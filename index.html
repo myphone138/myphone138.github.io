@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?706326d91e162e3e129576cfec1ad6b5";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王贵平主页</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            cursor: grab;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        canvas {
+            display: block;
+        }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, rgba(26, 26, 46, 0.9) 50%, rgba(22, 33, 62, 0.9) 100%);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.3);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-menu li a:hover {
+            color: #00ff88;
+        }
+        
+        .nav-menu li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00ff88;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-menu li a:hover::after {
+            width: 100%;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #00ff88;
+            font-size: 14px;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, rgba(26, 26, 46, 0.9) 50%, rgba(22, 33, 62, 0.9) 100%);
+            backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(0, 255, 136, 0.3);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 30px;
+        }
+        
+        .footer-center {
+            color: #fff !important;
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            text-align: center !important;
+            text-shadow:
+                0 0 12px #00ff88,
+                0 0 4px #fff,
+                0 2px 12px rgba(0,255,136,0.35),
+                0 0px 4px #000;
+            letter-spacing: 2px !important;
+            opacity: 1 !important;
+        } 
+        .social-links a {
+    color: #fff !important;
+    text-shadow: 0 0 8px #00ff88, 0 0 2px #fff;
+}
+.social-links a:hover {
+    color: #00ff88 !important;
+    text-shadow: 0 0 12px #00ff88, 0 0 4px #fff;
+}
+   </style>
+</head>
+<body>
+<header class="header">
+    <div class="header-left">
+        <div class="logo">王贵平 🎯</div>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于</a></li>
+                <li><a href="#features">特性</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="header-right">
+        <div class="social-links">
+            <a href="#" title="GitHub">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+            </a>
+            <a href="mailto:striketiger12388@outlook.com?to=王贵平" title="邮箱">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/>
+                </svg>
+            </a>
+            <a href="#" title="微信">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8.5 4.5c-3.5 0-6.5 2.5-6.5 6.5 0 2.5 1.5 4.5 3.5 5.5l-1 2.5 3-1.5c1.5.5 3 .5 4.5 0 1.5-.5 2.5-1.5 3-2.5.5-1 1-2 1-3.5 0-4-3-6.5-6.5-6.5z"/>
+                    <path d="M15.5 6.5c-2.5 0-4.5 1.5-4.5 4.5 0 2 1 3.5 2.5 4l-0.5 1.5 2-0.5c1 .5 2 .5 3 0 1-.5 1.5-1 2-2 .5-1 .5-2 .5-3 0-3-2-4.5-4.5-4.5z"/>
+                    <circle cx="6" cy="8" r="0.8" fill="currentColor"/>
+                    <circle cx="8" cy="8" r="0.8" fill="currentColor"/>
+                    <circle cx="13" cy="10" r="0.6" fill="currentColor"/>
+                    <circle cx="15" cy="10" r="0.6" fill="currentColor"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</header>
+
+<canvas id="sphereCanvas"></canvas>
+
+<footer class="footer">
+    <div class="footer-center">
+        <span>© 2025 王贵平保留所有权</span>
+    </div>
+</footer>
+
+<script>
+    const canvas = document.getElementById('sphereCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight - 140;
+        canvas.style.marginTop = '80px';
+    }
+    
+    resizeCanvas();
+
+    const numbers = "13828";
+    const points = [];
+    const trails = [];
+    const radius = Math.min(canvas.width, canvas.height) * 0.4;
+    let centerX = canvas.width / 2;
+    let centerY = canvas.height / 2;
+    const numPoints = 300;
+
+    let isMouseDown = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+    let mouseVelocityX = 0;
+    let mouseVelocityY = 0;
+
+    for (let i = 0; i < numPoints; i++) {
+        const phi = Math.acos(1 - (2 * i) / numPoints);
+        const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+
+        const x = Math.cos(theta) * Math.sin(phi);
+        const y = Math.sin(theta) * Math.sin(phi);
+        const z = Math.cos(phi);
+
+        points.push({ 
+            x, y, z, 
+            originalX: x, 
+            originalY: y, 
+            originalZ: z,
+            trail: [],
+            color: `hsl(${(i * 137.5) % 360}, 70%, 60%)`
+        });
+    }
+
+    let angleX = 0;
+    let angleY = 0;
+    let velocityX = 0.005;
+    let velocityY = 0.005;
+    const gravityAcceleration = 0.0005;
+    const friction = 0.98;
+
+    function rotatePoint(p, angleX, angleY) {
+        const y1 = p.y * Math.cos(angleX) - p.z * Math.sin(angleX);
+        const z1 = p.y * Math.sin(angleX) + p.z * Math.cos(angleX);
+
+        const x1 = p.x * Math.cos(angleY) - z1 * Math.sin(angleY);
+        const z2 = p.x * Math.sin(angleY) + z1 * Math.cos(angleY);
+
+        return { x: x1, y: y1, z: z2 };
+    }
+
+    function drawTrail(trail, color) {
+        if (trail.length < 2) return;
+        
+        ctx.beginPath();
+        ctx.moveTo(trail[0].x, trail[0].y);
+        
+        for (let i = 1; i < trail.length; i++) {
+            const alpha = i / trail.length;
+            ctx.strokeStyle = `${color.replace(')', `, ${alpha * 0.6})`)}`;
+            ctx.lineWidth = 2 * alpha;
+            ctx.lineTo(trail[i].x, trail[i].y);
+        }
+        
+        ctx.stroke();
+    }
+
+    function draw() {
+        const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius * 2);
+        gradient.addColorStop(0, 'rgba(0, 255, 136, 0.1)');
+        gradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.3)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.8)');
+        
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        velocityX += gravityAcceleration;
+        velocityY += gravityAcceleration;
+        velocityX *= friction;
+        velocityY *= friction;
+
+        velocityX += mouseVelocityX * 0.1;
+        velocityY += mouseVelocityY * 0.1;
+        mouseVelocityX *= 0.9;
+        mouseVelocityY *= 0.9;
+
+        angleX += velocityX;
+        angleY += velocityY;
+
+        const rotatedPoints = points.map(p => {
+            const rotated = rotatePoint(p, angleX, angleY);
+            return { ...rotated, originalPoint: p };
+        });
+
+        rotatedPoints.sort((a, b) => b.z - a.z);
+
+        rotatedPoints.forEach((p) => {
+            const scale = 1 / (1.5 + p.z);
+            const x = centerX + p.x * radius * scale;
+            const y = centerY + p.y * radius * scale;
+
+            p.originalPoint.trail.push({ x, y, timestamp: Date.now() });
+            
+            p.originalPoint.trail = p.originalPoint.trail.filter(point => 
+                Date.now() - point.timestamp < 1000
+            );
+
+            drawTrail(p.originalPoint.trail, p.originalPoint.color);
+        });
+
+        rotatedPoints.forEach((p, index) => {
+            const scale = 1 / (1.5 + p.z);
+            const x = centerX + p.x * radius * scale;
+            const y = centerY + p.y * radius * scale;
+
+            const fontSize = 10 + scale * 15;
+            ctx.font = `bold ${fontSize}px monospace`;
+            
+            const textGradient = ctx.createLinearGradient(x - fontSize/2, y - fontSize/2, x + fontSize/2, y + fontSize/2);
+            textGradient.addColorStop(0, p.originalPoint.color);
+            textGradient.addColorStop(1, '#ffffff');
+            
+            ctx.fillStyle = textGradient;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            ctx.shadowColor = p.originalPoint.color;
+            ctx.shadowBlur = 10 * scale;
+            ctx.fillText(numbers[index % numbers.length], x, y);
+            ctx.shadowBlur = 0;
+
+            for (let j = index + 1; j < Math.min(index + 5, rotatedPoints.length); j++) {
+                const otherPoint = rotatedPoints[j];
+                const otherScale = 1 / (1.5 + otherPoint.z);
+                const otherX = centerX + otherPoint.x * radius * otherScale;
+                const otherY = centerY + otherPoint.y * radius * otherScale;
+                
+                const distance = Math.sqrt((x - otherX) ** 2 + (y - otherY) ** 2);
+                if (distance < 50) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(otherX, otherY);
+                    ctx.strokeStyle = `rgba(0, 255, 136, ${0.1 * (1 - distance/50)})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        });
+
+        requestAnimationFrame(draw);
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+        isMouseDown = true;
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+        canvas.style.cursor = 'grabbing';
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+        if (isMouseDown) {
+            mouseVelocityX = (e.clientX - lastMouseX) * 0.01;
+            mouseVelocityY = (e.clientY - lastMouseY) * 0.01;
+            lastMouseX = e.clientX;
+            lastMouseY = e.clientY;
+        }
+    });
+
+    canvas.addEventListener('mouseup', () => {
+        isMouseDown = false;
+        canvas.style.cursor = 'grab';
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+        isMouseDown = false;
+        canvas.style.cursor = 'grab';
+    });
+
+    draw();
+
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        centerX = canvas.width / 2;
+        centerY = canvas.height / 2;
+        radius = Math.min(canvas.width, canvas.height) * 0.4;
+    });
+</script>
+</body>
+</html>
