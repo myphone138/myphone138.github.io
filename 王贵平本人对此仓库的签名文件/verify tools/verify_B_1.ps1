@@ -12,7 +12,7 @@ $OutputEncoding = [Console]::OutputEncoding = [Text.Encoding]::UTF8
 # 定义原件和签名文件的路径
 $originalPath = [System.IO.Path]::GetFullPath("K:\完整性校验_6FEC A20A@A")  # 改为根目录，支持递归搜索
 $signaturePath = [System.IO.Path]::GetFullPath("K:\完整性校验_6FEC A20A@A\王贵平本人对此仓库的签名文件\王贵平对《完整性校验_6FEC A20A@A》的签名文件")
-$publicKeyPath = [System.IO.Path]::GetFullPath("K:\完整性校验_6FEC A20A@A\王贵平本人对此仓库的签名文件\王贵平_0x6FECA20A_public.asc")
+$publicKeyPath = [System.IO.Path]::GetFullPath("F:\签名系统\gpg\6FECA20A_pub1D2E1425.asc")
 
 # 已知公钥指纹（如有，直接填写，否则留空）
 $knownFingerprint = "36788E18D1584881F9C3DE39B900C0CD26375457"
@@ -200,9 +200,9 @@ Write-Host "找到 $($signatureFiles.Count) 个签名文件（含子目录）" -
 # 创建原件文件索引（递归，排除签名文件目录）
 Write-Host "正在扫描原件文件..." -ForegroundColor Yellow
 $originalFiles = @{}
-Get-ChildItem -Path $originalPath -File -Recurse | Where-Object { 
-    $_.DirectoryName -notlike "*\Sig签名文件*" -and $_.Name -notlike "*.sig"
-} | ForEach-Object {
+Get-ChildItem -Path $originalPath -File -Recurse |
+Where-Object { $_.FullName -notlike "K:\完整性校验_6FEC A20A@A\王贵平本人对此仓库的签名文件*" -and $_.Name -notlike "*.sig" } |
+ForEach-Object {
     $originalFiles[$_.Name] = $_.FullName
 }
 

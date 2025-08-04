@@ -8,14 +8,9 @@ set /a bad=0
 set "badfiles="
 
 rem 只遍历 K:\完整性校验\files\origin 文件夹及其子文件夹的文件
-rem 递归遍历 K:\完整性校验_6FEC A20A@A 下所有文件，忽略签名文件目录
-for /r "K:\完整性校验_6FEC A20A@A" %%f in (*) do (
-    rem 忽略签名文件目录
-    echo %%f | findstr /C:"K:\完整性校验_6FEC A20A@A\王贵平本人对此仓库的签名文件" >nul && goto :continue
+for /r "K:\完整性校验_6FEC A20A@A\files\origin" %%f in (*) do (
     set "orig_path=%%~dpnxf"
-    set "sig_path=!orig_path:K:\完整性校验_6FEC A20A@A\=K:\完整性校验_6FEC A20A@A\王贵平本人对此仓库的签名文件\王贵平对《完整性校验_6FEC A20A@A》的签名文件\!.sig"
-    rem ...existing code...
-    :continue
+    set "sig_path=!orig_path:K:\完整性校验_6FEC A20A@A\files\origin\=K:\完整性校验_6FEC A20A@A\files\sign\!.sig"
     if exist "!sig_path!" (
         set /a total+=1
         <nul set /p=正在验证: %%f  
