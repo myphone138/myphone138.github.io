@@ -182,7 +182,7 @@ var _hmt = _hmt || [];
         @media (max-width: 900px) {
             .nav-menu {
                 display: none !important;
-                flex-direction: column;
+                flex-direction: row;
                 gap: 0;
                 position: absolute;
                 top: 80px;
@@ -191,13 +191,29 @@ var _hmt = _hmt || [];
                 background: linear-gradient(90deg, #1a237e 0%, #1976d2 100%);
                 padding: 20px 0;
                 box-shadow: 0 4px 24px rgba(25, 118, 210, 0.12);
+                overflow-x: auto;
+                white-space: nowrap;
+                scrollbar-width: auto;
+                scrollbar-color: #1976d2 #eee;
             }
             .nav-menu.show {
                 display: flex !important;
             }
             .nav-menu li {
+                flex: 0 0 auto;
                 margin: 10px 0;
                 text-align: center;
+            }
+            .nav-menu::-webkit-scrollbar {
+                height: 8px;
+                background: #eee;
+            }
+            .nav-menu::-webkit-scrollbar-thumb {
+                background: #1976d2;
+                border-radius: 4px;
+            }
+            .nav-menu::-webkit-scrollbar-track {
+                background: #eee;
             }
             .header-left {
                 width: 100%;
