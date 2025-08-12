@@ -135,6 +135,48 @@ var _hmt = _hmt || [];
             list-style: none;
             margin: 0;
             padding: 0;
+            overflow-x: auto;
+            white-space: nowrap;
+            /* 显示可见滚动条 */
+            scrollbar-width: auto;
+            scrollbar-color: #1976d2 #eee;
+        }
+        .nav-menu::-webkit-scrollbar {
+            height: 8px;
+            background: #eee;
+        }
+        .nav-menu::-webkit-scrollbar-thumb {
+            background: #1976d2;
+            border-radius: 4px;
+        }
+        .nav-menu::-webkit-scrollbar-track {
+            background: #eee;
+        }
+        }
+        .nav-menu li {
+            flex: 0 0 auto;
+        }
+        .nav-menu::-webkit-scrollbar {
+            height: 6px;
+        }
+        .nav-menu::-webkit-scrollbar-thumb {
+            background: #1976d2;
+            border-radius: 3px;
+        }
+        .nav-menu::-webkit-scrollbar-track {
+            background: #eee;
+        }
+        }
+        .nav-menu::-webkit-scrollbar {
+            height: 6px;
+        }
+        .nav-menu::-webkit-scrollbar-thumb {
+            background: #1976d2;
+            border-radius: 3px;
+        }
+        .nav-menu::-webkit-scrollbar-track {
+            background: #eee;
+        }
         }
         /* 优先保证移动端隐藏导航栏 */
         @media (max-width: 900px) {
@@ -273,8 +315,7 @@ var _hmt = _hmt || [];
                     <li><a class="capsule-btn" href="https://myphone138.github.io">首页</a></li>
                     <li><a class="capsule-btn" href="https://www.ccdi.gov.cn/toutun/202507/t20250721_435904.html">中央巡视进驻</a></li>
                     <li><a class="capsule-btn" href="https://www.faxin.cn/lib/Zyfl/ZylfSimple.aspx?gid=A289188&libid=all">法〔2013〕283号</a></li>
-                    <li><a class="capsule-btn" href="http://gongbao.court.gov.cn/Details/11aaa996a59f5824912be62d3dfa0d.html?sw=">刑诉法（一）</a></li>
-                    <li><a class="capsule-btn" href="http://gongbao.court.gov.cn/Details/b772fbc86b46cdf2eddda464ef3325.html?sw=">刑诉法（二）</a></li>
+                    <li><a class="capsule-btn" href="http://gongbao.court.gov.cn/Details/11aaa996a59f5824912be62d3dfa0d.html?sw=">刑诉法</a></li>
                     <li><a class="capsule-btn" href="https://www.gov.cn/zhengce/2022-04/07/content_5683923.htm">《信访工作条例》</a></li>
                     <li><a class="capsule-btn" href="https://www.mps.gov.cn/n6557558/c9072148/content.html">公通字〔2023〕9号</a></li>
                     <li><a class="capsule-btn" href="https://www.xiangshan.gov.cn/art/2020/1/21/art_1229682852_4092176.html">公通字〔2016〕14号</a></li>
