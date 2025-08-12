@@ -136,6 +136,36 @@ var _hmt = _hmt || [];
             margin: 0;
             padding: 0;
         }
+        /* 优先保证移动端隐藏导航栏 */
+        @media (max-width: 900px) {
+            .nav-menu {
+                display: none !important;
+                flex-direction: column;
+                gap: 0;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: linear-gradient(90deg, #1a237e 0%, #1976d2 100%);
+                padding: 20px 0;
+                box-shadow: 0 4px 24px rgba(25, 118, 210, 0.12);
+            }
+            .nav-menu.show {
+                display: flex !important;
+            }
+            .nav-menu li {
+                margin: 10px 0;
+                text-align: center;
+            }
+            .header-left {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            .hamburger {
+                display: flex;
+            }
+        }
+        }
         
         .nav-menu li a {
             color: white;
