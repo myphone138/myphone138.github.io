@@ -12,6 +12,9 @@ var _hmt = _hmt || [];
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="icon" type="image/png" href="images/OPPO A5 来源不明.png">
+    
     <title>王贵平主页</title>
     <style>
         body {
@@ -25,7 +28,6 @@ var _hmt = _hmt || [];
         canvas {
             display: block;
         }
-            /* 汉堡菜单按钮样式 */
             .hamburger {
                 display: none;
                 flex-direction: column;
@@ -47,7 +49,6 @@ var _hmt = _hmt || [];
                 border-radius: 2px;
                 transition: 0.3s;
             }
-            /* 移动端导航菜单样式 */
             @media (max-width: 900px) {
                 .nav-menu {
                     position: absolute;
@@ -99,7 +100,6 @@ var _hmt = _hmt || [];
             gap: 20px;
         }
         
-            /* 专业胶囊按钮样式 */
             .capsule-btn {
                 display: inline-block;
                 padding: 0.35em 1.2em;
@@ -135,12 +135,8 @@ var _hmt = _hmt || [];
             list-style: none;
             margin: 0;
             padding: 0;
-            display: flex;
-            gap: 30px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            /* 移除横向滚动条，保持简洁 */
+            justify-content: center;
+            width: 100%;
         }
         }
         .nav-menu li {
@@ -168,7 +164,6 @@ var _hmt = _hmt || [];
             background: #eee;
         }
         }
-        /* 优先保证移动端隐藏导航栏 */
         @media (max-width: 900px) {
             .nav-menu {
                 display: none !important;
@@ -306,11 +301,41 @@ var _hmt = _hmt || [];
     color: #00ff88 !important;
     text-shadow: 0 0 12px #00ff88, 0 0 4px #fff;
 }
-   </style>
+
+.avatar-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(25,118,210,0.15);
+    margin-right: 12px;
+    object-fit: cover;
+    vertical-align: middle;
+}
+.avatar-name {
+    font-size: 22px;
+    font-weight: bold;
+    color: #00ff88;
+    margin-right: 18px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px #00ff88, 0 0 2px #fff;
+}
+.nav-menu {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    width: 100%;
+}
+    </style>
 </head>
 <body>
 <header class="header">
     <div class="header-left">
+        
+            <img src="images/OPPO A5 来源不明.png" alt="头像" class="avatar-img">
+            <span class="avatar-name">王贵平</span>
             <button class="hamburger" id="hamburgerBtn" aria-label="菜单">
                 <span></span>
                 <span></span>
@@ -319,8 +344,10 @@ var _hmt = _hmt || [];
         <nav>
             <ul class="nav-menu" id="navMenu">
                 <li><a class="capsule-btn" href="index.html">首页</a></li>
-                <li><a class="capsule-btn" href="about.html">关于</a></li>
+                <li><a class="capsule-btn" href="about.html">简介</a></li>
                 <li><a class="capsule-btn" href="nav.html">导航中心</a></li>
+                <li><a class="capsule-btn" href="problems.html">问题清单</a></li>
+                        <li><a class="capsule-btn" href="progress.html">处理进度</a></li>
                 <li><a class="capsule-btn" href="#official-news">官方动态</a></li>
                 <li><a class="capsule-btn" href="#blog-news">博主动态</a></li>
                 <li><a class="capsule-btn" href="contact.html">联系</a></li>
@@ -328,7 +355,6 @@ var _hmt = _hmt || [];
         </nav>
     </div>
     <script>
-    // 汉堡菜单点击展开/收起导航
     document.addEventListener('DOMContentLoaded', function() {
         var hamburger = document.getElementById('hamburgerBtn');
         var navMenu = document.getElementById('navMenu');

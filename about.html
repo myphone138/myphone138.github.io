@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?706326d91e162e3e129576cfec1ad6b5";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<head>
+
+	<link rel="icon" type="image/png" href="images/OPPO A5 来源不明.png">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>简介</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+	<style>
+		.header {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 80px;
+			background: linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, rgba(26, 26, 46, 0.9) 50%, rgba(22, 33, 62, 0.9) 100%);
+			backdrop-filter: blur(15px);
+			border-bottom: 1px solid rgba(0, 255, 136, 0.3);
+			z-index: 2000;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0 30px;
+		}
+		.header-left {
+			display: flex;
+			align-items: center;
+			gap: 20px;
+		}
+		.nav-menu {
+			display: flex;
+			gap: 30px;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			justify-content: center;
+			width: 100%;
+		}
+		.footer {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 60px;
+			background: linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, rgba(26, 26, 46, 0.9) 50%, rgba(22, 33, 62, 0.9) 100%);
+			backdrop-filter: blur(15px);
+			border-top: 1px solid rgba(0, 255, 136, 0.3);
+			z-index: 2000;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0 30px;
+		}
+		.footer-center {
+			color: #fff !important;
+			font-size: 18px !important;
+			font-weight: 700 !important;
+			text-align: center !important;
+			text-shadow:
+				0 0 12px #00ff88,
+				0 0 4px #fff,
+				0 2px 12px rgba(0,255,136,0.35),
+				0 0px 4px #000;
+			letter-spacing: 2px !important;
+			opacity: 1 !important;
+		}
+	</style>
+	<style>
+		.capsule-btn {
+			display: inline-block;
+			padding: 0.35em 1.2em;
+			border-radius: 999px;
+			background: linear-gradient(90deg, #1976d2 0%, #2196f3 100%);
+			color: #f5f5f5;
+			font-weight: 500;
+			font-size: 15px;
+			text-decoration: none;
+			box-shadow: 0 2px 6px rgba(25, 118, 210, 0.10);
+			border: none;
+			transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+			cursor: pointer;
+			outline: none;
+			white-space: nowrap;
+		}
+		.capsule-btn:hover, .capsule-btn:focus {
+			background: linear-gradient(90deg, #1565c0 0%, #1976d2 100%);
+			box-shadow: 0 4px 12px rgba(25, 118, 210, 0.18);
+			color: #ffffff;
+			transform: translateY(-2px) scale(1.04);
+		}
+	</style>
+	<style>
+		body {
+			margin: 0;
+			background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+			font-family: 'Arial', sans-serif;
+		}
+		.swiper {
+			width: 100vw;
+			height: 100vh;
+		}
+		.swiper-slide {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: flex-start;
+			font-size: 22px;
+			color: #fff;
+			height: calc(100vh - 140px);
+			overflow-y: auto;
+			padding-top: 100px;
+			padding-bottom: 80px;
+			box-sizing: border-box;
+			scrollbar-width: thin;
+			scrollbar-color: #1976d2 #eee;
+		}
+		.swiper-slide::-webkit-scrollbar {
+			width: 8px;
+			background: #eee;
+		}
+		.swiper-slide::-webkit-scrollbar-thumb {
+			background: #1976d2;
+			border-radius: 4px;
+		}
+		.swiper-slide::-webkit-scrollbar-track {
+			background: #eee;
+		}
+		.nav-btn {
+			display: inline-block;
+			margin: 12px;
+			padding: 0.5em 2em;
+			border-radius: 999px;
+			background: linear-gradient(90deg, #1976d2 0%, #2196f3 100%);
+			color: #f5f5f5;
+			font-weight: 500;
+			font-size: 18px;
+			text-decoration: none;
+			box-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
+			border: none;
+			transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+			cursor: pointer;
+			outline: none;
+			white-space: nowrap;
+		}
+		.nav-btn:hover, .nav-btn:focus {
+			background: linear-gradient(90deg, #1565c0 0%, #1976d2 100%);
+			box-shadow: 0 4px 16px rgba(25, 118, 210, 0.18);
+			color: #ffffff;
+			transform: translateY(-2px) scale(1.04);
+		}
+		.slide-title {
+			font-size: 28px;
+			font-weight: bold;
+			margin-bottom: 24px;
+			color: #00ff88;
+		}
+		.avatar-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(25,118,210,0.15);
+    margin-right: 12px;
+    object-fit: cover;
+    vertical-align: middle;
+}
+.avatar-name {
+    font-size: 22px;
+    font-weight: bold;
+    color: #00ff88;
+    margin-right: 18px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px #00ff88, 0 0 2px #fff;
+}
+	</style>
+</head>
+<body>
+	<header class="nav-header">
+		<nav class="nav-bar">
+		<header class="header">
+			<div class="header-left">
+
+				<img src="images/OPPO A5 来源不明.png" alt="头像" class="avatar-img">
+				<span class="avatar-name">王贵平</span>
+				<nav>
+					<ul class="nav-menu">
+						<li><a class="capsule-btn" href="index.html">首页</a></li>
+						<li><a class="capsule-btn" href="about.html">简介</a></li>
+						<li><a class="capsule-btn" href="nav.html">导航中心</a></li>
+                        <li><a class="capsule-btn" href="problems.html">问题清单</a></li>
+                        <li><a class="capsule-btn" href="progress.html">处理进度</a></li>
+						<li><a class="capsule-btn" href="#official-news">官方动态</a></li>
+						<li><a class="capsule-btn" href="#blog-news">博主动态</a></li>
+						<li><a class="capsule-btn" href="contact.html">联系</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		</nav>
+	</header>
+	<main style="min-height:calc(100vh - 140px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding-top:100px;padding-bottom:80px;width:400px;margin:0 auto;">
+        <div class="slide-title" style="align-self:center;">暂无</div>
+    </main>
+	<footer class="footer">
+		<div class="footer-center">
+			<span>© 2025 王贵平保留所有权</span>
+		</div>
+	</footer>
+	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+	<script>
+		const swiper = new Swiper('.swiper', {
+			slidesPerView: 1,
+			spaceBetween: 30,
+			loop: false,
+			pagination: {
+				el: '.swiper-pagination',
+				clickable: true,
+			},
+			navigation: {
+				nextEl: '.swiper-button-next',
+				prevEl: '.swiper-button-prev',
+			},
+		});
+	</script>
+</body>
+</html>
