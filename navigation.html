@@ -70,6 +70,24 @@ var _hmt = _hmt || [];
 			justify-content: center;
 			width: 100%;
 		}
+		.nav-menu li {
+			flex: 0 0 auto;
+		}
+		.nav-menu li a {
+			color: white;
+			text-decoration: none;
+			font-size: 16px;
+			transition: color 0.3s ease;
+			position: relative;
+		}
+		.nav-menu li a:hover {
+			color: #00ff88;
+		}
+		.nav-menu li a::after {
+			/* 隐藏短下划线，保留长的 capsule underline */
+			display: none;
+		}
+
 		.footer {
 			position: fixed;
 			bottom: 0;
@@ -206,33 +224,132 @@ var _hmt = _hmt || [];
     text-shadow: 0 0 8px #00ff88, 0 0 2px #fff;
 }
 	</style>
+	<style>
+	/* 汉堡按钮 */
+	.hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 3000;
+        }
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 4px;
+            margin: 4px 0;
+            background: #2196f3;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* 移动端：隐藏导航，显示汉堡 */
+        @media (max-width:900px){
+            .hamburger{ display:flex; }
+            /* 固定定位浮层，避免被 footer 覆盖；保留底部内边距以便最后一项可见 */
+            .nav-menu{
+                display:none !important;
+                flex-direction:column;
+                gap:10px;
+                position:fixed;
+                top:90px;
+                left:50%;
+                transform:translateX(-50%);
+                width:86%;
+                max-height:calc(100vh - 170px); /* 留出 header+footer 空间 */
+                padding:12px 16px 120px 16px; /* 底部留出更多空间，避免被 footer 遮挡 */
+                background:rgba(26,35,126,0.94);
+                backdrop-filter:blur(6px);
+                border-radius:12px;
+                box-shadow:0 8px 32px rgba(0,0,0,0.45);
+                overflow-y:auto;
+                -webkit-overflow-scrolling:touch;
+                touch-action:pan-y;
+                overscroll-behavior: contain;
+                white-space:normal;
+                scrollbar-width:thin;
+                scrollbar-color:#1976d2 rgba(0,0,0,0.1);
+                z-index:9999;
+                pointer-events:auto;
+            }
+            .nav-menu.show{ display:flex !important; }
+            .nav-menu li{ margin:10px 0; text-align:center; }
+            .nav-menu::-webkit-scrollbar{ height:8px; }
+            .nav-menu::-webkit-scrollbar-thumb{ background:#1976d2; border-radius:4px; }
+            .header-left{ width:100%; justify-content:flex-end; }
+        }
+	</style>
 </head>
 <body>
-	<header class="nav-header">
-		<nav class="nav-bar">
-		<header class="header">
-			<div class="header-left">
+	<header class="header">
+		<div class="header-left">
+			<img src="images/OPPO A5 来源不明.png" alt="头像" class="avatar-img">
+                        <span class="avatar-name" style="font-size:16px;">（2019）黔0103刑初821号揭秘</span>
+			<nav>
+                        <ul class="nav-menu" id="navMenu">
+				<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="index.html">本站首页</a><span class="capsule-btn-underline"></span></span></li>
+				<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="declaration.html">重要声明</a><span class="capsule-btn-underline"></span></span></li>
+				<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="introduction.html">案件简介</a><span class="capsule-btn-underline"></span></span></li>
+				<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="case-history.html">案件脉络</a><span class="capsule-btn-underline"></span></span></li>
+				<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="blog-news.html">博主动态</a><span class="capsule-btn-underline"></span></span></li>
+				<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="navigation.html">导航中心</a><span class="capsule-btn-underline"></span></span></li>
+				<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="problems.html">问题清单</a><span class="capsule-btn-underline"></span></span></li>
+				<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="evidence.html">证据列表</a><span class="capsule-btn-underline"></span></span></li>
+				<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="progress.html">处理进度</a><span class="capsule-btn-underline"></span></span></li>
+				<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="official-news.html">官方动态</a><span class="capsule-btn-underline"></span></span></li>
+				<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="contact.html">联系我们</a><span class="capsule-btn-underline"></span></span></li>
+                        </ul>
+			</nav>
+		</div>
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var hamburger = document.getElementById('hamburgerBtn');
+                    var navMenu = document.getElementById('navMenu');
+                    // 占位，用于还原 navMenu 的原始位置
+                    var placeholder = document.createElement('div');
+                    placeholder.style.display = 'none';
+                    navMenu.parentNode.insertBefore(placeholder, navMenu.nextSibling);
 
-				<img src="images/OPPO A5 来源不明.png" alt="头像" class="avatar-img">
-        <span class="avatar-name" style="font-size:16px;">（2019）黔0103刑初821号揭秘</span>
-				<nav>
-                <ul class="nav-menu" id="navMenu">
-					<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="index.html">本站首页</a><span class="capsule-btn-underline"></span></span></li>
-					<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="declaration.html">重要声明</a><span class="capsule-btn-underline"></span></span></li>
-					<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="introduction.html">案件简介</a><span class="capsule-btn-underline"></span></span></li>
-					<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="case-history.html">案件脉络</a><span class="capsule-btn-underline"></span></span></li>
-					<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="blog-news.html">博主动态</a><span class="capsule-btn-underline"></span></span></li>
-					<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="navigation.html">导航中心</a><span class="capsule-btn-underline"></span></span></li>
-					<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="problems.html">问题清单</a><span class="capsule-btn-underline"></span></span></li>
-					<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="evidence.html">证据列表</a><span class="capsule-btn-underline"></span></span></li>
-					<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="progress.html">处理进度</a><span class="capsule-btn-underline"></span></span></li>
-					<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="official-news.html">官方动态</a><span class="capsule-btn-underline"></span></span></li>
-					<li><span class="capsule-btn-wrap"><a class="capsule-btn" href="contact.html">联系我们</a><span class="capsule-btn-underline"></span></span></li>
-                </ul>
-				</nav>
-			</div>
-		</header>
-		</nav>
+                  // 强制初始收起菜单，防止手机端默认展开
+                  navMenu.classList.remove('show');
+                  // 调试：打印当前菜单项数量与文本，便于比较手机/桌面差异
+                  try { console.info('navMenu items count:', navMenu.querySelectorAll('li').length);
+                      console.info(Array.from(navMenu.querySelectorAll('li a')).map(a=>a.textContent.trim())); } catch(e) {}
+                    if (window.innerWidth <= 900) {
+                        navMenu.style.display = 'none';
+                    }
+
+                    var movedToBody = false;
+
+                    hamburger.addEventListener('click', function() {
+                        var isShown = navMenu.classList.toggle('show');
+                        // 清除内联 display，让 CSS 控制显示
+                        navMenu.style.display = '';
+
+                        if (isShown) {
+                            // 将菜单移动到 body，避免受父容器 stacking context 限制
+                            if (!movedToBody) {
+                                document.body.appendChild(navMenu);
+                                movedToBody = true;
+                            }
+                            // 让菜单内部支持原生滚动惯性，避免禁用 body overflow（提高灵敏度）
+                            // 确保菜单滚到顶部以显示首项
+                            setTimeout(function() { navMenu.scrollTop = 0; }, 50);
+                        } else {
+                            // 收起时把菜单放回占位位置
+                            if (movedToBody) {
+                                placeholder.parentNode.insertBefore(navMenu, placeholder.nextSibling);
+                                movedToBody = false;
+                            }
+                        }
+                    });
+                });
+                </script>
 	</header>
 	<div class="swiper">
 		<div class="swiper-wrapper">

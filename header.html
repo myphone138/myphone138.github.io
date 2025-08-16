@@ -1,0 +1,70 @@
+<header class="header">
+    <div class="header-left">
+        <img src="images/OPPO A5 来源不明.png" alt="头像" class="avatar-img">
+        <span class="avatar-name" style="font-size:16px;">（2019）黔0103刑初821号揭秘</span>
+        <button class="hamburger" id="hamburgerBtn" aria-label="菜单">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav>
+            <ul class="nav-menu" id="navMenu">
+                <li><a class="capsule-btn" href="index.html">本站首页</a></li>
+                <li><a class="capsule-btn" href="declaration.html">重要声明</a></li>
+                <li><a class="capsule-btn" href="introduction.html">案件简介</a></li>
+                <li><a class="capsule-btn" href="case-history.html">案件脉络</a></li>
+                <li><a class="capsule-btn" href="blog-news.html">博主动态</a></li>
+                <li><a class="capsule-btn" href="navigation.html">导航中心</a></li>
+                <li><a class="capsule-btn" href="problems.html">问题清单</a></li>
+                <li><a class="capsule-btn" href="evidence.html">证据列表</a></li>
+                <li><a class="capsule-btn" href="progress.html">处理进度</a></li>
+                <li><a class="capsule-btn" href="official-news.html">官方动态</a></li>
+                <li><a class="capsule-btn" href="contact.html">联系我们</a></li>
+            </ul>
+        </nav>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var hamburger = document.getElementById('hamburgerBtn');
+        var navMenu = document.getElementById('navMenu');
+        // 占位，用于还原 navMenu 的原始位置
+        var placeholder = document.createElement('div');
+        placeholder.style.display = 'none';
+        navMenu.parentNode.insertBefore(placeholder, navMenu.nextSibling);
+
+      // 强制初始收起菜单，防止手机端默认展开
+      navMenu.classList.remove('show');
+      // 调试：打印当前菜单项数量与文本，便于比较手机/桌面差异
+      try { console.info('navMenu items count:', navMenu.querySelectorAll('li').length);
+          console.info(Array.from(navMenu.querySelectorAll('li a')).map(a=>a.textContent.trim())); } catch(e) {}
+        if (window.innerWidth <= 900) {
+            navMenu.style.display = 'none';
+        }
+
+        var movedToBody = false;
+
+        hamburger.addEventListener('click', function() {
+            var isShown = navMenu.classList.toggle('show');
+            // 清除内联 display，让 CSS 控制显示
+            navMenu.style.display = '';
+
+            if (isShown) {
+                // 将菜单移动到 body，避免受父容器 stacking context 限制
+                if (!movedToBody) {
+                    document.body.appendChild(navMenu);
+                    movedToBody = true;
+                }
+                // 让菜单内部支持原生滚动惯性，避免禁用 body overflow（提高灵敏度）
+                // 确保菜单滚到顶部以显示首项
+                setTimeout(function() { navMenu.scrollTop = 0; }, 50);
+            } else {
+                // 收起时把菜单放回占位位置
+                if (movedToBody) {
+                    placeholder.parentNode.insertBefore(navMenu, placeholder.nextSibling);
+                    movedToBody = false;
+                }
+            }
+        });
+    });
+    </script>
+</header>

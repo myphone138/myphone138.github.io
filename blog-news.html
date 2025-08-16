@@ -344,6 +344,47 @@ var _hmt = _hmt || [];
     justify-content: center;
     width: 100%;
 }
+        /* 移动端：隐藏导航，显示汉堡 */
+        @media (max-width:900px){
+            .hamburger{ display:flex; }
+            /* 固定定位浮层，避免被 footer 覆盖；保留底部内边距以便最后一项可见 */
+            .nav-menu{
+                display:none !important;
+                flex-direction:column;
+                gap:10px;
+                position:fixed;
+                top:90px;
+                left:50%;
+                transform:translateX(-50%);
+                width:86%;
+                max-height:calc(100vh - 170px); /* 留出 header+footer 空间 */
+                padding:12px 16px 120px 16px; /* 底部留出更多空间，避免被 footer 遮挡 */
+                background:rgba(26,35,126,0.94);
+                backdrop-filter:blur(6px);
+                border-radius:12px;
+                box-shadow:0 8px 32px rgba(0,0,0,0.45);
+                overflow-y:auto;
+                -webkit-overflow-scrolling:touch;
+                touch-action:pan-y;
+                overscroll-behavior: contain;
+                white-space:normal;
+                scrollbar-width:thin;
+                scrollbar-color:#1976d2 rgba(0,0,0,0.1);
+                z-index:9999;
+                pointer-events:auto;
+            }
+            .nav-menu.show{ display:flex !important; }
+            .nav-menu li{ margin:10px 0; text-align:center; }
+            .nav-menu::-webkit-scrollbar{ height:8px; }
+            .nav-menu::-webkit-scrollbar-thumb{ background:#1976d2; border-radius:4px; }
+            .header-left{ width:100%; justify-content:flex-end; }
+        }
+    </style>
+    <!-- 额外保险：立刻在 head 级别再次保证小屏幕隐藏导航（防止缓存或脚本先行显示） -->
+    <style>
+        @media (max-width:900px){
+            .nav-menu{ display:none !important; }
+        }
     </style>
 </head>
 <body>
@@ -381,18 +422,43 @@ var _hmt = _hmt || [];
     document.addEventListener('DOMContentLoaded', function() {
         var hamburger = document.getElementById('hamburgerBtn');
         var navMenu = document.getElementById('navMenu');
-        // 默认折叠
-        navMenu.classList.remove('show');
+        // 占位，用于还原 navMenu 的原始位置
+        var placeholder = document.createElement('div');
+        placeholder.style.display = 'none';
+        navMenu.parentNode.insertBefore(placeholder, navMenu.nextSibling);
+
+      // 强制初始收起菜单，防止手机端默认展开
+      navMenu.classList.remove('show');
+      // 调试：打印当前菜单项数量与文本，便于比较手机/桌面差异
+      try { console.info('navMenu items count:', navMenu.querySelectorAll('li').length);
+          console.info(Array.from(navMenu.querySelectorAll('li a')).map(a=>a.textContent.trim())); } catch(e) {}
+        if (window.innerWidth <= 900) {
+            navMenu.style.display = 'none';
+        }
+
+        var movedToBody = false;
+
         hamburger.addEventListener('click', function() {
-            navMenu.classList.toggle('show');
-        });
-        // 点击菜单任意按钮后自动收起（移动端体验优化）
-        navMenu.querySelectorAll('a').forEach(function(link){
-            link.addEventListener('click',function(){
-                if(window.innerWidth<=900){
-                    navMenu.classList.remove('show');
+            var isShown = navMenu.classList.toggle('show');
+            // 清除内联 display，让 CSS 控制显示
+            navMenu.style.display = '';
+
+            if (isShown) {
+                // 将菜单移动到 body，避免受父容器 stacking context 限制
+                if (!movedToBody) {
+                    document.body.appendChild(navMenu);
+                    movedToBody = true;
                 }
-            });
+                // 让菜单内部支持原生滚动惯性，避免禁用 body overflow（提高灵敏度）
+                // 确保菜单滚到顶部以显示首项
+                setTimeout(function() { navMenu.scrollTop = 0; }, 50);
+            } else {
+                // 收起时把菜单放回占位位置
+                if (movedToBody) {
+                    placeholder.parentNode.insertBefore(navMenu, placeholder.nextSibling);
+                    movedToBody = false;
+                }
+            }
         });
     });
     </script>

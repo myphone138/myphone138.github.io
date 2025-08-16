@@ -60,7 +60,10 @@ var _hmt = _hmt || [];
             backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(0,255,136,0.3);
             z-index: 2000;
-            display: flex; align-items: center; justify-content: space-between; padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
         }
         .header-left { display: flex; align-items: center; gap: 20px; }
 
@@ -96,8 +99,31 @@ var _hmt = _hmt || [];
         .status-dot{ width:8px; height:8px; background:#00ff88; border-radius:50%; animation:pulse 2s infinite; }
         @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.5;} }
 
-        .footer{ position:fixed; bottom:0; left:0; right:0; height:60px; background:linear-gradient(90deg,rgba(0,0,0,0.9) 0%, rgba(26,26,46,0.9) 50%, rgba(22,33,62,0.9) 100%); backdrop-filter:blur(15px); border-top:1px solid rgba(0,255,136,0.3); z-index:2000; display:flex; align-items:center; justify-content:center; padding:0 30px; }
-        .footer-center{ color:#fff !important; font-size:18px !important; font-weight:700 !important; text-align:center !important; text-shadow:0 0 12px #00ff88,0 0 4px #fff,0 2px 12px rgba(0,255,136,0.35); letter-spacing:2px !important; }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(26,26,46,0.9) 50%, rgba(22,33,62,0.9) 100%);
+            backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(0,255,136,0.3);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 30px;
+        }
+        .footer-center {
+            color: #fff !important;
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            text-align: center !important;
+            text-shadow: 0 0 12px #00ff88, 0 0 4px #fff, 0 2px 12px rgba(0,255,136,0.35);
+            letter-spacing: 2px !important;
+            width: 100%;
+            text-align: center;
+        }
 
         .social-links a{ color:#fff !important; text-shadow:0 0 8px #00ff88,0 0 2px #fff; }
         .social-links a:hover{ color:#00ff88 !important; text-shadow:0 0 12px #00ff88,0 0 4px #fff; }
