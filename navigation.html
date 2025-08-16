@@ -84,10 +84,18 @@ var _hmt = _hmt || [];
 			color: #00ff88;
 		}
 		.nav-menu li a::after {
-			/* 隐藏短下划线，保留长的 capsule underline */
-			display: none;
+			content: '';
+			position: absolute;
+			bottom: -5px;
+			left: 0;
+			width: 0;
+			height: 2px;
+			background: #00ff88;
+			transition: width 0.3s ease;
 		}
-
+		.nav-menu li a:hover::after {
+			width: 100%;
+		}
 		.footer {
 			position: fixed;
 			bottom: 0;
@@ -142,8 +150,10 @@ var _hmt = _hmt || [];
 		}
 	</style>
 	<style>
-		body {
+		html, body {
+			height: 100%;
 			margin: 0;
+			overflow: hidden; /* hide outer scrollbar; inner .swiper-slide keeps its own scrolling */
 			background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
 			font-family: 'Arial', sans-serif;
 		}
@@ -224,9 +234,8 @@ var _hmt = _hmt || [];
     text-shadow: 0 0 8px #00ff88, 0 0 2px #fff;
 }
 	</style>
-	<style>
-	/* 汉堡按钮 */
-	.hamburger {
+        /* 汉堡按钮 */
+        .hamburger {
             display: none;
             flex-direction: column;
             justify-content: center;
@@ -283,7 +292,6 @@ var _hmt = _hmt || [];
             .nav-menu::-webkit-scrollbar-thumb{ background:#1976d2; border-radius:4px; }
             .header-left{ width:100%; justify-content:flex-end; }
         }
-	</style>
 </head>
 <body>
 	<header class="header">
