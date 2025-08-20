@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>myphone138.github.io仓库操作日志</title>
+  <style>
+    :root {
+      --bg-light: #f7f7f9;
+      --bg-dark: #23272f;
+      --text-light: #23272f;
+      --text-dark: #f7f7f9;
+      --primary: #007bff;
+      --secondary: #e2e6ea;
+      --border: #d1d5db;
+      --code-bg-light: #f3f4f6;
+      --code-bg-dark: #2d333b;
+      --copy-btn: #4f8cff;
+      --copy-btn-hover: #0056b3;
+      --bg-color: #ffffff;
+      --text-color: #333333;
+      --section-bg: #f8f9fa;
+      --subsection-bg: #ffffff;
+      --border-color: #dee2e6;
+      --shadow: 0 2px 4px rgba(0,0,0,0.1);
+      --password-bg: #f8f9fa;
+      --pre-bg: #f8f9fa;
+      --desc-color: #6c757d;
+      --nav-bg: #ffffff;
+      --nav-hover: #e9ecef;
+      --nav-active: #007bff;
+      --nav-text: #495057;
+      --nav-title: #212529;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+      --primary: #ffe066;
+      --copy-btn-hover: #ffd700;
+      --bg-color: #181a20;
+      --text-color: #e0e0e0;
+      --section-bg: #23272f;
+      --subsection-bg: #2c313a;
+      --border-color: #404040;
+      --shadow: 0 2px 4px rgba(0,0,0,0.3);
+      --password-bg: #181a20;
+      --pre-bg: #181a20;
+      --desc-color: #bdbdbd;
+      --nav-bg: #23272f;
+      --nav-hover: #2c313a;
+      --nav-active: #ffe066;
+      --nav-text: #bdbdbd;
+      --nav-title: #ffe066;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background: var(--bg-color);
+      min-height: 100vh;
+    }
+    .dark .container {
+      background: #23272f;
+      color: var(--text-dark);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    }
+    h1 {
+      text-align: center;
+      color: var(--text-color);
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      font-weight: bold;
+    }
+    h2 {
+      margin-top: 32px;
+      font-size: 1.3em;
+      color: var(--primary);
+    }
+    ol {
+      padding-left: 1.2em;
+    }
+    .step {
+      margin-bottom: 28px;
+    }
+    .desc {
+      margin-bottom: 10px;
+      font-size: 1.08em;
+    }
+    pre {
+      background: var(--pre-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 12px;
+      margin: 10px 0;
+      overflow-x: auto;
+      position: relative;
+      font-family: 'Courier New', monospace;
+      color: var(--text-color);
+    }
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      background: var(--primary);
+      color: var(--bg-color);
+      border: none;
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 2;
+    }
+    
+    .copy-btn:hover {
+      background: var(--copy-btn-hover);
+      transform: translateY(-1px);
+    }
+    
+    .password-container .copy-btn {
+      align-self: flex-end;
+      min-width: 50px;
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background: var(--primary);
+      color: var(--bg-color);
+      font-size: 1.5em;
+      cursor: pointer;
+      z-index: 1001;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+    
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .section {
+      background: var(--section-bg);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+    .dark .section {
+      background: #2d333b;
+      border-color: #444;
+    }
+    .subsection {
+      background: var(--subsection-bg);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border-color);
+    }
+    .subsection h3 {
+      color: var(--text-color);
+      margin-bottom: 15px;
+      font-size: 1.3em;
+      font-weight: 600;
+    }
+    .password {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 10px 0;
+      font-family: monospace;
+    }
+    .dark .password {
+      background: #2d1b69;
+      border-color: #6c5ce7;
+      color: #a29bfe;
+    }
+    
+    /* 密码隐匿功能样式 */
+    .password-container {
+      background: var(--password-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 12px;
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    
+    .password-label {
+      color: var(--text-color);
+      font-weight: 500;
+      min-width: 60px;
+    }
+    
+    .password-field {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    
+    .password-input {
+      width: 100%;
+      padding: 8px 40px 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+    
+    .password-toggle {
+      position: absolute;
+      right: 8px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: var(--text-color);
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    
+    .password-toggle:hover {
+      opacity: 1;
+    }
+    
+    .password-toggle svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+    
+    .password-dots {
+      font-family: monospace;
+      letter-spacing: 2px;
+    }
+    
+    .password-container .copy-btn {
+      position: static;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 60px;
+      text-align: center;
+    }
+    
+    .password-container .copy-btn:hover {
+      background: var(--copy-btn-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(79, 140, 255, 0.3);
+    }
+    
+    .password-container .copy-btn:active {
+      transform: translateY(0);
+    }
+    /* 侧边导航样式 */
+    .side-nav {
+      position: fixed;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--nav-bg);
+      border-radius: 12px;
+      padding: 16px 12px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      max-width: 200px;
+      max-height: 80vh;
+      overflow-y: auto;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+    
+    .side-nav.hidden {
+      transform: translateY(-50%) translateX(-100%);
+      opacity: 0;
+    }
+    
+    .nav-section {
+      margin-bottom: 16px;
+    }
+    
+    .nav-section:last-child {
+      margin-bottom: 0;
+    }
+    
+    .nav-section-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: var(--nav-hover);
+    }
+    
+    .nav-section-title a {
+      color: var(--nav-title);
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+    
+    .side-nav-item {
+      display: block;
+      padding: 6px 8px;
+      margin: 2px 0;
+      color: var(--nav-text);
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.85em;
+      transition: all 0.2s ease;
+    }
+    
+    .side-nav-item:hover {
+      background: var(--nav-hover);
+      color: var(--nav-text);
+    }
+    
+    .side-nav-item.active {
+      background: var(--nav-active);
+      color: var(--bg-color);
+    }
+    
+    /* 自定义滚动条样式 */
+    .side-nav::-webkit-scrollbar {
+      width: 6px;
+    }
+    .side-nav::-webkit-scrollbar-track {
+      background: transparent;
+      border-radius: 3px;
+    }
+    .side-nav::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+    .side-nav::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+    .dark .side-nav::-webkit-scrollbar-thumb {
+      background: #555;
+    }
+    .dark .side-nav::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+    .side-nav-toggle {
+      position: fixed;
+      left: 20px;
+      top: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background: var(--primary);
+      color: var(--bg-color);
+      font-size: 1.5em;
+      cursor: pointer;
+      z-index: 1001;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+    
+    .side-nav-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    @media (max-width: 800px) {
+      .container {
+        margin: 16px 0;
+        margin-left: 0;
+        padding: 18px 4vw 18px 4vw;
+      }
+      .theme-toggle {
+        right: 12px;
+        top: 12px;
+      }
+      .side-nav {
+        left: 10px;
+        top: 60px;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+        padding: 12px 8px;
+      }
+      .nav-section-title {
+        font-size: 0.75em;
+      }
+      .side-nav-item {
+        padding: 6px 8px;
+        font-size: 0.75em;
+      }
+      .side-nav-toggle {
+        left: 10px;
+        top: 15px;
+        width: 36px;
+        height: 36px;
+        font-size: 1em;
+      }
+      
+      /* 移动端密码容器优化 */
+      .password-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      
+      .password-field {
+        width: 100%;
+        max-width: none;
+      }
+      
+      .password-container .copy-btn {
+        align-self: flex-end;
+        min-width: 50px;
+        padding: 6px 12px;
+        font-size: 13px;
+      }
+    }
+    
+    /* 特别窄的屏幕 */
+    @media (max-width: 480px) {
+      .side-nav {
+        left: 8px;
+        padding: 10px 6px;
+        max-width: 140px;
+      }
+      .side-nav-item {
+        padding: 4px 6px;
+        font-size: 0.7em;
+        margin: 2px 0;
+      }
+      .nav-section-title {
+        font-size: 0.7em;
+        padding: 3px 6px;
+        margin-bottom: 6px;
+      }
+      .side-nav-toggle {
+        left: 8px;
+        width: 32px;
+        height: 32px;
+        font-size: 0.9em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" title="切换昼夜模式">🌙</button>
+  
+  <button class="side-nav-toggle" id="sideNavToggle" title="显示/隐藏导航">☰</button>
+  <nav class="side-nav hidden" id="sideNav">
+    <!-- 初始化配置阶段导航 -->
+    <div class="nav-section">
+      <div class="nav-section-title"><a href="#repositories-info" class="side-nav-item" style="font-weight:bold;">仓库基本信息</a></div>
+      <a href="#repository-1" class="side-nav-item">1、myphone138.github.io</a>
+    </div>
+    <!-- 初始化配置阶段导航 -->
+    <div class="nav-section">
+      <div class="nav-section-title"><a href="#section-init" class="side-nav-item" style="font-weight:bold;">一、初始化配置阶段</a></div>
+      <a href="#init-cmd1" class="side-nav-item">1、配置全局用户名</a>
+      <a href="#init-cmd2" class="side-nav-item">2、配置全局邮箱</a>
+      <a href="#init-cmd3" class="side-nav-item">3、查看当前仓库用户名</a>
+      <a href="#init-cmd4" class="side-nav-item">4、设置当前仓库用户名</a>
+      <a href="#init-cmd5" class="side-nav-item">5、初始化本地仓库</a>
+      <a href="#init-cmd6" class="side-nav-item">6、关联远程仓库</a>
+      <a href="#init-cmd7" class="side-nav-item">7、检查远程仓库地址</a>
+    </div>
+    <!-- 日常开发阶段导航 -->
+    <div class="nav-section">
+      <div class="nav-section-title"><a href="#section-daily" class="side-nav-item" style="font-weight:bold;">二、日常开发阶段</a></div>
+      <a href="#daily-cmd1" class="side-nav-item">1、拉取远程最新代码</a>
+      <a href="#daily-cmd2" class="side-nav-item">2、切换开发分支</a>
+      <a href="#daily-cmd3" class="side-nav-item">3、查看工作区修改</a>
+      <a href="#daily-cmd4" class="side-nav-item">4、添加修改到暂存区</a>
+      <a href="#daily-cmd5" class="side-nav-item">5、查看暂存区差异</a>
+      <a href="#daily-cmd6" class="side-nav-item">6、提交到本地仓库</a>
+      <a href="#daily-cmd7" class="side-nav-item">7、查看提交历史</a>
+      <a href="#daily-cmd8" class="side-nav-item">8、回退到指定版本</a>
+    </div>
+    <!-- 协作同步阶段导航 -->
+    <div class="nav-section">
+      <div class="nav-section-title"><a href="#section-coop" class="side-nav-item" style="font-weight:bold;">三、协作同步阶段</a></div>
+      <a href="#coop-cmd1" class="side-nav-item">1、再次拉取远程代码</a>
+      <a href="#coop-cmd2" class="side-nav-item">2、推送本地提交到远程</a>
+      <a href="#coop-cmd3" class="side-nav-item">3、推送指定分支到远程</a>
+      <a href="#coop-cmd4" class="side-nav-item">4、查看关联远程仓库</a>
+      <a href="#coop-cmd5" class="side-nav-item">5、修改远程仓库地址</a>
+      <a href="#coop-cmd6" class="side-nav-item">6、检查远程连接有效性</a>
+      <a href="#coop-cmd7" class="side-nav-item">7、测试GitHub SSH连接</a>
+    </div>
+    <!-- 进阶管理阶段导航 -->
+    <div class="nav-section">
+      <div class="nav-section-title"><a href="#section-advance" class="side-nav-item" style="font-weight:bold;">四、进阶管理阶段</a></div>
+      <a href="#advance-cmd1" class="side-nav-item">1、查看本地GPG密钥</a>
+      <a href="#advance-cmd2" class="side-nav-item">2、设置默认GPG签名密钥</a>
+      <a href="#advance-cmd3" class="side-nav-item">3、GPG签名提交</a>
+      <a href="#advance-cmd4" class="side-nav-item">4、开启默认自动签名</a>
+      <a href="#advance-cmd5" class="side-nav-item">5、查看提交签名信息</a>
+      <a href="#advance-cmd6" class="side-nav-item">6、对比两个分支差异</a>
+      <a href="#advance-cmd7" class="side-nav-item">7、生成4096位SSH密钥</a>
+      <a href="#advance-cmd8" class="side-nav-item">8、查看SSH密钥指纹</a>
+      <a href="#advance-cmd9" class="side-nav-item">9、生成4096位GPG密钥</a>
+      <a href="#advance-cmd10" class="side-nav-item">10、查看GPG密钥详细信息</a>
+      <a href="#advance-cmd11" class="side-nav-item">11、查看未导入GPG密钥文件信息</a>
+    </div>
+    <!-- 分支管理阶段导航 -->
+    <div class="nav-section">
+      <div class="nav-section-title"><a href="#section-branch" class="side-nav-item" style="font-weight:bold;">五、分支管理阶段</a></div>
+      <a href="#branch-cmd1" class="side-nav-item">1、查看本地分支</a>
+      <a href="#branch-cmd2" class="side-nav-item">2、创建并切换到新分支</a>
+      <a href="#branch-cmd3" class="side-nav-item">3、切换分支</a>
+      <a href="#branch-cmd4" class="side-nav-item">4、查看所有分支（包括远程）</a>
+      <a href="#branch-cmd5" class="side-nav-item">5、合并分支</a>
+      <a href="#branch-cmd6" class="side-nav-item">6、删除分支</a>
+      <a href="#branch-cmd7" class="side-nav-item">7、推送到远程分支</a>@outlook.com
+    </div>
+    <!-- 操作日志导航 -->
+    <div class="nav-section">
+      <div class="nav-section-title"><a href="#section-log" class="side-nav-item" style="font-weight:bold;">六、操作日志</a></div>
+      <a href="#log-cmd1" class="side-nav-item">1、设置当前仓库用户名</a>
+      <a href="#log-cmd2" class="side-nav-item">2、设置当前仓库用户邮箱</a>
+      <a href="#log-cmd3" class="side-nav-item">3、设置GPG签名密钥</a>
+      <a href="#log-cmd4" class="side-nav-item">4、启用提交签名</a>
+      <a href="#log-cmd5" class="side-nav-item">5、设置SSH推送密钥</a>
+      <a href="#log-cmd6" class="side-nav-item">6、强力推送</a>
+      <a href="#log-cmd7" class="side-nav-item">7、创建.gitignore文件</a>
+    </div>
+  </nav>
+  
+  <div class="container">
+    <h1>myphone138.github.io仓库操作日志</h1>
+
+  <!-- 仓库基本信息 -->
+  <div class="section" id="repositories-info">
+    <h2>仓库基本信息</h2>
+    <div class="subsection" id="repository-1">
+      <div class="desc">1、仓库名称：myphone138.github.io</div>
+      <pre><button class="copy-btn" data-copy>复制</button>myphone138.github.io</pre>
+      <div class="desc">①用户名：myphone138</div>
+      <pre><button class="copy-btn" data-copy>复制</button>myphone138</pre>
+      <div class="desc">②邮箱：myphone138@outlook.com</div>
+      <pre><button class="copy-btn" data-copy>复制</button>myphone138@outlook.com</pre>
+      <div class="desc">③GPG密钥ID：C2939BD52F9F32A304FE3E6027F8B13D87C451E1</div>
+      <pre><button class="copy-btn" data-copy>复制</button>C2939BD52F9F32A304FE3E6027F8B13D87C451E1</pre>
+      <div class="desc">④GPG密钥存放路径：G:\keys\gpg\myphone138@outlook.com\C2939BD52F9F32A304FE3E6027F8B13D87C451E1</div>
+      <pre><button class="copy-btn" data-copy>复制</button>G:\keys\gpg\myphone138@outlook.com\C2939BD52F9F32A304FE3E6027F8B13D87C451E1</pre>
+      <div class="desc">⑤SSH密钥ID</div>
+      <pre><button class="copy-btn" data-copy>复制</button>暂时未知</pre>
+      <div class="desc">⑥SSH密钥存放路径</div>
+      <pre><button class="copy-btn" data-copy>复制</button>G:\keys\ssh\myphone138@outlook.com\.ssh</pre>
+    </div>
+  </div>
+    
+    <!-- 一、初始化配置阶段 -->
+    <div class="section" id="section-init">
+      <h2>一、初始化配置阶段（新环境/新项目起步）</h2>
+      <p class="desc">首次使用Git、换电脑、新建项目时，先做好「身份认证」和「仓库基础设置」</p>
+      
+      <div class="subsection" id="init-cmd1">
+        <h3>1、配置全局用户名</h3>
+        <div class="desc">作用说明：配置所有仓库默认身份，避免用他人账号提交</div>
+        <div class="desc">使用场景：首次安装Git后，或需要统一所有仓库提交身份时</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git config --global user.name "myphone138"</pre>
+      </div>
+      
+      <div class="subsection" id="init-cmd2">
+        <h3>2、配置全局邮箱</h3>
+        <div class="desc">作用说明：配置所有仓库默认提交邮箱，需与GitHub/GitLab绑定</div>
+        <div class="desc">使用场景：首次安装Git后，确保提交能被远程仓库识别身份</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git config --global user.email "myphone138@outlook.com"</pre>
+      </div>
+      
+      <div class="subsection" id="init-cmd3">
+        <h3>3、查看当前仓库用户名</h3>
+        <div class="desc">作用说明：查看当前仓库的局部用户名配置（未单独设置则显示全局）</div>
+        <div class="desc">使用场景：新仓库开发前，确认当前身份是否正确</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git config user.name</pre>
+      </div>
+      
+      <div class="subsection" id="init-cmd4">
+        <h3>4、设置当前仓库用户名</h3>
+        <div class="desc">作用说明：为当前仓库单独设置用户名，覆盖全局配置</div>
+        <div class="desc">使用场景：特定仓库需用不同账号（如工作号/个人号区分）时</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git config user.name "myphone138"</pre>
+      </div>
+      
+      <div class="subsection" id="init-cmd5">
+        <h3>5、初始化本地仓库</h3>
+        <div class="desc">作用说明：在当前文件夹创建.git隐藏目录，将文件夹变为Git可管理仓库</div>
+        <div class="desc">使用场景：新建本地项目，首次纳入Git版本控制时</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git init</pre>
+      </div>
+      
+      <div class="subsection" id="init-cmd6">
+        <h3>6、关联远程仓库</h3>
+        <div class="desc">作用说明：将本地仓库与远程仓库（如GitHub/GitLab）建立关联</div>
+        <div class="desc">使用场景：本地项目需同步到远程，首次关联远程仓库时</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git remote add origin git@github.com:myphone138/myphone138.github.io.git</pre>
+      </div>
+      
+      <div class="subsection" id="init-cmd7">
+        <h3>7、检查远程仓库地址</h3>
+        <div class="desc">作用说明：显示当前仓库关联的远程仓库地址（包括fetch和push地址）</div>
+        <div class="desc">使用场景：关联远程后，确认地址是否正确，避免推送到错误仓库</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git remote -v</pre>
+      </div>
+    </div>
+    
+    <!-- 二、日常开发阶段 -->
+    <div class="section" id="section-daily">
+      <h2>二、日常开发阶段（写代码时的高频操作）</h2>
+      <p class="desc">每天写代码、改bug时，反复用到的「本地代码管理」命令</p>
+      
+      <div class="subsection" id="daily-cmd1">
+        <h3>1、拉取远程最新代码</h3>
+        <div class="desc">作用说明：从远程仓库拉取最新代码到本地，同步团队其他人的修改</div>
+        <div class="desc">使用场景：每天开始开发前，避免本地代码与远程脱节导致冲突</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git pull</pre>
+      </div>
+      
+      <div class="subsection" id="daily-cmd2">
+        <h3>2、切换开发分支</h3>
+        <div class="desc">作用说明：切换到指定的开发分支（如dev分支），避免直接修改主分支</div>
+        <div class="desc">使用场景：需在专属分支开发功能/修复bug时，如从main切换到dev分支</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git checkout &lt;分支名&gt;</pre>
+      </div>
+      
+      <div class="subsection" id="daily-cmd3">
+        <h3>3、查看工作区修改</h3>
+        <div class="desc">作用说明：查看当前工作区（未暂存）与暂存区的代码差异</div>
+        <div class="desc">使用场景：写完一段代码后，检查自己具体修改了哪些内容，避免误改</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git diff</pre>
+      </div>
+      
+      <div class="subsection" id="daily-cmd4">
+        <h3>4、添加修改到暂存区</h3>
+        <div class="desc">作用说明：将工作区的指定修改添加到暂存区，准备提交到本地仓库</div>
+        <div class="desc">使用场景：确认修改无误后，将需要提交的内容暂存（可指定单个文件）</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git add &lt;文件名&gt;</pre>
+      </div>
+      
+      <div class="subsection" id="daily-cmd5">
+        <h3>5、查看暂存区差异</h3>
+        <div class="desc">作用说明：查看暂存区（已add）与本地仓库（已commit）的代码差异</div>
+        <div class="desc">使用场景：暂存修改后，再次确认暂存内容是否符合预期，再提交</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git diff --staged</pre>
+      </div>
+      
+      <div class="subsection" id="daily-cmd6">
+        <h3>6、提交到本地仓库</h3>
+        <div class="desc">作用说明：将暂存区的内容提交到本地仓库，附带修改说明（备注需清晰）</div>
+        <div class="desc">使用场景：完成一个小功能/修复一个bug后，保存当前代码状态</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git commit -m "备注（如：修复登录按钮点击无响应bug）"</pre>
+      </div>
+      
+      <div class="subsection" id="daily-cmd7">
+        <h3>7、查看提交历史</h3>
+        <div class="desc">作用说明：查看当前分支的所有提交记录，包括提交人、时间、备注</div>
+        <div class="desc">使用场景：回顾自己的修改记录，或查找某个历史版本的提交信息</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git log</pre>
+      </div>
+      
+      <div class="subsection" id="daily-cmd8">
+        <h3>8、回退到指定版本</h3>
+        <div class="desc">作用说明：切换到指定的历史版本，恢复代码到之前可正常运行的状态</div>
+        <div class="desc">使用场景：代码改崩后，需回退到之前的稳定版本（版本号从git log获取）</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git checkout &lt;版本号&gt;</pre>
+      </div>
+    </div>
+    
+    <!-- 三、协作同步阶段 -->
+    <div class="section" id="section-coop">
+      <h2>三、协作同步阶段（和团队/远程仓库交互）</h2>
+      <p class="desc">完成本地开发后，同步到远程、或处理团队协作的命令</p>
+      
+      <div class="subsection" id="coop-cmd1">
+        <h3>1、再次拉取远程代码</h3>
+        <div class="desc">作用说明：推送前再次拉取远程最新代码，避免与他人修改冲突</div>
+        <div class="desc">使用场景：本地提交后、推送远程前，确保本地代码是最新的</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git pull</pre>
+      </div>
+      
+      <div class="subsection" id="coop-cmd2">
+        <h3>2、推送本地提交到远程</h3>
+        <div class="desc">作用说明：将本地仓库的提交推送到已关联的远程仓库（默认origin）</div>
+        <div class="desc">使用场景：本地完成开发后，同步修改到远程，让团队其他人可见</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git push</pre>
+      </div>
+      
+      <div class="subsection" id="coop-cmd3">
+        <h3>3、推送指定分支到远程</h3>
+        <div class="desc">作用说明：将本地指定分支推送到远程仓库的对应分支</div>
+        <div class="desc">使用场景：开发新功能分支（如feature/login）后，推送分支到远程审核</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git push origin &lt;分支名&gt;</pre>
+      </div>
+      
+      <div class="subsection" id="coop-cmd4">
+        <h3>4、查看关联远程仓库</h3>
+        <div class="desc">作用说明：列出当前仓库已配置的所有远程仓库名称（默认通常是origin）</div>
+        <div class="desc">使用场景：多远程仓库（如同时关联GitHub和Gitee）时，确认可用远程</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git remote</pre>
+      </div>
+      
+      <div class="subsection" id="coop-cmd5">
+        <h3>5、修改远程仓库地址</h3>
+        <div class="desc">作用说明：修改指定远程仓库的连接地址（如切换HTTP/SSH协议，或远程仓库迁移）</div>
+        <div class="desc">使用场景：远程仓库地址变更，或想从HTTP协议改用更安全的SSH协议</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git remote set-url origin &lt;新远程地址&gt;</pre>
+      </div>
+      
+      <div class="subsection" id="coop-cmd6">
+        <h3>6、检查远程连接有效性</h3>
+        <div class="desc">作用说明：列出远程仓库的引用（分支、标签），验证本地能否正常连接远程</div>
+        <div class="desc">使用场景：推送失败时，排查是否远程地址错误、网络不通或权限不足</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git ls-remote origin</pre>
+      </div>
+      
+      <div class="subsection" id="coop-cmd7">
+        <h3>7、测试GitHub SSH连接</h3>
+        <div class="desc">作用说明：测试与GitHub的SSH连接是否正常，验证SSH密钥配置是否正确</div>
+        <div class="desc">使用场景：首次配置SSH密钥后，或SSH连接出现问题时，验证连接状态</div>
+        <pre><button class="copy-btn" data-copy>复制</button>ssh -T git@github.com</pre>
+      </div>
+    </div>
+    
+    <!-- 四、进阶管理阶段 -->
+    <div class="section" id="section-advance">
+      <h2>四、进阶管理阶段（安全加固/复杂场景）</h2>
+      <p class="desc">需身份验证、强制规范的场景（如开源项目、企业开发）</p>
+      
+      <div class="subsection" id="advance-cmd1">
+        <h3>1、查看本地GPG密钥</h3>
+        <div class="desc">作用说明：列出本地已生成的GPG密钥，获取用于签名的密钥ID</div>
+        <div class="desc">使用场景：准备配置GPG签名前，确认本地有可用密钥</div>
+        <pre><button class="copy-btn" data-copy>复制</button>gpg --list-secret-keys</pre>
+      </div>
+      
+      <div class="subsection" id="advance-cmd2">
+        <h3>2、设置默认GPG签名密钥</h3>
+        <div class="desc">作用说明：配置全局/本地默认的GPG签名密钥，无需每次提交指定密钥</div>
+        <div class="desc">使用场景：需频繁进行GPG签名提交时，简化操作（密钥ID从上方命令获取）</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git config [--global] user.signingkey C2939BD52F9F32A304FE3E6027F8B13D87C451E1</pre>
+      </div>
+      
+      <div class="subsection" id="advance-cmd3">
+        <h3>3、GPG签名提交</h3>
+        <div class="desc">作用说明：提交时附加GPG签名，证明提交是本人操作，增强安全性</div>
+        <div class="desc">使用场景：开源项目贡献、企业安全要求高的场景，需验证提交者身份</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git commit -S -m "备注（如：添加用户注册功能，已签名）"</pre>
+      </div>
+      
+      <div class="subsection" id="advance-cmd4">
+        <h3>4、开启默认自动签名</h3>
+        <div class="desc">作用说明：开启全局/本地默认提交签名，所有提交自动附加GPG签名（无需加-S）</div>
+        <div class="desc">使用场景：项目强制要求所有提交必须签名时，避免遗漏签名步骤</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git config [--global] commit.gpgsign true</pre>
+      </div>
+      
+      <div class="subsection" id="advance-cmd5">
+        <h3>5、查看提交签名信息</h3>
+        <div class="desc">作用说明：查看提交历史中的GPG签名详情，包括签名是否有效、签名者信息</div>
+        <div class="desc">使用场景：审核他人提交时，验证签名是否有效，确认提交身份真实性</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git log --show-signature</pre>
+      </div>
+      
+      <div class="subsection" id="advance-cmd6">
+        <h3>6、对比两个分支差异</h3>
+        <div class="desc">作用说明：查看两个指定分支之间的代码差异，包括新增、删除、修改的内容</div>
+        <div class="desc">使用场景：合并分支前，检查两个分支的差异，提前发现潜在冲突风险</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git diff &lt;分支1&gt; &lt;分支2&gt;</pre>
+      </div>
+      
+      <div class="subsection" id="advance-cmd7">
+        <h3>7、生成4096位SSH密钥</h3>
+        <div class="desc">作用说明：生成高强度的4096位RSA SSH密钥对，用于安全连接远程仓库</div>
+        <div class="desc">使用场景：首次配置SSH访问GitHub/GitLab等远程仓库时</div>
+        <pre><button class="copy-btn" data-copy>复制</button>ssh-keygen -t rsa -b 4096 -C "your_email@example.com"</pre>
+      </div>
+      
+      <div class="subsection" id="advance-cmd8">
+        <h3>8、查看SSH密钥指纹</h3>
+        <div class="desc">作用说明：显示SSH公钥的指纹信息，用于验证密钥唯一性</div>
+        <div class="desc">使用场景：确认SSH密钥是否正确生成，或在远程仓库中识别密钥</div>
+        <pre><button class="copy-btn" data-copy>复制</button>ssh-keygen -lf ~/.ssh/id_rsa.pub</pre>
+      </div>
+      
+      <div class="subsection" id="advance-cmd9">
+        <h3>9、生成4096位GPG密钥</h3>
+        <div class="desc">作用说明：生成高强度的4096位RSA GPG密钥对，用于提交签名</div>
+        <div class="desc">使用场景：首次配置GPG签名提交时</div>
+        <pre><button class="copy-btn" data-copy>复制</button>gpg --full-generate-key</pre>
+      </div>
+      
+      <div class="subsection" id="advance-cmd10">
+        <h3>10、查看GPG密钥详细信息</h3>
+        <div class="desc">作用说明：显示GPG密钥的详细信息，包括ID、创建时间等</div>
+        <div class="desc">使用场景：获取GPG密钥ID用于Git配置，或查看密钥创建时间</div>
+        <pre><button class="copy-btn" data-copy>复制</button>gpg --list-secret-keys --keyid-format LONG</pre>
+      </div>
+      
+      <div class="subsection" id="advance-cmd11">
+        <h3>11、查看未导入GPG密钥文件信息</h3>
+        <div class="desc">作用说明：查看未导入的GPG密钥文件的详细信息，包括ID和创建时间</div>
+        <div class="desc">使用场景：在导入GPG密钥前，确认密钥文件的有效性和信息</div>
+        <pre><button class="copy-btn" data-copy>复制</button>gpg --with-fingerprint ./path/to/key.asc</pre>
+      </div>
+    </div>
+    
+    <!-- 五、分支管理阶段 -->
+    <div class="section" id="section-branch">
+      <h2>五、分支管理阶段（开发流程核心）</h2>
+      <p class="desc">分支是Git的核心功能之一，用于并行开发、功能隔离和版本管理</p>
+      
+      <div class="subsection" id="branch-cmd1">
+        <h3>1、查看本地分支</h3>
+        <div class="desc">作用说明：列出所有本地分支，并用星号标示当前所在分支</div>
+        <div class="desc">使用场景：确认当前所在分支，查看本地已有的分支列表</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git branch</pre>
+      </div>
+      
+      <div class="subsection" id="branch-cmd2">
+        <h3>2、创建并切换到新分支</h3>
+        <div class="desc">作用说明：创建一个新分支并立即切换到该分支</div>
+        <div class="desc">使用场景：开始新功能开发或修复bug时，创建独立的开发分支</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git checkout -b &lt;分支名&gt;</pre>
+      </div>
+      
+      <div class="subsection" id="branch-cmd3">
+        <h3>3、切换分支</h3>
+        <div class="desc">作用说明：切换到指定分支</div>
+        <div class="desc">使用场景：在不同功能分支之间切换，或切换到主分支进行合并</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git checkout &lt;分支名&gt;</pre>
+      </div>
+      
+      <div class="subsection" id="branch-cmd4">
+        <h3>4、查看所有分支（包括远程）</h3>
+        <div class="desc">作用说明：列出所有本地和远程分支</div>
+        <div class="desc">使用场景：查看远程分支状态，了解团队其他成员的工作进展</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git branch -a</pre>
+      </div>
+      
+      <div class="subsection" id="branch-cmd5">
+        <h3>5、合并分支</h3>
+        <div class="desc">作用说明：将指定分支合并到当前分支</div>
+        <div class="desc">使用场景：功能开发完成后，将功能分支合并到主分支</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git merge &lt;分支名&gt;</pre>
+      </div>
+      
+      <div class="subsection" id="branch-cmd6">
+        <h3>6、删除分支</h3>
+        <div class="desc">作用说明：删除指定的本地分支</div>
+        <div class="desc">使用场景：功能已合并到主分支后，删除已完成使命的功能分支</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git branch -d &lt;分支名&gt;</pre>
+      </div>
+      
+      <div class="subsection" id="branch-cmd7">
+        <h3>7、推送到远程分支</h3>
+        <div class="desc">作用说明：将本地分支推送到远程仓库的同名分支</div>
+        <div class="desc">使用场景：将本地创建的分支推送到远程，便于团队协作或备份</div>
+        <pre><button class="copy-btn" data-copy>复制</button>git push origin &lt;分支名&gt;</pre>
+      </div>
+    </div>
+
+  <!-- 六、操作日志 -->
+  <div class="section" id="section-log">
+    <h2>六、操作日志（2025年8月18日）</h2>
+    <p class="desc">记录在当前仓库执行的配置操作</p>
+    
+    <div class="subsection" id="log-cmd1">
+      <h3>1、设置当前仓库用户名</h3>
+      <div class="desc">作用说明：为当前仓库单独设置用户名，覆盖全局配置</div>
+      <div class="desc">使用场景：特定仓库需用不同账号时</div>
+      <pre><button class="copy-btn" data-copy>复制</button>git config user.name "myphone138"</pre>
+    </div>
+    
+    <div class="subsection" id="log-cmd2">
+      <h3>2、设置当前仓库用户邮箱</h3>
+      <div class="desc">作用说明：为当前仓库单独设置用户邮箱</div>
+      <div class="desc">使用场景：特定仓库需用不同邮箱时</div>
+      <pre><button class="copy-btn" data-copy>复制</button>git config user.email "myphone138@outlook.com"</pre>
+    </div>
+    
+    <div class="subsection" id="log-cmd3">
+      <h3>3、设置GPG签名密钥</h3>
+      <div class="desc">作用说明：设置当前仓库使用的GPG签名密钥ID</div>
+      <div class="desc">使用场景：为当前仓库配置特定的GPG签名密钥</div>
+      <pre><button class="copy-btn" data-copy>复制</button>git config user.signingkey C2939BD52F9F32A304FE3E6027F8B13D87C451E1</pre>
+    </div>
+    
+    <div class="subsection" id="log-cmd4">
+      <h3>4、启用提交签名</h3>
+      <div class="desc">作用说明：启用当前仓库的提交签名功能</div>
+      <div class="desc">使用场景：确保所有提交都被GPG签名</div>
+      <pre><button class="copy-btn" data-copy>复制</button>git config commit.gpgsign true</pre>
+    </div>
+    
+    <div class="subsection" id="log-cmd5">
+      <h3>5、设置SSH推送密钥</h3>
+      <div class="desc">作用说明：设置当前仓库使用的SSH私钥路径</div>
+      <div class="desc">使用场景：为当前仓库指定特定的SSH密钥用于推送</div>
+      <pre><button class="copy-btn" data-copy>复制</button>git config core.sshCommand "ssh -i G:/keys/ssh/myphone138@outlook.com/.ssh/id_rsa"</pre>
+    </div>
+
+    <div class="subsection" id="log-cmd6">
+      <h3>6、强力推送</h3>
+      <div class="desc">作用说明：强力推送至远程仓库</div>
+      <div class="desc">使用场景：当远程仓库与本次不一致时，强制推送至远程仓库，所有记录以本地为准（危险操作）</div>
+      <pre><button class="copy-btn" data-copy>复制</button>git push -f origin main</pre>
+    </div>
+    
+    <div class="subsection" id="log-cmd7">
+      <h3>7、创建.gitignore文件</h3>
+      <div class="desc">作用说明：创建.gitignore文件以忽略指定目录</div>
+      <div class="desc">使用场景：防止特定文件或目录被Git跟踪和推送</div>
+      <pre><button class="copy-btn" data-copy>复制</button>echo "禁止推送/" > .gitignore<br>git add .gitignore<br>git commit -m "Add .gitignore to exclude 禁止推送 directory"</pre>
+    </div>
+  </div>
+
+  <script>
+    // 密码隐匿功能
+    function initializePasswordFields() {
+      const passwordInputs = document.querySelectorAll('.password-input');
+      
+      passwordInputs.forEach(input => {
+        const toggleBtn = input.parentElement.querySelector('.password-toggle');
+        const originalPassword = input.getAttribute('data-password');
+        
+        // 初始化时显示为圆点
+        input.value = '●'.repeat(originalPassword.length);
+        input.classList.add('password-dots');
+        
+        // 切换显示/隐藏
+        toggleBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          if (input.classList.contains('password-dots')) {
+            // 显示密码
+            input.value = originalPassword;
+            input.classList.remove('password-dots');
+            this.innerHTML = `
+              <svg viewBox="0 0 24 24">
+                <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>
+              </svg>
+            `;
+          } else {
+            // 隐藏密码
+            input.value = '●'.repeat(originalPassword.length);
+            input.classList.add('password-dots');
+            this.innerHTML = `
+              <svg viewBox="0 0 24 24">
+                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+              </svg>
+            `;
+          }
+        });
+      });
+    }
+    
+    // 密码复制功能
+    function initializePasswordCopy() {
+      const passwordCopyBtns = document.querySelectorAll('[data-copy-password]');
+      
+      passwordCopyBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const password = this.getAttribute('data-copy-password');
+          
+          // 使用现代剪贴板API
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(password).then(() => {
+              this.innerText = '已复制!';
+              setTimeout(() => { this.innerText = '复制'; }, 1200);
+            }).catch(err => {
+              console.error('复制失败:', err);
+              // 降级方案
+              fallbackCopyTextToClipboard(password, this);
+            });
+          } else {
+            // 降级方案
+            fallbackCopyTextToClipboard(password, this);
+          }
+        });
+      });
+    }
+    
+    // 复制按钮功能
+    document.querySelectorAll('.copy-btn:not([data-copy-password])').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // 获取pre元素中的所有文本节点，排除按钮
+        const preElement = this.parentElement;
+        const textNodes = [];
+        
+        // 遍历pre元素的子节点，只收集文本内容
+        for (let node of preElement.childNodes) {
+          if (node.nodeType === Node.TEXT_NODE) {
+            textNodes.push(node.textContent);
+          }
+        }
+        
+        // 合并文本内容并清理
+        const code = textNodes.join('').trim();
+        
+        // 使用现代剪贴板API
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(code).then(() => {
+            this.innerText = '已复制!';
+            setTimeout(() => { this.innerText = '复制'; }, 1200);
+          }).catch(err => {
+            console.error('复制失败:', err);
+            // 降级方案
+            fallbackCopyTextToClipboard(code, this);
+          });
+        } else {
+          // 降级方案
+          fallbackCopyTextToClipboard(code, this);
+        }
+      });
+    });
+    
+    // 降级复制方案
+    function fallbackCopyTextToClipboard(text, button) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+          button.innerText = '已复制!';
+          setTimeout(() => { button.innerText = '复制'; }, 1200);
+        } else {
+          button.innerText = '复制失败';
+          setTimeout(() => { button.innerText = '复制'; }, 1200);
+        }
+      } catch (err) {
+        console.error('降级复制失败:', err);
+        button.innerText = '复制失败';
+        setTimeout(() => { button.innerText = '复制'; }, 1200);
+      }
+      
+      document.body.removeChild(textArea);
+    }
+    
+    // 主题切换功能
+    const themeToggle = document.getElementById('themeToggle');
+    function setTheme(dark) {
+      if (dark) {
+        document.body.classList.add('dark');
+        themeToggle.innerText = '☀️';
+      } else {
+        document.body.classList.remove('dark');
+        themeToggle.innerText = '🌙';
+      }
+      localStorage.setItem('js-theme', dark ? 'dark' : 'light');
+    }
+    themeToggle.addEventListener('click', () => {
+      setTheme(!document.body.classList.contains('dark'));
+    });
+    
+    // 初始化主题
+    (function() {
+      const saved = localStorage.getItem('js-theme');
+      if (saved === 'dark' || (saved !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        setTheme(true);
+      }
+    })();
+
+    // 侧边导航切换
+    const sideNavToggle = document.getElementById('sideNavToggle');
+    const sideNav = document.getElementById('sideNav');
+    const navItems = document.querySelectorAll('.side-nav-item');
+    
+    sideNavToggle.addEventListener('click', () => {
+      const isHidden = sideNav.classList.toggle('hidden');
+      sideNavToggle.textContent = isHidden ? '☰' : '✕';
+    });
+    
+    // 导航跳转与激活状态
+    navItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = item.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+          
+          // 更新活动状态
+          navItems.forEach(nav => nav.classList.remove('active'));
+          item.classList.add('active');
+        }
+      });
+    });
+    
+    // 滚动时更新导航激活状态
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY + 100;
+      document.querySelectorAll('.subsection').forEach((subsection) => {
+        const sectionTop = subsection.offsetTop;
+        const sectionHeight = subsection.offsetHeight;
+        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+          const targetId = subsection.getAttribute('id');
+          navItems.forEach(nav => {
+            if (nav.getAttribute('href') === `#${targetId}`) {
+              navItems.forEach(n => n.classList.remove('active'));
+              nav.classList.add('active');
+            }
+          });
+        }
+      });
+    });
+    
+    // 初始化密码功能
+    document.addEventListener('DOMContentLoaded', function() {
+      initializePasswordFields();
+      initializePasswordCopy();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+git init
+
+git config user.name "myphone138"
+
+git config user.name "myphone138@outlook.com"
+
+git config user.signingkey "G:\keys\git138\myphone138_0x3C2A2DA7_SECRET.asc"
+
+git config commit.gpgsign true
+
+git config core.sshCommand "ssh -i G:\keys\git138\id_rsa_4096_138"
+git config --local user.signingkey C9BDB14C3C2A2DA7
+ git config --local --get user.signingkey
+
+echo "禁止推送/" > .gitignoregit add .gitignoregit commit -m "Add .gitignore to exclude 禁止推送 directory"
+
+git remote add origin git@github.com:myphone138/myphone138.github.io.git
+
+ssh -T git@github.com
+
+git push -f origin main
+
+
+
+"G:\keys\git138\myphone138_0x3C2A2DA7_SECRET.asc"
+
+git config --local user.name
+
