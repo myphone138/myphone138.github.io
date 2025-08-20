@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?706326d91e162e3e129576cfec1ad6b5";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="icon" type="image/png" href="images/OPPO A5 来源不明.png">
+    
+    <title>联系我们</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            cursor: grab;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        canvas {
+            display: block;
+        }
+            .hamburger {
+                display: none;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 40px;
+                height: 40px;
+                cursor: pointer;
+                background: none;
+                border: none;
+                z-index: 3000;
+            }
+            .hamburger span {
+                display: block;
+                width: 28px;
+                height: 4px;
+                margin: 4px 0;
+                background: #2196f3;
+                border-radius: 2px;
+                transition: 0.3s;
+            }
+            @media (max-width: 900px) {
+                .nav-menu {
+                    position: absolute;
+                    top: 80px;
+                    left: 0;
+                    right: 0;
+                    background: linear-gradient(90deg, #1a237e 0%, #1976d2 100%);
+                    flex-direction: column;
+                    gap: 0;
+                    padding: 20px 0;
+                    box-shadow: 0 4px 24px rgba(25, 118, 210, 0.12);
+                    display: none;
+                    overflow-y: auto;
+                    max-height: calc(100vh - 80px - 60px);
+                    white-space: normal;
+                    scrollbar-width: auto;
+                    scrollbar-color: #1976d2 #eee;
+                }
+                .nav-menu.show {
+                    display: flex !important;
+                }
+                .nav-menu li {
+                    margin: 10px 0;
+                    text-align: center;
+                }
+                .nav-menu::-webkit-scrollbar {
+                    width: 8px;
+                    background: #eee;
+                }
+                .nav-menu::-webkit-scrollbar-thumb {
+                    background: #1976d2;
+                    border-radius: 4px;
+                }
+                .nav-menu::-webkit-scrollbar-track {
+                    background: #eee;
+                }
+                .header-left {
+                    width: 100%;
+                    justify-content: flex-end;
+                }
+                .hamburger {
+                    display: flex;
+                }
+            }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, rgba(26, 26, 46, 0.9) 50%, rgba(22, 33, 62, 0.9) 100%);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.3);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+            .capsule-btn {
+                display: inline-block;
+                padding: 0.35em 1.2em;
+                border-radius: 999px;
+                background: linear-gradient(90deg, #1976d2 0%, #2196f3 100%);
+                color: #f5f5f5;
+                font-weight: 500;
+                font-size: 15px;
+                text-decoration: none;
+                box-shadow: 0 2px 6px rgba(25, 118, 210, 0.10);
+                border: none;
+                transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+                cursor: pointer;
+                outline: none;
+                white-space: nowrap;
+            }
+            .capsule-btn:hover, .capsule-btn:focus {
+                background: linear-gradient(90deg, #1565c0 0%, #1976d2 100%);
+                box-shadow: 0 4px 12px rgba(25, 118, 210, 0.18);
+                color: #ffffff;
+                transform: translateY(-2px) scale(1.04);
+            }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            justify-content: center;
+            width: 100%;
+        }
+        }
+        .nav-menu li {
+            flex: 0 0 auto;
+        }
+        .nav-menu::-webkit-scrollbar {
+            height: 6px;
+        }
+        .nav-menu::-webkit-scrollbar-thumb {
+            background: #1976d2;
+            border-radius: 3px;
+        }
+        .nav-menu::-webkit-scrollbar-track {
+            background: #eee;
+        }
+        }
+        .nav-menu::-webkit-scrollbar {
+            height: 6px;
+        }
+        .nav-menu::-webkit-scrollbar-thumb {
+            background: #1976d2;
+            border-radius: 3px;
+        }
+        .nav-menu::-webkit-scrollbar-track {
+            background: #eee;
+        }
+        }
+        @media (max-width: 900px) {
+            .nav-menu {
+                display: none !important;
+                flex-direction: row;
+                gap: 0;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: linear-gradient(90deg, #1a237e 0%, #1976d2 100%);
+                padding: 20px 0;
+                box-shadow: 0 4px 24px rgba(25, 118, 210, 0.12);
+                overflow-x: auto;
+                white-space: nowrap;
+                scrollbar-width: auto;
+                scrollbar-color: #1976d2 #eee;
+            }
+            .nav-menu.show {
+                display: flex !important;
+            }
+            .nav-menu li {
+                flex: 0 0 auto;
+                margin: 10px 0;
+                text-align: center;
+            }
+            .nav-menu::-webkit-scrollbar {
+                height: 8px;
+                background: #eee;
+            }
+            .nav-menu::-webkit-scrollbar-thumb {
+                background: #1976d2;
+                border-radius: 4px;
+            }
+            .nav-menu::-webkit-scrollbar-track {
+                background: #eee;
+            }
+            .header-left {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            .hamburger {
+                display: flex;
+            }
+        }
+        }
+        
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-menu li a:hover {
+            color: #00ff88;
+        }
+        
+        .nav-menu li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00ff88;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-menu li a:hover::after {
+            width: 100%;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #00ff88;
+            font-size: 14px;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, rgba(26, 26, 46, 0.9) 50%, rgba(22, 33, 62, 0.9) 100%);
+            backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(0, 255, 136, 0.3);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 30px;
+        }
+        
+        .footer-center {
+            color: #fff !important;
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            text-align: center !important;
+            text-shadow:
+                0 0 12px #00ff88,
+                0 0 4px #fff,
+                0 2px 12px rgba(0,255,136,0.35),
+                0 0px 4px #000;
+            letter-spacing: 2px !important;
+            opacity: 1 !important;
+        } 
+        .social-links a {
+    color: #fff !important;
+    text-shadow: 0 0 8px #00ff88, 0 0 2px #fff;
+}
+.social-links a:hover {
+    color: #00ff88 !important;
+    text-shadow: 0 0 12px #00ff88, 0 0 4px #fff;
+}
+
+.avatar-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(25,118,210,0.15);
+    margin-right: 12px;
+    object-fit: cover;
+    vertical-align: middle;
+}
+.avatar-name {
+    font-size: 22px;
+    font-weight: bold;
+    color: #00ff88 !important;
+    margin-right: 18px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px #00ff88, 0 0 2px #fff;
+}
+.nav-menu {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    width: 100%;
+}
+        /* 移动端：隐藏导航，显示汉堡 */
+        @media (max-width:900px){
+            .hamburger{ display:flex; }
+            /* 固定定位浮层，避免被 footer 覆盖；保留底部内边距以便最后一项可见 */
+            .nav-menu{
+                display:none !important;
+                flex-direction:column;
+                gap:10px;
+                position:fixed;
+                top:90px;
+                left:50%;
+                transform:translateX(-50%);
+                width:86%;
+                max-height:calc(100vh - 170px); /* 留出 header+footer 空间 */
+                padding:12px 16px 120px 16px; /* 底部留出更多空间，避免被 footer 遮挡 */
+                background:rgba(26,35,126,0.94);
+                backdrop-filter:blur(6px);
+                border-radius:12px;
+                box-shadow:0 8px 32px rgba(0,0,0,0.45);
+                overflow-y:auto;
+                -webkit-overflow-scrolling:touch;
+                touch-action:pan-y;
+                overscroll-behavior: contain;
+                white-space:normal;
+                scrollbar-width:thin;
+                scrollbar-color:#1976d2 rgba(0,0,0,0.1);
+                z-index:9999;
+                pointer-events:auto;
+            }
+            .nav-menu.show{ display:flex !important; }
+            .nav-menu li{ margin:10px 0; text-align:center; }
+            .nav-menu::-webkit-scrollbar{ height:8px; }
+            .nav-menu::-webkit-scrollbar-thumb{ background:#1976d2; border-radius:4px; }
+            .header-left{ width:100%; justify-content:flex-end; }
+        }
+    </style>
+    <!-- 额外保险：立刻在 head 级别再次保证小屏幕隐藏导航（防止缓存或脚本先行显示） -->
+    <style>
+        @media (max-width:900px){
+            .nav-menu{ display:none !important; }
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <div class="header-left">
+        <img src="images/OPPO A5 来源不明.png" alt="头像" class="avatar-img">
+        <span class="avatar-name" style="font-size:16px;">（2019）黔0103刑初821号揭秘</span>
+        <button class="hamburger" id="hamburgerBtn" aria-label="菜单">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav>
+            <ul class="nav-menu" id="navMenu">
+                <li><a class="capsule-btn" href="index.html">本站首页</a></li>
+                <li><a class="capsule-btn" href="declaration.html">重要声明</a></li>
+                <li><a class="capsule-btn" href="introduction.html">案件简介</a></li>
+                <li><a class="capsule-btn" href="case-history.html">案件脉络</a></li>
+                <li><a class="capsule-btn" href="blog-news.html">博主动态</a></li>
+                <li><a class="capsule-btn" href="navigation.html">导航中心</a></li>
+                <li><a class="capsule-btn" href="problems.html">问题清单</a></li>
+                <li><a class="capsule-btn" href="evidence.html">证据列表</a></li>
+                <li><a class="capsule-btn" href="progress.html">处理进度</a></li>
+                <li><a class="capsule-btn" href="official-news.html">官方动态</a></li>
+                <li><a class="capsule-btn" href="contact.html">联系我们</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="header-right">
+        <button id="themeToggleBtn" aria-label="切换昼夜模式" style="margin-left:16px;width:44px;height:44px;border-radius:50%;border:none;background:rgba(26,26,46,0.92);box-shadow:0 2px 12px #00ff8855;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background 0.3s;">
+            <span id="themeIcon" style="font-size:26px;">🌙</span>
+        </button>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var hamburger = document.getElementById('hamburgerBtn');
+        var navMenu = document.getElementById('navMenu');
+        // 占位，用于还原 navMenu 的原始位置
+        var placeholder = document.createElement('div');
+        placeholder.style.display = 'none';
+        navMenu.parentNode.insertBefore(placeholder, navMenu.nextSibling);
+
+      // 强制初始收起菜单，防止手机端默认展开
+      navMenu.classList.remove('show');
+      // 调试：打印当前菜单项数量与文本，便于比较手机/桌面差异
+      try { console.info('navMenu items count:', navMenu.querySelectorAll('li').length);
+          console.info(Array.from(navMenu.querySelectorAll('li a')).map(a=>a.textContent.trim())); } catch(e) {}
+        if (window.innerWidth <= 900) {
+            navMenu.style.display = 'none';
+        }
+
+        var movedToBody = false;
+
+        hamburger.addEventListener('click', function() {
+            var isShown = navMenu.classList.toggle('show');
+            // 清除内联 display，让 CSS 控制显示
+            navMenu.style.display = '';
+
+            if (isShown) {
+                // 将菜单移动到 body，避免受父容器 stacking context 限制
+                if (!movedToBody) {
+                    document.body.appendChild(navMenu);
+                    movedToBody = true;
+                }
+                // 让菜单内部支持原生滚动惯性，避免禁用 body overflow（提高灵敏度）
+                // 确保菜单滚到顶部以显示首项
+                setTimeout(function() { navMenu.scrollTop = 0; }, 50);
+            } else {
+                // 收起时把菜单放回占位位置
+                if (movedToBody) {
+                    placeholder.parentNode.insertBefore(navMenu, placeholder.nextSibling);
+                    movedToBody = false;
+                }
+            }
+        });
+    });
+    </script>
+</header>
+
+
+<main id="mainContent" style="margin-top:100px;margin-bottom:80px;max-width:700px;padding:32px 16px 32px 16px;background:rgba(26,26,46,0.85);border-radius:18px;box-shadow:0 4px 32px rgba(0,255,136,0.08);margin-left:auto;margin-right:auto;height:calc(100vh - 180px);overflow-y:auto;">
+    <h2 style="color:#00ff88;text-shadow:0 0 8px #00ff88,0 0 2px #fff;letter-spacing:2px;">联系方式</h2>
+    <section style="margin-top:32px;">
+        <article style="background:rgba(0,0,0,0.18);border-radius:12px;padding:18px 20px;margin-bottom:22px;box-shadow:0 2px 8px rgba(0,255,136,0.06);">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <img src="images/icons/王贵平.webp" alt="头像" style="width:36px;height:36px;border-radius:50%;box-shadow:0 1px 4px #00ff8855;">
+                <span style="font-weight:bold;color:#00ff88;">王贵平</span>
+            </div>
+            <div style="margin-top:10px;color:#fff;font-size:17px;line-height:1.7;">
+                <a href="mailto:myphone138@outlook.com?subject=给王贵平的邮件&body=您好王贵平：" style="color:#00ff88;text-decoration:underline;word-break:break-all;">
+                    myphone138@outlook.com
+                </a>
+            </div>
+        </article>
+<!-- 抖音联系方式（点击 logo 跳转，显示二维码供扫码关注） -->
+<article style="background:rgba(0,0,0,0.18);border-radius:12px;padding:18px 20px;margin-bottom:22px;box-shadow:0 2px 8px rgba(0,255,136,0.06);">
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                <a href="https://www.douyin.com/user/MS4wLjABAAAAuzwathE3wz2XZrfZ40O8-XmxQKHbMYX6EA_BN0HDs2iDyQHr7yeC-m8_jq1ljD6r?from_tab_name=main" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;text-decoration:none;">
+                    <img src="images/WeMedia/抖音.webp" onerror="this.onerror=null;this.src='images/WeMedia/抖音.png'" alt="抖音 - 关注王UI平" style="width:48px;height:48px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.4);object-fit:cover;">
+                </a>
+                <div style="min-width:0;">
+                    <div style="font-weight:bold;color:#00ff88;">抖音 (王UI平)</div>
+                    <div style="color:#fff;font-size:15px;margin-top:6px;max-width:520px;">
+                        点击左边抖音Logo图标访问博主的抖音主页，或使用下方二维码扫码，也可进入博主的抖音主页。
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:12px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+                <div style="flex:0 0 auto;">
+                    <img src="images/qr_code/王UI平的抖音主页.png" alt="王UI平 抖音二维码" style="width:140px;height:140px;border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,0.45);object-fit:cover;">
+                </div>
+            </div>
+        </article>
+    </section>
+</main>
+
+<footer class="footer" style="z-index:3000;">
+    <div class="footer-center">
+        <span>© 2025 王贵平保留所有权</span>
+    </div>
+
+
+
+
+</body>
+<script>
+// 昼夜主题切换
+const themeBtn = document.getElementById('themeToggleBtn');
+const themeIcon = document.getElementById('themeIcon');
+const mainContent = document.getElementById('mainContent');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+function setTheme(mode) {
+    if(mode === 'light') {
+        document.body.style.background = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
+        mainContent.style.background = 'rgba(255,255,255,0.95)';
+        mainContent.style.color = '#222';
+        themeIcon.textContent = '🌙';
+        themeBtn.style.background = 'rgba(255,255,255,0.92)';
+        document.querySelectorAll('article').forEach(a=>{
+            a.style.background = 'rgba(0,0,0,0.06)';
+            a.style.color = '#222';
+            // 修正所有子元素字体色
+            a.querySelectorAll('div,span').forEach(e=>{
+                e.style.color = '';
+            });
+            // 标签色
+            a.querySelectorAll('span').forEach(e=>{
+                if(e.textContent.startsWith('#')) e.style.color = '#1976d2';
+            });
+        });
+        document.querySelectorAll('.avatar-name').forEach(e=>e.style.color='#1976d2');
+        document.querySelectorAll('h2').forEach(e=>e.style.color='#1976d2');
+        // 时间色
+        document.querySelectorAll('article span').forEach(e=>{
+            if(/\d{4}-\d{2}-\d{2}/.test(e.textContent)) e.style.color = '#888';
+        });
+    } else {
+        document.body.style.background = 'linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%)';
+        mainContent.style.background = 'rgba(26,26,46,0.85)';
+        mainContent.style.color = '#fff';
+        themeIcon.textContent = '☀️';
+        themeBtn.style.background = 'rgba(26,26,46,0.92)';
+        document.querySelectorAll('article').forEach(a=>{
+            a.style.background = 'rgba(0,0,0,0.18)';
+            a.style.color = '#fff';
+            a.querySelectorAll('div,span').forEach(e=>{
+                e.style.color = '';
+            });
+            a.querySelectorAll('span').forEach(e=>{
+                if(e.textContent.startsWith('#')) e.style.color = '#00ff88';
+            });
+        });
+        document.querySelectorAll('.avatar-name').forEach(e=>e.style.color='#00ff88');
+        document.querySelectorAll('h2').forEach(e=>e.style.color='#00ff88');
+        document.querySelectorAll('article span').forEach(e=>{
+            if(/\d{4}-\d{2}-\d{2}/.test(e.textContent)) e.style.color = '#aaa';
+        });
+    }
+    localStorage.setItem('theme', mode);
+}
+function toggleTheme() {
+    const current = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
+    setTheme(current==='dark'?'light':'dark');
+}
+themeBtn.onclick = toggleTheme;
+// 初始化主题
+setTheme(localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light'));
+</script>
+</html>

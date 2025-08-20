@@ -1,0 +1,55 @@
+<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="检方">
+  <defs>
+    <style>
+      .ring{stroke:#D32F2F;stroke-width:4;fill:#FFF5F5}
+      .stroke{fill:none;stroke:#B71C1C;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+      .fill{fill:#B71C1C}
+      .suit{fill:#B71C1C}
+      .skin{fill:#FFF5F5}
+      .tie{fill:#FFF}
+    </style>
+    <!-- 底部U型文字路径 -->
+    <path id="textArc" d="M10 36 A14 6 0 0 0 38 36" />
+  </defs>
+  
+  <!-- 红色外环 -->
+  <circle class="ring" cx="24" cy="24" r="22" />
+  
+  <!-- 职业男性形象 -->
+  <g transform="translate(0, 0)">
+    <!-- 头部 -->
+    <circle cx="24" cy="18" r="6" class="stroke skin" />
+    
+    <!-- 发型（干练短发） -->
+    <path d="M18 15 Q21 12 24 12 Q27 12 30 15 L30 18 Q27 15 24 15 Q21 15 18 18 Z" class="fill" />
+    
+    <!-- 面部特征 -->
+    <circle cx="21.5" cy="17" r="1" fill="#B71C1C" />
+    <circle cx="26.5" cy="17" r="1" fill="#B71C1C" />
+    <path d="M22.5 20 Q24 21 25.5 20" stroke="#B71C1C" fill="none" stroke-width="1" />
+    
+    <!-- 颈部 -->
+    <rect x="22" y="22" width="4" height="3" rx="1" class="stroke skin" />
+    
+    <!-- 西装外套 -->
+    <path d="M16 25 L18 26 H30 L32 25 V32 H16Z" class="suit" />
+    <path d="M18 26 L24 28 L30 26" stroke="#FFF" stroke-width="1" fill="none" />
+    
+    <!-- 衬衫领 -->
+    <path d="M21 26 L24 28 L27 26" stroke="#FFF" stroke-width="1" fill="none" />
+    
+    <!-- 领带 -->
+    <polygon points="24 28, 22.5 30, 25.5 30" class="tie" />
+    <rect x="23.5" y="30" width="1" height="4" class="tie" />
+    
+    <!-- 肩线 -->
+    <path d="M16 25 L32 25" stroke="#8B0000" stroke-width="1.5" />
+  </g>
+  
+  <!-- 底部U型文字 -->
+  <text font-size="5.5" fill="#B71C1C" font-weight="bold">
+    <textPath href="#textArc" startOffset="50%" text-anchor="middle" dy="-0.5">
+      JIANCHA
+    </textPath>
+  </text>
+</svg>

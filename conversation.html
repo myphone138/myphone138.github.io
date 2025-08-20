@@ -1,0 +1,2292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?706326d91e162e3e129576cfec1ad6b5";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>与官方对话记录</title>
+    <style>
+        :root {
+            --bg-color: #fff;
+            --text-color: #333;
+            --title-color: #2c3e50;
+            --time-location-bg: #f5f5f5;
+            --time-location-color: #34495e;
+            --border-color: #3498db;
+            --policeman-color: #2980b9;
+            --wang-color: #e74c3c;
+            --timestamp-color: #7f8c8d;
+            --note-color: #7f8c8d;
+            /* 新增：通用表面/卡片变量，便于夜间模式统一控制 */
+            --surface-color: #f6f8fa;
+            --card-bg: #ffffff;
+            --card-border: #e5e7eb;
+            --muted-bg: #f3f4f6;
+        }
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: background 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            /* 移除margin-left、flex等，主内容自动居中 */
+        }
+        .title {
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 30px;
+            color: var(--title-color);
+            padding: 15px 25px;
+            background: linear-gradient(135deg, var(--time-location-bg), #e8f4fd);
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 2px solid var(--border-color);
+        }
+        .time-location {
+            font-weight: bold;
+            margin: 20px 0 10px;
+            color: var(--time-location-color);
+            padding: 20px 25px;
+            background: linear-gradient(135deg, var(--time-location-bg), #f8f9fa);
+            border-radius: 20px;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .time-location::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--border-color), #5dade2);
+        }
+        .dialog {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .speaker {
+            margin: 12px 0;
+            padding: 14px 18px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            line-height: 1.8;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .speaker:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-color: var(--border-color);
+        }
+        .a-policeman {
+            color: var(--policeman-color);
+            font-weight: 500;
+            padding: 4px 12px;
+            background: linear-gradient(135deg, rgba(41, 128, 185, 0.1), rgba(41, 128, 185, 0.05));
+            border-radius: 15px;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .wang-guiping {
+            color: var(--wang-color);
+            font-weight: 500;
+            padding: 4px 12px;
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05));
+            border-radius: 15px;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .timestamp {
+            color: var(--timestamp-color);
+            font-size: 14px;
+            margin-right: 12px;
+            padding: 3px 10px;
+            background: var(--surface-color);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            display: inline-block;
+            font-weight: 500;
+            width: 72px;            /* 固定宽度，统一对齐 */
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+        .note {
+            font-style: italic;
+            color: var(--note-color);
+            margin: 5px 0 20px 20px;
+            padding: 12px 18px;
+            background: var(--muted-bg);
+            border-radius: 12px;
+            border: 1px solid #ffc107;
+            box-shadow: 0 2px 8px rgba(255, 193, 7, 0.16);
+        }
+        /* 统一说话人标签宽度，提升文本起始对齐度 */
+        .a-policeman,
+        .wang-guiping {
+            display: inline-block;
+            min-width: 96px;
+            text-align: right;
+            margin-right: 12px;
+        }
+        body.night {
+            /* 更专业的中性深色配色 */
+            --bg-color: #0f172a;            /* slate-900 */
+            --text-color: #e5e7eb;         /* zinc-200 */
+            --title-color: #f8fafc;
+            --time-location-bg: #111827;   /* gray-900 surface */
+            --time-location-color: #94a3b8; /* slate-400 */
+            --border-color: #334155;       /* slate-600 */
+            --policeman-color: #60a5fa;    /* blue-400 */
+            --wang-color: #f87171;         /* red-400 */
+            --timestamp-color: #94a3b8;
+            --note-color: #a1a1aa;
+            --surface-color: #111827;
+            --card-bg: #111827;
+            --card-border: #2b3445;
+            --muted-bg: #0b1220;
+        }
+        /* 夜间模式下，去除强烈渐变与重阴影，统一为纯色表面 */
+        body.night .title,
+        body.night .time-location,
+        body.night .timestamp,
+        body.night .note {
+            background: var(--card-bg) !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+        }
+        body.night .speaker {
+            background: var(--card-bg) !important;
+            border-color: var(--card-border);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            z-index: 999;
+            background: linear-gradient(135deg, var(--time-location-bg), var(--border-color));
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, var(--border-color), var(--time-location-bg));
+        }
+        /* 侧边导航样式 */
+        .side-nav {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 300px;
+            max-width: 300px;
+            min-width: 300px;
+            max-height: 70vh;
+            background: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+            overflow-y: auto;
+            z-index: 998;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px 0;
+            border: 1.5px solid var(--border-color);
+        }
+        .side-nav::-webkit-scrollbar {
+            width: 6px;
+        }
+        .side-nav::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+        .side-nav-item {
+            margin: 8px 0;
+            padding: 6px 8px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: center;
+            width: 260px;
+            white-space: nowrap;
+        }
+        .side-nav-item:hover {
+            background: var(--muted-bg);
+        }
+        @media (max-width: 800px) {
+            .side-nav { display: none; }
+        }
+    </style>
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('night');
+            // 可选：保存用户选择
+            if(document.body.classList.contains('night')) {
+                localStorage.setItem('theme', 'night');
+            } else {
+                localStorage.setItem('theme', 'day');
+            }
+            updateThemeIcon();
+        }
+        function updateThemeIcon() {
+            var btn = document.getElementById('theme-toggle-btn');
+            if(document.body.classList.contains('night')) {
+                btn.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>`;
+            } else {
+                btn.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2"/><path d="M12 21v2"/><path d="M4.22 4.22l1.42 1.42"/><path d="M18.36 18.36l1.42 1.42"/><path d="M1 12h2"/><path d="M21 12h2"/><path d="M4.22 19.78l1.42-1.42"/><path d="M18.36 5.64l1.42-1.42"/></svg>`;
+            }
+        }
+        function buildSideNav() {
+            var nav = document.createElement('nav');
+            nav.className = 'side-nav';
+            // 获取所有主标题和小标题
+            var titles = document.querySelectorAll('h1');
+            titles.forEach(function(el, idx) {
+                var text = el.textContent.trim().replace(/音频文件名称.*/, '').replace(/文件SHA256哈希值.*/, '').replace(/录制时间戳.*/, '').replace(/录音时长.*/, '').replace(/录制地点.*/, '').replace(/音频时长.*/, '');
+                var anchorId = 'nav-anchor-' + idx;
+                el.setAttribute('id', anchorId);
+                var btn = document.createElement('button');
+                btn.className = 'side-nav-item';
+                btn.textContent = text.length > 8 ? text.slice(0,8)+'…' : text;
+                btn.title = text;
+                btn.onclick = function() {
+                    document.getElementById(anchorId).scrollIntoView({behavior:'smooth', block:'center'});
+                };
+                nav.appendChild(btn);
+            });
+            document.body.appendChild(nav);
+        }
+        window.onload = function() {
+                    // 自动读取用户选择
+                    if(localStorage.getItem('theme') === 'night') {
+                        document.body.classList.add('night');
+                    }
+                    updateThemeIcon();
+                    // 构建侧边导航栏
+                    var nav = document.createElement('nav');
+                    nav.className = 'side-nav';
+                    nav.style.textAlign = 'left';
+                    nav.style.overflowY = 'auto';
+                    nav.style.maxHeight = '70vh';
+                    nav.style.width = '300px';
+                    nav.style.minWidth = '300px';
+                    nav.style.background = 'var(--card-bg)';
+                    nav.style.padding = '12px 0';
+                    nav.style.border = '1.5px solid var(--border-color)';
+                    var titles = document.querySelectorAll('h1.title[id^="nav-anchor-"]');
+                    var navBtns = [];
+                    titles.forEach(function(el) {
+                        var text = el.textContent.trim();
+                        var anchorId = el.id;
+                        var btn = document.createElement('button');
+                        btn.className = 'side-nav-item';
+                        btn.textContent = text;
+                        btn.title = text;
+                        btn.style.textAlign = 'left';
+                        btn.style.whiteSpace = 'normal';
+                        btn.style.overflow = 'visible';
+                        btn.style.textOverflow = 'clip';
+                        btn.onclick = function() {
+                            document.getElementById(anchorId).scrollIntoView({behavior:'smooth', block:'center'});
+                        };
+                        nav.appendChild(btn);
+                        navBtns.push(btn);
+                    });
+                    document.body.appendChild(nav);
+
+                    // 高亮当前区域
+                    function highlightNav() {
+                        let scrollPos = window.scrollY || document.documentElement.scrollTop;
+                        let winHeight = window.innerHeight;
+                        let currentIdx = -1;
+                        titles.forEach(function(el, idx) {
+                            let rect = el.getBoundingClientRect();
+                            if(rect.top >= 0 && rect.top < winHeight/2) {
+                                currentIdx = idx;
+                            }
+                        });
+                        navBtns.forEach(function(btn, idx) {
+                            if(idx === currentIdx) {
+                                btn.style.background = 'var(--border-color)';
+                                btn.style.color = '#fff';
+                                btn.style.fontWeight = 'bold';
+                            } else {
+                                btn.style.background = 'none';
+                                btn.style.color = 'var(--text-color)';
+                                btn.style.fontWeight = 'normal';
+                            }
+                        });
+                    }
+                    window.addEventListener('scroll', highlightNav);
+                    highlightNav();
+                }
+    </script>
+</head>
+<body>
+    <button class="theme-toggle" id="back-btn" onclick="location.href='official-news.html'" aria-label="返回官方动态" style="position:fixed;top:20px;left:30px;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0;font-size:22px;z-index:999;">
+        <span style="display:inline-block;transform:rotate(180deg);">&#10148;</span>
+    </button>
+    <button class="theme-toggle" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="切换主题"></button>
+    <div class="container">
+
+        <h1 class="title" id="nav-anchor-1">2024年11月4日在中院档案室首次发现自己的案号存在问题</h1>
+        <div class="time-location">
+            <div>音频文件名称：20241104_143533.M4a</div>
+            <div>时间：2024年11月4日 14:35:33</div>
+            <div>录音时长：11分38秒</div>
+            <div>录制地点：贵阳市中级人民法院档案室</div>
+            <div>文件SHA256哈希值：183447649898047B78FDF47688BC48C0A8D366307E323C453970E9A0F4641AF6</div>
+        </div>
+
+        <!-- 插入自动头像脚本：为指定姓名的发言者在其名字前添加头像 -->
+        <script>
+            (function(){
+                const mapping = {
+                    '王贵平：': 'images/icons/王贵平.webp',
+                    '林筑萍：': 'images/icons/林筑萍.webp',
+                    '周江红：': 'images/icons/周江红.webp',
+                    '高辉：': 'images/icons/高辉.webp',
+                    '马晓捷：': 'images/icons/马晓捷.webp'
+                };
+
+                // Find all speaker spans and insert avatar before matching name spans
+                document.addEventListener('DOMContentLoaded', function(){
+                    const dialog = document.querySelectorAll('.dialog, .speaker');
+                    // Search for all span elements inside the document
+                    const spans = document.querySelectorAll('span');
+                    spans.forEach(s => {
+                        const text = s.textContent && s.textContent.trim();
+                        if(!text) return;
+                        for(const name in mapping){
+                            if(text.startsWith(name)){
+                                // avoid duplicate insertion
+                                if(s.previousElementSibling && s.previousElementSibling.tagName === 'IMG' && s.previousElementSibling.alt === name.replace('：','')) return;
+                                const img = document.createElement('img');
+                                img.src = mapping[name];
+                                img.alt = name.replace('：','');
+                                img.style.width = '28px';
+                                img.style.height = '28px';
+                                img.style.borderRadius = '50%';
+                                img.style.verticalAlign = 'middle';
+                                img.style.marginRight = '6px';
+                                s.parentNode.insertBefore(img, s);
+                                return;
+                            }
+                        }
+                    });
+                });
+            })();
+        </script>
+        <div class="dialog">
+            <div class="speaker"><span class="timestamp">[01:56]</span><span class="a-policeman">A工作人员：</span>你的这个（查阅卷宗申请书）我不要，我只要你的身份证复印件哈</div>
+            <div class="speaker"><span class="timestamp">[02:00]</span><span class="wang-guiping">王贵平：</span>身份证复印件都有的</div>
+            <div class="speaker"><span class="timestamp">[02:01]</span><span class="a-policeman">A工作人员：</span>我撕（单独撕下身份证复印件）了哈。我要撕我只要这个（身份证复印件），哈，你是当事人哈，案号是多少？</div>
+            <div class="speaker"><span class="timestamp">[02:14]</span><span class="wang-guiping">王贵平：</span>呃，这上面写的有的嘛，我看一下，（2019）黔 01 刑终 667 号。</div>
+            <div class="speaker"><span class="timestamp">[02:21]</span><span class="a-policeman">A工作人员：</span>667，667 号？</div>
+            <div class="speaker"><span class="timestamp">[02:34]</span><span class="wang-guiping">王贵平：</span>哎。</div>
+            <div class="speaker"><span class="timestamp">[02:35]</span><span class="a-policeman">A工作人员：</span>刑终，不是你的呢。</div>
+            <div class="speaker"><span class="timestamp">[02:38]</span><span class="wang-guiping">王贵平：</span>不是我的？</div>
+            <div class="speaker"><span class="timestamp">[02:39]</span><span class="a-policeman">A工作人员：</span>啊，不是你的呢。你的是什么 xing 嘛？“刑事”的“刑”还是“行政”的“行”？</div>
+            <div class="speaker"><span class="timestamp">[02:45]</span><span class="wang-guiping">王贵平：</span>“刑事”的“刑”呀。</div>
+            <div class="speaker"><span class="timestamp">[02:46]</span><span class="a-policeman">A工作人员：</span>不是，667，6677。</div>
+            <div class="speaker"><span class="timestamp">[02:53]</span><span class="wang-guiping">王贵平：</span>（打开查阅卷宗申请书）就是这个嘛，这个一审的号，这个二审的号。</div>
+            <div class="speaker"><span class="timestamp">[02:55]</span><span class="a-policeman">A工作人员：</span>不对。</div>
+            <div class="speaker"><span class="timestamp">[02:57]</span><span class="wang-guiping">王贵平：</span>调一审的号看一下。</div>
+            <div class="speaker"><span class="timestamp">[03:00]</span><span class="a-policeman">A工作人员：</span>调不到一审的，只能调二审的。</div>
+            <div class="speaker"><span class="timestamp">[03:06]</span><span class="wang-guiping">王贵平：</span>我这个已经上过诉的呢。</div>
+            <div class="speaker"><span class="timestamp">[03:08]</span><span class="a-policeman">B工作人员：</span>各个法院管各个法院的东西，你的一审的东西在一审的档案室，晓得不？在这里的就在这里。</div>
+            <div class="speaker"><span class="timestamp">[03:20]</span><span class="a-policeman">A工作人员：</span>你的是 669，不是 667。</div>
+            <div class="speaker"><span class="timestamp">[03:23]</span><span class="wang-guiping">王贵平：</span>是 669 呀？</div>
+            <div class="speaker"><span class="timestamp">[03:24]</span><span class="a-policeman">A工作人员：</span>嗯。</div>
+            <div class="speaker"><span class="timestamp">[03:25]</span><span class="wang-guiping">王贵平：</span>我看一下。</div>
+            <div class="speaker"><span class="timestamp">[03:27]</span><span class="a-policeman">A工作人员：</span>你要那些东西嘛？这个案子？这个卷宗材料你要啥东西？</div>
+            <div class="speaker"><span class="timestamp">[03:32]</span><span class="wang-guiping">王贵平：</span>等一下啊，这（查阅卷宗申请书）上面能调得出来的都要。</div>
+            <div class="speaker"><span class="timestamp">[03:49]</span><span class="a-policeman">A工作人员：</span>只有……我不晓得，我只是给你讲，这里面，就是卷宗材料我可以整本的给你看，但是，你看你要啥。要不你先阅卷可不可以？</div>
+            <div class="speaker"><span class="timestamp">[04:03]</span><span class="wang-guiping">王贵平：</span>可以阅卷不嘛？</div>
+            <div class="speaker"><span class="timestamp">[04:04]</span><span class="a-policeman">A工作人员：</span>可以。</div>
+            <div class="speaker"><span class="timestamp">[04:05]</span><span class="wang-guiping">王贵平：</span>那，我阅卷。</div>
+            <div class="speaker"><span class="timestamp">[04:06]</span><span class="a-policeman">A工作人员：</span>啊。</div>
+            <div class="speaker"><span class="timestamp">[04:07]</span><span class="wang-guiping">王贵平：</span>好。</div>
+            <div class="speaker"><span class="timestamp">[04:16]</span><span class="a-policeman">A工作人员：</span>你阅电子卷嘛，哈。坐着等一会儿。</div>
+        </div>
+        <div class="time-location">
+            <div>音频文件名称：20241104_151320.M4a</div>
+            <div>时间：2024年11月4日 15:13:20</div>
+            <div>录音时长：1分07秒</div>
+            <div>录制地点：贵阳市中级人民法院档案室</div>
+            <div>文件SHA256哈希值：A5E828BE5E0E004B1FC9823797905369B0AE8232C51B7C944837D6AA6B8CB1D9</div>
+        </div>
+        <div class="dialog">
+            <div class="speaker"><span class="timestamp">[00:39]</span><span class="wang-guiping">王贵平：</span>这个（查阅的卷宗资料）可以给我打印一份不？</div>
+            <div class="speaker"><span class="timestamp">[00:42]</span><span class="a-policeman">A工作人员：</span>我们打不到，你可以拍照，你可以拍照，你可以拍照哈。</div>
+        </div>
+        <div class="time-location">
+            <div>音频文件名称：20241104_152908.M4a</div>
+            <div>时间：2024年11月4日 15:29:08</div>
+            <div>录音时长：2分14秒</div>
+            <div>录制地点：贵阳市中级人民法院档案室</div>
+            <div>文件SHA256哈希值：8ECE1E18E2B200F26397CBAA403B81D2EE26BDCFA7190226771D4BBC71655B78</div>
+        </div>
+        <div class="dialog">
+            <div class="speaker"><span class="timestamp">[00:23]</span><span class="a-policeman">B工作人员：</span>你呢嘛……</div>
+            <div class="speaker"><span class="timestamp">[00:26]</span><span class="wang-guiping">王贵平：</span>（别人在公用电脑要查越档案）他们要看是吧，让他们先看。</div>
+            <div class="speaker"><span class="timestamp">[00:34]</span><span class="wang-guiping">王贵平：</span>就是没有开庭的视频？</div>
+            <div class="speaker"><span class="timestamp">[00:37]</span><span class="a-policeman">A工作人员：</span>没有。</div>
+            <div class="speaker"><span class="timestamp">[00:46]</span><span class="wang-guiping">王贵平：</span>就是我的那个……就是我的那个二审裁定书是 667 咋变成669 呢？</div>
+            <div class="speaker"><span class="timestamp">[00:53]</span><span class="a-policeman">A工作人员：</span>这个你去问承办人，我们不清楚。</div>
+            <div class="speaker"><span class="timestamp">[01:02]</span><span class="wang-guiping">王贵平：</span>（掏出之前所持裁定书）我的那个裁定书就是这个呢！</div>
+            <div class="speaker"><span class="timestamp">[01:46]</span><span class="wang-guiping">王贵平：</span>你看嘛，这个就是 667 呀！</div>
+            <div class="speaker"><span class="timestamp">[01:52]</span><span class="a-policeman">A工作人员：</span>这个我们就不清楚了呢。</div>
+            <div class="speaker"><span class="timestamp">[02:02]</span><span class="wang-guiping">王贵平：</span>其它视频那些这里调不到的呀？</div>
+            <div class="speaker"><span class="timestamp">[02:05]</span><span class="a-policeman">A工作人员：</span>我们这里只能调你的档案。</div>
+            <div class="speaker"><span class="timestamp">[02:07]</span><span class="wang-guiping">王贵平：</span>其它的地方可以调不呢？</div>
+            <div class="speaker"><span class="timestamp">[02:10]</span><span class="a-policeman">A工作人员：</span>这个你只有可以去找承办人呢。</div>
+            <div class="speaker"><span class="timestamp">[02:13]</span><span class="wang-guiping">王贵平：</span>找承办人！</div>
+            <div class="speaker"><span class="timestamp">[02:14]</span><span class="a-policeman">A工作人员：</span>呃。</div>
+        </div>
+
+        <h1 class="title" id="nav-anchor-2">2024年11月7日 第一次与林筑萍通话</h1>
+        <!-- 2024年11月7日 第一次通话 -->
+        <div class="time-location">
+            <div>音频文件名称：林筑萍法官@0851 8536 4238_20241107085454.m4a</div>
+            <div>音频文件SHA256哈希值：2EB85E34CDA6687D1BCEFD70A066EDE7C8FBAD5211F1080CA7E2C98A7E935EAF</div>
+            <div>录制时间戳：2024年11月7日8时54分</div>
+            <div>音频时长：1分03秒</div>
+            <div>录制地点：通话录音</div>
+        </div>
+        <div class="dialog">
+            <div class="speaker"><span class="timestamp">[0:01]</span><span class="a-policeman">林筑萍：</span>喂！</div>
+            <div class="speaker"><span class="timestamp">[0:03]</span><span class="wang-guiping">王贵平：</span>呃，等于，10月4号那天……我</div>
+            <div class="speaker"><span class="timestamp">[0:06]</span><span class="a-policeman">林筑萍：</span>你是哪个？</div>
+            <div class="speaker"><span class="timestamp">[0:08]</span><span class="wang-guiping">王贵平：</span>呃，我叫王贵平。</div>
+            <div class="speaker"><span class="timestamp">[0:12]</span><span class="a-policeman">林筑萍：</span>什么事嘛？</div>
+            <div class="speaker"><span class="timestamp">[0:13]</span><span class="wang-guiping">王贵平：</span>等于……我先介绍一下嘛，我是那个（2019）黔0103刑初821号案件当事人，就是被告人，我的案子有点问题。</div>
+            <div class="speaker"><span class="timestamp">[0:27]</span><span class="a-policeman">林筑萍：</span>有问题你申诉呀！</div>
+            <div class="speaker"><span class="timestamp">[0:30]</span><span class="wang-guiping">王贵平：</span>申诉……，等于……。</div>
+            <div class="speaker"><span class="timestamp">[0:32]</span><span class="a-policeman">林筑萍：</span>有问题你按法律程序走，该申诉你申诉。</div>
+            <div class="speaker"><span class="timestamp">[0:36]</span><span class="wang-guiping">王贵平：</span>啊？</div>
+            <div class="speaker"><span class="timestamp">[0:37]</span><span class="a-policeman">林筑萍：</span>有问题你按法律程序走，该申诉你申诉，哈。</div>
+            <div class="speaker"><span class="timestamp">[0:42]</span><span class="wang-guiping">王贵平：</span>等于我的那个……裁定书是667号，后面为什么搞成669号呢？</div>
+            <div class="speaker"><span class="timestamp">[0:48]</span><span class="a-policeman">林筑萍：</span>有什么问题你按那个正常程序走，你突然问我，我晓得你是什么案子！</div>
+        </div>
+
+        <h1 class="title" id="nav-anchor-3">2024年11月8日 第二次与林筑萍通话</h1>
+        <!-- 2024年11月8日 第二次通话 -->
+        <div class="time-location">
+            <div>音频文件名称：林筑萍法官助理@0851 8893 3147_20241108110638.m4a</div>
+            <div>音频文件SHA256哈希值：A4CB2299210866594DA86680AB0FBA443B67BCF8C9C93C20A39AE8802911CE29</div>
+            <div>录制时间戳：2024年11月8日 11:06</div>
+            <div>音频时长：6分16秒</div>
+            <div>录制地点：通话录音</div>
+        </div>
+        <div class="dialog">
+            <div class="speaker"><span class="timestamp">[0:01]</span><span class="wang-guiping">王贵平：</span>喂，您好？</div>
+            <div class="speaker"><span class="timestamp">[0:01]</span><span class="a-policeman">林筑萍：</span>请问你是这个，刘贵平啊？王贵平。</div>
+            <div class="speaker"><span class="timestamp">[0:05]</span><span class="wang-guiping">王贵平：</span>王贵平。</div>
+            <div class="speaker"><span class="timestamp">[0:07]</span><span class="a-policeman">林筑萍：</span>啊。</div>
+            <div class="speaker"><span class="timestamp">[0:09]</span><span class="wang-guiping">王贵平：</span>唉，是的。</div>
+            <div class="speaker"><span class="timestamp">[0:13]</span><span class="a-policeman">林筑萍：</span>你是王贵平呀？</div>
+            <div class="speaker"><span class="timestamp">[0:15]</span><span class="wang-guiping">王贵平：</span>对！</div>
+            <div class="speaker"><span class="timestamp">[0:16]</span><span class="a-policeman">林筑萍：</span>我是贵阳市中级人民法院的。你～那个，你先给我讲一下你的身份证号，因为这个是电话，我们要确认你是不是王贵平本人。</div>
+            <div class="speaker"><span class="timestamp">[0:24]</span><span class="wang-guiping">王贵平：</span>呃，是的</div>
+            <div class="speaker"><span class="timestamp">[0:25]</span><span class="a-policeman">林筑萍：</span>讲一下你的身份证是多少。</div>
+            <div class="speaker"><span class="timestamp">[0:27]</span><span class="wang-guiping">王贵平：</span>522xxxxxxxxxxxxxxxx0。</div>
+            <div class="speaker"><span class="timestamp">[0:35]</span><span class="a-policeman">林筑萍：</span>好，我是贵阳市中级人民法院刑一庭的哈，你原来二审抢劫案的承办人林筑萍。喂？听到没有？</div>
+            <div class="speaker"><span class="timestamp">[0:45]</span><span class="wang-guiping">王贵平：</span>啊？</div>
+            <div class="speaker"><span class="timestamp">[0:47]</span><span class="a-policeman">林筑萍：</span>我现在告诉你，我是哪个！我是贵阳市中级人民法院刑一庭你原抢劫案的二审承办人林筑萍，听清楚没有？</div>
+            <div class="speaker"><span class="timestamp">[0:56]</span><span class="wang-guiping">王贵平：</span>林筑萍，就是林筑萍法官呢嘛？</div>
+            <div class="speaker"><span class="timestamp">[0:58]</span><span class="a-policeman">林筑萍：</span>啊，对！</div>
+            <div class="speaker"><span class="timestamp">[0:59]</span><span class="wang-guiping">王贵平：</span>啊，听清楚了。</div>
+            <div class="speaker"><span class="timestamp">[1:02]</span><span class="a-policeman">林筑萍：</span>听清楚了哈！</div>
+            <div class="speaker"><span class="timestamp">[1:03]</span><span class="wang-guiping">王贵平：</span> 唉！</div>
+            <div class="speaker"><span class="timestamp">[1:04]</span><span class="a-policeman">林筑萍：</span>我看你交了一个，你的这个……啥……查阅个人刑事卷宗申请书，你的这个申请书我们收到了。好像之前你给我打了一个电话，是不是？</div>
+            <div class="speaker"><span class="timestamp">[1:15]</span><span class="wang-guiping">王贵平：</span>呃！</div>
+            <div class="speaker"><span class="timestamp">[1:16]</span><span class="a-policeman">林筑萍：</span>你电话里面提到你的这个……二审裁定书的案号有误是不是？</div>
+            <div class="speaker"><span class="timestamp">[1:21]</span><span class="wang-guiping">王贵平：</span>是的。</div>
+            <div class="speaker"><span class="timestamp">[1:23]</span><span class="a-policeman">林筑萍：</span>呃，这样子，我们核实了。你这个案号呢，案号，呃，我们有发给你的文书的案号，可能是有失误。这样子……</div>
+            <div class="speaker"><span class="timestamp">[1:32]</span><span class="wang-guiping">王贵平：</span>这个问题是我不晓得勒！</div>
+            <div class="speaker"><span class="timestamp">[1:33]</span><span class="a-policeman">林筑萍：</span>你听着，我再给你讲，我还没讲完。啊！第 1 个事，通知你下午两点半钟，到我们中院刑一庭（咦！我们是哪个办公室？问旁人），D205 办公室来领取我们的更正裁定书，啊，就是案号错误的更正裁定书。下午两点半钟。</div>
+            <div class="speaker"><span class="timestamp">[1:53]</span><span class="wang-guiping">王贵平：</span>问题是，这不是我的问题啊！</div>
+            <div class="speaker"><span class="timestamp">[1:54]</span><span class="a-policeman">林筑萍：</span>你听着嘛！你听着我给你讲完。这个不影响，这个不影响你这个案件的事实。啊，首先我们通知你，如果你不来，我们给你记录在案就行了。啊！通知你今天是 11 月 8 号，8 号下午两点半钟，到贵阳市中级人民法院，枫林路这边，刑一庭 D205 办公室来领取更正裁定书。那个……呃，更正裁定仅针对案号错误的这个，给你下个裁定。</div>
+            <div class="speaker"><span class="timestamp">[2:18]</span><span class="wang-guiping">王贵平：</span>问题是，这是因为什么原因造成的呢？</div>
+            <div class="speaker"><span class="timestamp">[2:20]</span><span class="a-policeman">林筑萍：</span>你听着我讲完，这个造不造成不影响。不影响案件的事实，法院呢有这种，这种，那个，呃，就相当于瑕疵的这个问题，我们是可以做更正的。哈，这个法律是规定的，这是 1 个事情。啊，如果你不来，我们给你记录在案就行了，已经通知了你，这是第 1 个事。第 2 个事，我们收到了你的一个申请书，你的申请书的主要内容都是查阅你个人刑事卷宗申请书。这个，我们明确的答复你，因为你是被告人本人，啊，你是当事人本人，根据相关的法律规定，和相关的卷宗管理规定，你本人是，包括根据这个刑诉法的规定，你是不具有查阅这个卷宗的权利的。啊，你可以委托你的律师，啊，如果有案子的话，你可以委托律师来进行查阅。依照规定来这个……，按照来办理，啊，能不能查阅，也按照相应的这个……规定。我们的档案室会对你进行这个处理……查阅卷宗的这个事情的答复，哈。能不能查阅，现在的规定你本人是行的。啊，所以这是给你一个答复。对你这个申请书，我们建议你来把它撤回去，拿回去，如果你不来领，那么我们已经告知你了，你把这个申请书撤回去了，如果你不领，我们记录在案就行了。啊，也不影响。其它还有什么要说的你讲。
+        </div>
+
+        <h1 class="title" id="nav-anchor-4">2024年11月13日在派出所做笔录的对话记录</h1>
+        <div class="time-location">
+            <div>音频文件名称：20241113_160615.M4a</div>
+            <div>时间：2024年11月13日 16:06:15</div>
+            <div>录音时长：22分11秒</div>
+            <div>录制地点：贵阳市毓秀路派出所</div>
+            <div>文件SHA256哈希值：25F0FF827D7E7277443EE60E24DF1E17E71C18A4D580023FC0203DF66EE202B3</div>
+        </div>
+
+        <div class="dialog">
+            <div class="speaker">
+                <span class="timestamp">[09:43]</span>
+                <span class="a-policeman">民警：</span>你当时着（被抓）的时候你咋不讲呢？你现在那个。你好久出来的嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[09:53]</span>
+                <span class="wang-guiping">王贵平：</span>2023年1月20号。
+            </div>
+
+            <div class="speaker">
+                <span class="timestamp">[09:55]</span>
+                <span class="a-policeman">民警：</span>等于说当时你在打架，后面人家讲你抢手机？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[10:01]</span>
+                <span class="wang-guiping">王贵平：</span>他后面给我做成抢手机，然后我去看守所以后才晓得呢，才反应过来。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[10:10]</span>
+                <span class="a-policeman">民警：</span>当时法院判的时候你咋（没讲）……
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[10:15]</span>
+                <span class="wang-guiping">王贵平：</span>我讲的，讲的，讲的没用。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[10:26]</span>
+                <span class="a-policeman">民警：</span>刚哥，王贵平的这个你有印象没有？说他打架被关。当时打架被关了呢嘛。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[11:10]</span>
+                <span class="a-policeman">民警：</span>你，王贵平本人是吗？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[11:13]</span>
+                <span class="wang-guiping">王贵平：</span>是的。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[11:14]</span>
+                <span class="a-policeman">民警：</span>现在，刚才是个啥情况嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[11:17]</span>
+                <span class="wang-guiping">王贵平：</span>那天法院判的时候呢，上面写的这么多东西晓得吧，这么多证据，但是这些视频，呃就是那个……那天晚上的视频呢，就是我打人的那个视频都有，但是没有这个手机。（案发现场）那里有个公安岗亭，我就是在那个公安岗亭内出的案，但是公安岗亭内的那个视频没有。我就是着（被关）得莫名其妙的，就是！
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[11:45]</span>
+                <span class="a-policeman">民警：</span>那打架的人呢，他说他抢手机的这个。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[11:47]</span>
+                <span class="a-policeman">民警：</span>带他去找钟所长啊？
+            </div>
+             <div class="speaker">
+                <span class="timestamp">[12:15]</span>
+                <span class="a-policeman">民警：</span>你这些东西在哪得的嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[12:18]</span>
+                <span class="wang-guiping">王贵平：</span>这是那个，我自己打的。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[12:20]</span>
+                <span class="a-policeman">民警：</span>查阅档案你自己也查不到呀。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[12:22]</span>
+                <span class="wang-guiping">王贵平：</span>我申请……
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[12:25]</span>
+                <span class="a-policeman">民警：</span>申请，你是对公嘛，对私呀？你肯定也查阅不到呀。你觉得这个案子有问题，你可以送（哪样）律师（呀），送哪……
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[12:39]</span>
+                <span class="wang-guiping">王贵平：</span>你看这个证据写是写这么多，但是我一样都没看着呀！
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[12:43]</span>
+                <span class="a-policeman">民警：</span>这个（申请材料）东西。我暂时拿着一分钟，等一会儿我还你哈。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[13:30]</span>
+                <span class="a-policeman">民警：</span>先等一下哈，我和我们领导讲了。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[13:33]</span>
+                <span class="wang-guiping">王贵平：</span>好的好的。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:39]</span>
+                <span class="a-policeman">民警：</span>坐。（王贵平坐下）
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:42]</span>
+                <span class="a-policeman">A民警（有点像领导）：</span>你来干啥？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:42]</span>
+                <span class="wang-guiping">王贵平：</span>呃
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:43]</span>
+                <span class="a-policeman">A民警（有点像领导）：</span>你来干啥？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:44]</span>
+                <span class="wang-guiping">王贵平：</span>就是我那个（案子），他给我做成抢劫罪。我很莫名其妙的……
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:50]</span>
+                <span class="a-policeman">A民警：</span>你坐了多少年嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:52]</span>
+                <span class="wang-guiping">王贵平：</span>四年。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:53]</span>
+                <span class="a-policeman">A民警：</span>你咋不上诉呢？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:55]</span>
+                <span class="wang-guiping">王贵平：</span>上诉？上的呀。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:58]</span>
+                <span class="a-policeman">A民警：</span>然后呢？上诉，判了没有嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:00]</span>
+                <span class="wang-guiping">王贵平：</span>他搞一个，维持原判。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:01]</span>
+                <span class="a-policeman">A民警：</span>那么，你来找我们干啥呢？这个事！判都判了，你来找我们干啥呢？你，这个（查阅申请材料），这个东西是哪个拿给你的嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:13]</span>
+                <span class="wang-guiping">王贵平：</span>我自己做的。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:15]</span>
+                <span class="a-policeman">A民警：</span>个人哪会调得了东西！个人你调不到这些东西啊。你的律师，你有律师没有嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:24]</span>
+                <span class="wang-guiping">王贵平：</span>律师，没请。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:26]</span>
+                <span class="a-policeman">A民警：</span>你这个只有去申请，申请最高法复核。哪里会有你这种说法。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:31]</span>
+                <span class="a-policeman">B民警：</span>这个不该找侦查机关，应该找法院。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:35]</span>
+                <span class="wang-guiping">王贵平：</span>法院我找过了的。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:38]</span>
+                <span class="a-policeman">B民警：</span>法院找了，你问一下律师哈。啊，第一……
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:42]</span>
+                <span class="a-policeman">A民警：</span>（看完判决书）啊，你把人家手机拿了，把人家打了，就是抢劫啊。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:44]</span>
+                <span class="wang-guiping">王贵平：</span>这是你们（派出所）写的，你们这里面写的……
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:46]</span>
+                <span class="a-policeman">A民警：</span>你打人家没有嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:48]</span>
+                <span class="wang-guiping">王贵平：</span>打的呀。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:49]</span>
+                <span class="a-policeman">A民警：</span>你拿人家手机没有嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:50]</span>
+                <span class="wang-guiping">王贵平：</span>打和抢是两回事。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:52]</span>
+                <span class="a-policeman">B民警：</span>错！
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:53]</span>
+                <span class="a-policeman">A民警：</span>你把人家手机拿了没有？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:54]</span>
+                <span class="a-policeman">B民警：</span>你说错了，兄弟。我给你讲，有个人……
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:00]</span>
+                <span class="a-policeman">A民警：</span>我给你打个比方，你可能不懂。我想偷你的手机，结果被你发现了，在这个时候，手机虽然说拿在你手上，结果被人家……
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:13]</span>
+                <span class="wang-guiping">王贵平：</span>但是那个手机我看都没看到过哈。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:15]</span>
+                <span class="a-policeman">A民警：</span>结果，不管为啥，你为了拿这个东西打了我一拳，你就是抢劫，就这么简单。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:22]</span>
+                <span class="a-policeman">B民警：</span>盗窃转换为抢劫。
+            </div>
+            <div class="speaker"><span class="timestamp">[18:25]</span><span class="a-policeman">A民警：</span>这个，哪有你这种说法，国家犯罪成本这么低，呃，大家都可以犯罪了，不行嘛！
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:33]</span>
+                <span class="wang-guiping">王贵平：</span>凡事，要讲个证据喽，这个！
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:36]</span>
+                <span class="a-policeman">A民警：</span>你打人家没有嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:37]</span>
+                <span class="wang-guiping">王贵平：</span>打的，和（抢是两码事）……
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:38]</span>
+                <span class="a-policeman">A民警：</span>拿到手机没嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:39]</span>
+                <span class="wang-guiping">王贵平：</span>不得（没有）！
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:39]</span>
+                <span class="a-policeman">A民警：</span>你打人家干啥呢？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:40]</span>
+                <span class="wang-guiping">王贵平：</span>那天出了点……
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:42]</span>
+                <span class="a-policeman">A民警：</span>你打人家干啥嘛？你打人家又没*手机。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:43]</span>
+                <span class="wang-guiping">王贵平：</span>那天情绪有点那个（失控）。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:50]</span>
+                <span class="a-policeman">A民警：</span>那，你打人家了呢嘛。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:52]</span>
+                <span class="wang-guiping">王贵平：</span>打和抢不是一回事！
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:54]</span>
+                <span class="a-policeman">A民警：</span>你拿人家手机呀。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:55]</span>
+                <span class="wang-guiping">王贵平：</span>没拿。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:56]</span>
+                <span class="a-policeman">A民警：</span>没拿这个手机，你不会打人家啊？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:57]</span>
+                <span class="wang-guiping">王贵平：</span>啊？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:58]</span>
+                <span class="a-policeman">A民警：</span>你不为这个手机，你不会打人家啊？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[19:00]</span>
+                <span class="wang-guiping">王贵平：</span>那这个手机在哪里喽？监控在哪里喽，问题是？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[19:04]</span>
+                <span class="a-policeman">A民警：</span>我不想和你讲这些，在哪里。我只晓得判决书在这里。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[19:07]</span>
+                <span class="a-policeman">B民警：</span>哦，你这个，判都判了。你一审判的时候你咋不上诉啊？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[19:16]</span>
+                <span class="a-policeman">某民警：</span>～～（该部分语音辨识不清）所有的证据，所有啥东西我们都是移交法院了～（实在听不清楚他说啥，翻译不过来）。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[19:21]</span>
+                <span class="a-policeman">B民警：</span>你如果认为，你这个有问题，你直接去找判决法院。我们只能以我们收，我们收集的证据，提交检察院，检察院提交法院。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[19:31]</span>
+                <span class="a-policeman">A民警：</span>你这个只有申请最高法复核。你认为你这个是啥子嘛，你认为就是个打架？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[19:35]</span>
+                <span class="wang-guiping">王贵平：</span>就是个打，打人。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[19:37]</span>
+                <span class="a-policeman">B民警：</span>这个东西……
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[19:39]</span>
+                <span class="a-policeman">A民警：</span>我直接给你讲。啊，判都判了，上诉也维持原判，那么就说明，我个人，虽然不是我办的，但是我个人认为，如果维持原判的话，证据链是完整的，并且是合法有效的。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[19:54]</span>
+                <span class="a-policeman">C民警：</span>你如果认为，证据有问题，在过程中对你的认定还是有问题，你依然可以找法院哈，这个早就移送到～（方言不好翻译，省略了）
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:10]</span>
+                <span class="a-policeman">A民警：</span>你在哪里坐的嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:11]</span>
+                <span class="wang-guiping">王贵平：</span>嗯？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:12]</span>
+                <span class="a-policeman">A民警：</span>你在哪里坐的呢？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:13]</span>
+                <span class="wang-guiping">王贵平：</span>北斗山。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:15]</span>
+                <span class="a-policeman">A民警：</span>那么，那期间你没有申请啊？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:17]</span>
+                <span class="a-policeman">C民警：</span>检察院也会起诉的啊。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:23]</span>
+                <span class="a-policeman">A、B民警：</span>他上诉了的，上诉维持原判。嗯，（对王贵平说）是不是啊？啊，你上诉……
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:30]</span>
+                <span class="wang-guiping">王贵平：</span>维持原判。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:31]</span>
+                <span class="a-policeman">A，B，C民警：</span>对了，是终审啊，那就再上啊。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:34]</span>
+                <span class="wang-guiping">王贵平：</span>你看，这些都是法院的，那个证据。这个证据哪有（抢手机）
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:40]</span>
+                <span class="a-policeman">A民警：</span>啊。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:41]</span>
+                <span class="wang-guiping">王贵平：</span>这是从法院调的证据，你看哪里有我抢的手机嘛，图片也没有一张！
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:47]</span>
+                <span class="a-policeman">A民警：</span>啊，你这个，你说的这个证据，法院是有的，啊。你说的这个，调卷子，调这个是可以的，啊。至于你说的这个，证据排除，这个你要走程序，啊。你要走程序，走法律程序，啊。你要质证，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，质证据，啊，
+                <span class="timestamp">[20:47]</span>
+                <span class="a-policeman">A民警：</span>这个你在哪里得的嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:48]</span>
+                <span class="wang-guiping">王贵平：</span>法院调的啊。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:52]</span>
+                <span class="a-policeman">B民警：</span>你如果认为，这个东西……你可以去法院……
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:58]</span>
+                <span class="a-policeman">A民警：</span>这上面，你的辩解有的呀。"有异议，我是治安案件，没有抢劫"，人家给你记了的呀。人家这个不是，凭你认为是啥就是啥。法院审理综合多种证据认定下来，才认定你是抢劫啊。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[21:19]</span>
+                <span class="wang-guiping">王贵平：</span>这个就是那个法院掌握的所有的东西。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[21:21]</span>
+                <span class="a-policeman">A民警：</span>不可能，这个是法院的判决卷，不是公安的侦查卷，啊。这个是法院的卷，不是公安的卷。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[21:33]</span>
+                <span class="wang-guiping">王贵平：</span>你看这上面它（王贵平在云岩区法院拷贝的正卷存在手机里）写的是证据材料是吧？相关证据材料，你好好看一下，有哪一个证据是有手机的？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[21:46]</span>
+                <span class="a-policeman">A民警：</span>那么我就这样跟你讲，判了，法院判了，啊！请你去申请最高法院复核，完了。你个人来调东西，首先我们这里调不到，另外一个，我们也不会提供给个人。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[21:59]</span>
+                <span class="a-policeman">C民警：</span>卷也不在我们手上。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[22:00]</span>
+                <span class="a-policeman">A民警：</span>也不在我们手上，你坐着。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[22:10]</span>
+                <span class="a-policeman">C民警：</span>那么，直接去最高法院……
+            </div>
+
+            <h1 class="title" id="nav-anchor-5">2024年11月28日 第二次到一审档案室</h1>
+            <div class="time-location">
+                <div>音频文件名称：20241128_102914.m4a</div>
+                <div>时间：2024年11月28日 10:29:14</div>
+                <div>录音时长：2分56秒</div>
+                <div>录制地点：贵阳市云岩区法院档案室</div>
+                <div>文件SHA256哈希值：3AA2BB46250E0BE2A363A026C7DA044449A81853F203CF8A909DC9DAC5923B39</div>
+            </div>
+            <div class="dialog">
+                <div class="speaker"><span class="timestamp">[00:00]</span><span class="a-policeman">一审档案管理员：</span>你叫啥名字？</div>
+                <div class="speaker"><span class="timestamp">[00:04]</span><span class="wang-guiping">王贵平：</span>王贵平。</div>
+                <div class="speaker"><span class="timestamp">[00:04]</span><span class="a-policeman">一审档案管理员：</span>王贵平，你现在需要啥材料。</div>
+                <div class="speaker"><span class="timestamp">[00:07]</span><span class="wang-guiping">王贵平：</span>呃，我查被告人的供述。</div>
+                <div class="speaker"><span class="timestamp">[00:09]</span><span class="a-policeman">一审档案管理员：</span>你不就是被告人吗？</div>
+                <div class="speaker"><span class="timestamp">[00:12]</span><span class="wang-guiping">王贵平：</span>唉，还有被害人的陈述，还有证人证言，还有那些照片。</div>
+                <div class="speaker"><span class="timestamp">[00:20]</span><span class="a-policeman">一审档案管理员：</span>你要查公安卷是不是嘛？你要查公安卷是不是嘛？</div>
+                <div class="speaker"><span class="timestamp">[00:24]</span><span class="wang-guiping">王贵平：</span>公安的诉讼卷。</div>
+                <div class="speaker"><span class="timestamp">[00:26]</span><span class="a-policeman">一审档案管理员：</span>张美姐。被告可以查公安卷不？</div>
+                <div class="speaker"><span class="timestamp">[00:30]</span><span class="a-policeman">一审档案女领导：</span>不可以。</div>
+                <div class="speaker"><span class="timestamp">[00:30]</span><span class="a-policeman">一审档案管理员：</span>不可以哈，只能查诉讼卷哈。你只能查我们法院诉讼卷，公安卷你可以公安那边调。</div>
+                <div class="speaker"><span class="timestamp">[00:35]</span><span class="wang-guiping">王贵平：</span>公安它是有个叫诉讼卷，还有个叫侦查卷噻。</div>
+                <div class="speaker"><span class="timestamp">[00:39]</span><span class="a-policeman">一审档案管理员：</span>你只能查我们这里的，只能查我们法院的诉讼卷，公安卷我们这查不到。公安侦查卷我们这了查不到。</div>
+                <div class="speaker"><span class="timestamp">[00:45]</span><span class="wang-guiping">王贵平：</span>侦查和我们不得关系，我们只查~</div>
+                <div class="speaker"><span class="timestamp">[00:48]</span><span class="a-policeman">一审档案管理员：</span>你只能查我们这里的诉讼卷，你要不要？法院的，开庭的诉讼卷，要的话拿U盘过来拷。</div>
+                <div class="speaker"><span class="timestamp">[00:53]</span><span class="wang-guiping">王贵平：</span>要嘛。就是这些被告人，被害人陈啊~</div>
+                <div class="speaker"><span class="timestamp">[01:14]</span><span class="a-policeman">一审档案管理员：</span>那是属于公安卷里面的哈。</div>
+                <div class="speaker"><span class="timestamp">[01:15]</span><span class="wang-guiping">王贵平：</span>属于公安卷！</div>
+                <div class="speaker"><span class="timestamp">[01:16]</span><span class="a-policeman">一审档案管理员：</span>诉讼卷~你看哈有没得。~~~。诉讼卷我全部拷给你去，就是我们法院的诉讼卷。</div>
+                <div class="speaker"><span class="timestamp">[01:28]</span><span class="wang-guiping">王贵平：</span>那个要在哪里可以查呢？</div>
+                <div class="speaker"><span class="timestamp">[01:31]</span><span class="a-policeman">一审档案管理员：</span>你去公安问一下嘛。</div>
+                <div class="speaker"><span class="timestamp">[01:34]</span><span class="wang-guiping">王贵平：</span>要去公安问呀？</div>
+                <div class="speaker"><span class="timestamp">[01:47]</span><span class="a-policeman">一审档案管理员：</span>诉讼卷你考过了的吗？你这个U盘有的啊！</div>
+                <div class="speaker"><span class="timestamp">[01:51]</span><span class="wang-guiping">王贵平：</span>有的，就是没有这些东西噻。</div>
+                <div class="speaker"><span class="timestamp">[01:51]</span><span class="a-policeman">一审档案管理员：</span>这些是公安卷里面的，诉讼卷之前你不是拷过的呢嘛？诉讼卷你U盘里面都有的啊。</div>
+                <div class="speaker"><span class="timestamp">[01:56]</span><span class="wang-guiping">王贵平：</span>那你就再给我拷一份嘛。</div>
+                <div class="speaker"><span class="timestamp">[01:57]</span><span class="a-policeman">一审档案管理员：</span>再拷一份拷不进去啊。一模一样的，咋可能拷得进去呢？</div>
+                <div class="speaker"><span class="timestamp">[02:00]</span><span class="wang-guiping">王贵平：</span>你换一个位置就可以拷了。</div>
+                <div class="speaker"><span class="timestamp">[02:03]</span><span class="a-policeman">一审档案管理员：</span>一模一样的，为啥再拷一遍呢？你需要你就自家再去复印，拷一遍复印一遍哈。这里面有的哈，我打开来看，里面一模一样的内容，它是重复的。</div>
+                <div class="speaker"><span class="timestamp">[02:15]</span><span class="a-policeman">同去档案室的其他人：</span>咿！</div>
+                <div class="speaker"><span class="timestamp">[02:21]</span><span class="a-policeman">一审档案管理员：</span>你把U盘给我。</div>
+                <div class="speaker"><span class="timestamp">[02:25]</span><span class="a-policeman">同去档案室的其他人：</span>这个才是你，嘿嘿。</div>
+                <div class="speaker"><span class="timestamp">[02:26]</span><span class="wang-guiping">王贵平：</span>嘿嘿，差点搞错了，这个玩笑开不得的呢。</div>
+                <div class="speaker"><span class="timestamp">[02:35]</span><span class="a-policeman">同去档案室的其他人：</span>这个这个。</div>
+                <div class="speaker"><span class="timestamp">[02:45]</span><span class="wang-guiping">王贵平：</span>好，谢谢哈。</div>
+                <div class="speaker"><span class="timestamp">[02:46]</span><span class="a-policeman">同去档案室的其他人：</span>没得，不是他们不给你，人家这里确实没得。
+            </div>
+            
+            <div class="time-location">
+                <div>音频文件名称：20241128_113126.m4a</div>
+                <div>时间：2024年11月28日 11:31:26</div>
+                <div>录音时长：34秒</div>
+                <div>录制地点：贵阳市云岩区人民法院档案室</div>
+                <div>文件SHA256哈希值：45DAC447198428823E64C419F73A051AD87B92D51761D405AFF259F32CFC411A</div>
+            </div>
+            <div class="dialog">
+                <div class="speaker"><span class="timestamp">[00:07]</span><span class="wang-guiping">王贵平：</span>我问他们，那个东西是能查的呢！</div>
+                <div class="speaker"><span class="timestamp">[00:09]</span><span class="a-policeman">一审档案管理员：</span>啥东西是能查的？</div>
+                <div class="speaker"><span class="timestamp">[00:11]</span><span class="wang-guiping">王贵平：</span>就是那个笔录呀那些。你，你看这个文件嘛【注：文件是《人民法院诉讼档案管理办法》和《人民法院电子诉讼档案管理暂行办法》（法〔2013〕283号）和《最高人民法院办公厅关于案件当事人及其代理人查阅诉讼档案有关问题的复函》（法办〔2005〕415号）和《公安机关刑事案卷立卷规范（2014版）》（公法〔2014〕1080号）】。这就是那个，那些规定呢。</div>
+                <div class="speaker"><span class="timestamp">[00:20]</span><span class="a-policeman">一审档案管理员：</span>这个是啥规定，啥东西嘛？</div>
+                <div class="speaker"><span class="timestamp">[00:29]</span><span class="wang-guiping">王贵平：</span>这就是当事人可以查那个，呃就是笔录啊，那些东西的（规定）。</div>
+            </div>
+
+            <div class="time-location">
+                <div>音频文件名称：20241128_113308.m4a</div>
+                <div>时间：2024年11月28日 11:33:08</div>
+                <div>录音时长：1分16秒</div>
+                <div>录制地点：贵阳市云岩区人民法院档案室</div>
+                <div>文件SHA256哈希值：71AC88BB005770164FCCBFAE72796BEAF28EF30C36599202FA7240ACC520F609</div>
+            </div>
+            <div class="dialog">
+                <div class="speaker"><span class="timestamp">[00:14]</span><span class="a-policeman">一审档案管理员：</span>我给你问过了，可以查。但是你必须委托律师来，你和律师在这里看。它们属于公安卷，我们打不走给你，这是我们这里一直以来查档案的规定。</div>
+                <div class="speaker"><span class="timestamp">[00:25]</span><span class="wang-guiping">王贵平：</span>这上面的是写的是当事人呢！</div>
+                <div class="speaker"><span class="timestamp">[00:27]</span><span class="a-policeman">一审档案管理员：</span>那上面我不晓得是哪里出的文件哈，你~</div>
+                <div class="speaker"><span class="timestamp">[00:28]</span><span class="wang-guiping">王贵平：</span>这就是最高人民法院办公厅出的呢嘛！</div>
+                <div class="speaker"><span class="timestamp">[00:32]</span><span class="a-policeman">一审档案管理员：</span>我们这里，你要查的话，你喊律师过来查，~~~~~~~~~~，他来他会在这里看。因为公安卷它不属于我们这里的卷宗，它是属于侦察卷。我们这里的卷宗我全部拷给你了。</div>
+                <div class="speaker"><span class="timestamp">[00:44]</span><span class="wang-guiping">王贵平：</span>侦察卷，它又分为那个诉讼文书卷和那个~</div>
+                <div class="speaker"><span class="timestamp">[00:48]</span><span class="a-policeman">一审档案管理员：</span>这里没有诉讼文书卷。全部都是侦查卷，诉讼文书卷我们已经拷给你了，唯一的一册诉讼文书卷我们已经拷给你了。我这个案子总共就三册，一册我们诉讼卷，两册侦查卷、诉讼文书我们已经拷给你了。</div>
+                <div class="speaker"><span class="timestamp">[01:05]</span><span class="wang-guiping">王贵平：</span>意思要找个律师来呢嘛？</div>
+                <div class="speaker"><span class="timestamp">[01:05]</span><span class="a-policeman">一审档案管理员：</span>唉，找他来，在这看。他来在这里看或者~</div>
+                <div class="speaker"><span class="timestamp">[01:05]</span><span class="wang-guiping">王贵平：</span>哦。</div>
+            </div>
+
+            <h1 class="title" id="nav-anchor-6">2024年12月12日贵阳市中级人民法院督察室回访电话记录</h1>
+            <div class="time-location">
+                <div>音频文件名称：0851 8536 4032_20241212093049.m4a</div>
+                <div>时间：2024年12月12日 9:30:49</div>
+                <div>录音时长：7分57秒</div>
+                <div>录制地点：通话录音</div>
+                <div>文件SHA256哈希值：46324B7203693AC141228B2FEF271E89227D5E8CC4EE91B777704D6192797811</div>
+            </div>
+            <div class="dialog">
+                <div class="speaker"><span class="timestamp">[00:00]</span><span class="a-policeman">督察室电话回访员：</span>我们卷宗中立案的案号呢，是（2019）黔01刑终669号，但是她给你送达呢，写的是667，哈。喂，你听得到不？</div>
+                <div class="speaker"><span class="timestamp">[00:12]</span><span class="wang-guiping">王贵平：</span>这问题我，我感觉没有这么简单呢！</div>
+                <div class="speaker"><span class="timestamp">[00:15]</span><span class="a-policeman">督察室电话回访员：</span>因为我们，我们要查，我们要查是从系统中查喽。系统中查的案号就是669号，但是她给你的裁定书上呢是667号，她肯定是搞错了。那么我看，我也问过承办人，承办人说是那么发现错误以后，因为你打电话来确实我们发现错误以后，她就针对这案号的错误，写了这个补正裁定送达给你了，是不是这么回事嘛？</div>
+                <div class="speaker"><span class="timestamp">[00:42]</span><span class="wang-guiping">王贵平：</span>这个，呃咋讲呢哈，这20，她是2019年是8月26号作的裁定，是不是？她那天发给我的是667号，但是她后面的裁定又说的是669号，也是2019年8月6号（口误，应是26号）作出的。既然都是同一天作出的，既然都发现错误了，为啥不当天就那个（纠正）呢？</div>
+                <div class="speaker"><span class="timestamp">[01:11]</span><span class="a-policeman">督察室电话回访员：</span>是，她这是因为当时的这个书记员，他现在已经辞职了，我们也核实核查不到他这个情况。他确实卷宗中，呃卷宗中就有这个案号，是发现错误。可能他们开始是确实疏忽，这是我们工作上的疏忽哈，确实给你道，给你道个歉。但是我们这个系统上查出来的这个案号呢，它确实是669号。那么如果是发给你的错了，我们肯定是要更正的。因为我们工作的  这个初心哈，给你说声道歉呢嘛哈。那么至于你讲的那个，当时这个，呃你们，你查这个云岩法院的这个卷宗上面发现，入所的上面有些伤情的情况，要求这个，没得非法证据排除这个问题。</div>
+                <div class="speaker"><span class="timestamp">[01:54]</span><span class="a-policeman">督察室电话回访员：</span>因为我们二审审查的时候，要看你是否有这个，非法证据排除的申请。那么我刚才查我刚刚刚刚才我查了卷宗上呢，确实没发现有这个申请在里面。那么你如果认为我们这案子，因为现在它已经生效，我看你已经刑满释放出来了哈。如果你认为法~这个判决确有错误，或者是没得保障你的合法权益的，那么你可以申请再审，好不好？</div>
+                <div class="speaker"><span class="timestamp">[02:22]</span><span class="wang-guiping">王贵平：</span>申请再审现在我有新的证据的呀。</div>
+                <div class="speaker"><span class="timestamp">[02:25]</span><span class="a-policeman">督察室电话回访员：</span>唉你可以啊，你可以，你如果有新的证据，你可以申请再审的。这是你的权利哈。</div>
+                <div class="speaker"><span class="timestamp">[02:31]</span><span class="wang-guiping">王贵平：</span>诶。</div>
+                <div class="speaker"><span class="timestamp">[02:31]</span><span class="a-policeman">督察室电话回访员：</span>哈！</div>
+                <div class="speaker"><span class="timestamp">[02:35]</span><span class="wang-guiping">王贵平：</span>她既然是同一天作了两个裁定，她为啥头一天都发现错误了，为啥第二天还是依然把，把那个错误那份裁定书发给我？</div>
+                <div class="speaker"><span class="timestamp">[02:50]</span><span class="a-policeman">督察室电话回访员：</span>她这哈，现在， 因为可能是当时我们承，承办人，承办人本人没有发现这个问题。书记员他是否发现，他给她讲没得，她现在也不清楚，因为几年了喽。那么，如果就这样子，因为我们确实现在是案号是错，但是他这案号本身从系统上它就是669号。呃如果你认为这个案子还有其他的你认为不公平的地方，或者判的不对的地方，那么你可以申请申诉。它是一个救济途径，你可以走这个程序好不好？</div>
+                <div class="speaker"><span class="timestamp">[03:20]</span><span class="wang-guiping">王贵平：</span>啊，这个申诉，申诉我现在已经线上申诉了，申诉。</div>
+                <div class="speaker"><span class="timestamp">[03:24]</span><span class="a-policeman">督察室电话回访员：</span>哦，已经申诉了哈，已经写材料了呢嘛，是吧？</div>
+                <div class="speaker"><span class="timestamp">[03:27]</span><span class="wang-guiping">王贵平：</span>等于我针对这个问题，我已经在你们中院的线就是线上，已经就是通过那个人民法院线上那个平台。</div>
+                <div class="speaker"><span class="timestamp">[03:38]</span><span class="a-policeman">督察室电话回访员：</span>哦，好的好的。那么我就把这个情况给你答复一下，把情况答复一下。我们也我刚才我也当时刚才我给你打的是免提电话，我们书记员和我一起一边跟你讲话，我们一边做过记录的，哈。就是我给你，就是说我们确实案号错了，我跟你觉得，我们是工作上的失误，确实，确实不好意思，对不起。那么如果你认为，呃这个案子有其他的问题呢，你可以通过，正常的这个申诉程序来进行纠正，好不好？</div>
+                <div class="speaker"><span class="timestamp">[04:06]</span><span class="wang-guiping">王贵平：</span>还有个问题，我想请问一下，就是她既然都发现那个错误了，为啥那天送达~</div>
+                <div class="speaker"><span class="timestamp">[04:14]</span><span class="a-policeman">督察室电话回访员：</span>这个东西嘛。我跟，我现在回答不到你这个问题。就说她好久发现的，如何发现的，因为她肯定是这个时候发现才会下补正裁定，承办人。那么以前那个书记员，就是你判决书那个周尔谦呢，他已经辞职了也不在我们这里，呃上班了。所以他当时咋，答复啥情况，我现在也不清楚。我现在就说是案号确实应该是669，他发给你667是错的，所以要纠正。</div>
+                <div class="speaker"><span class="timestamp">[04:42]</span><span class="wang-guiping">王贵平：</span>呃，既然他都作了一个补，补正裁定，为啥她以前那个669号的正本的那个附件，就是那个一模一样的那个版本，她为啥不拿送达给我呢？</div>
+                <div class="speaker"><span class="timestamp">[04:55]</span><span class="a-policeman">督察室电话回访员：</span>诶，她就是现在才送达给你啊，他就是才发现错误，她就现在送达给你啊。</div>
+                <div class="speaker"><span class="timestamp">[04:58]</span><span class="wang-guiping">王贵平：</span>她给我送达的就是一个更正裁定书。不是~</div>
+                <div class="speaker"><span class="timestamp">[05:01]</span><span class="a-policeman">督察室电话回访员：</span>就是嘛，更正那个案号了嘛，由现在这个667号，应该是669号. 唉。</div>
+                <div class="speaker"><span class="timestamp">[05:07]</span><span class="wang-guiping">王贵平：</span>为啥那个669号的那个~</div>
+                <div class="speaker"><span class="timestamp">[05:09]</span><span class="a-policeman">督察室电话回访员：</span>这样子我就给你讲这个问题，如果你对我说，因为你刚讲的为啥，为啥为啥，我刚才已经跟你讲了，她确实现在发现错误，她所以给你改了。呃改了，送了补正了。至于如果你认为还有其他的啥问题，你可以正常的通过信访程序来走，好不好，哦这个申诉程序来走，哈。</div>
+                <div class="speaker"><span class="timestamp">[05:28]</span><span class="wang-guiping">王贵平：</span>我是说她为啥不把那个~</div>
+                <div class="speaker"><span class="timestamp">[05:30]</span><span class="a-policeman">督察室电话回访员：</span>啊，我已经给你解释这个问题了，我觉得你一直揪起人家为啥为啥，我确实不晓得当时她这个书记员是咋想的，好不好？</div>
+                <div class="speaker"><span class="timestamp">[05:39]</span><span class="wang-guiping">王贵平：</span>呃，我讲的不是之前的问题，我是讲之后的问 题。</div>
+                <div class="speaker"><span class="timestamp">[05:46]</span><span class="a-policeman">督察室电话回访员：</span>啥之后的问题？</div>
+                <div class="speaker"><span class="timestamp">[05:48]</span><span class="wang-guiping">王贵平：</span>就是她那个，她八月，就是11月8号的时候，她作了一个补正裁定。然后既然是补正裁定，就是对前面那个（裁定）修改嘛。但是也就是说那个（2019）黔01刑终669号，就是之前那个版本的裁定书，她为啥不送达给我呢？</div>
+                <div class="speaker"><span class="timestamp">[06:12]</span><span class="a-policeman">督察室电话回访员：</span>你你你，她现在，她现在给你发那个补正裁定，那个落款日期是好久嘛？</div>
+                <div class="speaker"><span class="timestamp">[06:17]</span><span class="wang-guiping">王贵平：</span>落款日期是2024年11月8号。</div>
+                <div class="speaker"><span class="timestamp">[06:21]</span><span class="a-policeman">督察室电话回访员：</span>就是那天，就是那天发现这个错误她，所以她才给你下的补正裁定嘛。</div>
+                <div class="speaker"><span class="timestamp">[06:27]</span><span class="wang-guiping">王贵平：</span>她为啥不把那个2019年8月26号的那个，那个裁定一起送给我呢？</div>
+                <div class="speaker"><span class="timestamp">[06:34]</span><span class="a-policeman">督察室电话回访员：</span>那个，那个裁定，她写的是6，667了的嘛，写的是667号的呢嘛。</div>
+                <div class="speaker"><span class="timestamp">[06:41]</span><span class="wang-guiping">王贵平：</span>她写的是667号，我在档案室看到的是669号呢。</div>
+                <div class="speaker"><span class="timestamp">[06:45]</span><span class="a-policeman">督察室电话回访员：</span>是，我看到的，所以她就是肯定有个差错。她那个上面写669的时候，她已经送达667给你，肯定是书记员已经发现错误了，他没讲。那么现在我们承办人，你反映这个情况 以后，承办人发现确实案号错了，所以他马上给你作了一个补正。</div>
+                <div class="speaker"><span class="timestamp">[07:02]</span><span class="wang-guiping">王贵平：</span>补正，既然补正，我意思就是我应该要收到那个8月20（口误，应是26），就是2019年8月26号那天作的那个裁定书。</div>
+                <div class="speaker"><span class="timestamp">[07:14]</span><span class="a-policeman">督察室电话回访员：</span>她现在就是没送啊，没送就给你补送啊。</div>
+                <div class="speaker"><span class="timestamp">[07:18]</span><span class="wang-guiping">王贵平：</span>现在就给我补送啊。</div>
+                <div class="speaker"><span class="timestamp">[07:20]</span><span class="a-policeman">督察室电话回访员：</span>唉咋办喽，她已经错都错了呗，就只有更正啊，肯定是错了，案号肯定是搞错啊。这样子嘛，你如果是认为有啥问题，那么你就按照申诉程序来解决呢嘛哈，因为现在我们这个程序我已经解决不到了，也不能回溯到19年前再，再给你送这个问题了，所以我现在只能，她只能给你送补证了哈。</div>
+                <div class="speaker"><span class="timestamp">[07:41]</span><span class="wang-guiping">王贵平：</span>补正，嗯，反正你的这种解释，反正我还是不~还是不能理解哈。</div>
+                <div class="speaker"><span class="timestamp">[07:50]</span><span class="a-policeman">督察室电话回访员：</span>好好，你那个嘛，你保留意见呢嘛哈，我已经给你解释了哈。好，那么这样子哈，呃。</div>
+                <div class="speaker"><span class="timestamp">[07:54]</span><span class="wang-guiping">王贵平：</span>好好好。</div>
+            </div>
+            <h1 class="title" id="nav-anchor-7">2024年12月12日与云岩区人民检察院周江红通话录音</h1>
+            <div class="time-location">
+                <div>音频文件名称：检察员周江红@0851 8669 7155_20241212101551.m4a</div>
+                <div>时间：2024年12月12日 10:15:51</div>
+                <div>录音时长：40秒</div>
+                <div>录制地点：通话录音</div>
+                <div>文件SHA256哈希值：EE7A5377E1437059A8D28B70AF21A8ED0B3EEAF2E579A9DCE6CADB21A71C0842</div>
+            </div>
+            <div class="dialog">
+                <div class="speaker"><span class="timestamp">[00:00]</span><span class="wang-guiping">王贵平：</span>喂，你好。</div>
+                <div class="speaker"><span class="timestamp">[00:03]</span><span class="zhou-jianghong">周江红：</span>你好，王贵平是吧？</div>
+                <div class="speaker"><span class="timestamp">[00:04]</span><span class="wang-guiping">王贵平：</span>诶。</div>
+                <div class="speaker"><span class="timestamp">[00:04]</span><span class="zhou-jianghong">周江红：</span>我云岩检察院的。</div>
+                <div class="speaker"><span class="timestamp">[00:06]</span><span class="other">王贵平：</span>啥事？</div>
+                <div class="speaker"><span class="timestamp">[00:10]</span><span class="zhou-jianghong">周江红：</span>就是你不是一直对你以前你的那个案件有点意见喽。</div>
+                <div class="speaker"><span class="timestamp">[00:13]</span><span class="wang-guiping">王贵平：</span>诶。</div>
+                <div class="speaker"><span class="timestamp">[00:16]</span><span class="zhou-jianghong">周江红：</span>那你的意见是啥嘛？</div>
+                <div class="speaker"><span class="timestamp">[00:18]</span><span class="wang-guiping">王贵平：</span>我的意见？</div>
+                <div class="speaker"><span class="timestamp">[00:19]</span><span class="zhou-jianghong">周江红：</span>啊，你现在是哪想法？</div>
+                <div class="speaker"><span class="timestamp">[00:21]</span><span class="wang-guiping">王贵平：</span>哦，你等一下哦。</div>
+            </div>
+                <div class="time-location">
+                    <div>音频文件名称：检察员周江红@0851 8669 7155_20241212101645.m4a</div>
+                    <div>时间：2024年12月12日 10:16:45</div>
+                    <div>录音时长：19秒</div>
+                    <div>录制地点：通话录音</div>
+                    <div>文件SHA256哈希值：49411C220BD16FC6FB9D1F3F6535AC268E8F0B91768171CF5AF9FD64CCD1E502</div>
+                </div>
+                <div class="dialog">
+                    <div class="speaker"><span class="timestamp">[00:01]</span><span class="wang-guiping">王贵平：</span>等一下嘛，我把那个找出来，我要花点时间。</div>
+                    <div class="speaker"><span class="timestamp">[00:05]</span><span class="zhou-jianghong">周江红：</span>好，你等一下给我过来嘛。</div>
+                    <div class="speaker"><span class="timestamp">[00:08]</span><span class="wang-guiping">王贵平：</span>大概一分钟时间，要不要好久。</div>
+                    <div class="speaker"><span class="timestamp">[00:12]</span><span class="zhou-jianghong">周江红：</span>等会给你打过来嘛哈。</div>
+                    <div class="speaker"><span class="timestamp">[00:14]</span><span class="wang-guiping">王贵平：</span>等会你给我打过来？</div>
+                    <div class="speaker"><span class="timestamp">[00:15]</span><span class="zhou-jianghong">周江红：</span>哦。</div>
+                    <div class="speaker"><span class="timestamp">[00:15]</span><span class="wang-guiping">王贵平：</span>要不了好多~</div>
+                </div>
+                <div class="time-location">
+                    <div>音频文件名称：检察员周江红@0851 8669 7155_20241212101853.m4a</div>
+                    <div>时间：2024年12月12日 10:18:53</div>
+                    <div>录音时长：11分50秒</div>
+                    <div>录制地点：通话录音</div>
+                    <div>文件SHA256哈希值：45D0C559C70A8A866D268F6351B9E54E1932D0A60CE1A4EC11F2C40F34DD009D</div>
+                </div>
+                <div class="dialog">
+                    <div class="speaker"><span class="timestamp">[00:02]</span><span class="zhou-jianghong">周江红：</span>找到没有嘛？</div>
+                    <div class="speaker"><span class="timestamp">[00:06]</span><span class="wang-guiping">王贵平：</span>马上马上哈，就有八个问题我想了解一下。第一个问题，就是2019年7月2号那天，在庭审当中，我问你就是那个案件有没有退侦，然后你回答的是没有，是不是？</div>
+                    <div class="speaker"><span class="timestamp">[00:31]</span><span class="zhou-jianghong">周江红：</span>这个以起诉书上面写的为准。</div>
+                    <div class="speaker"><span class="timestamp">[00:35]</span><span class="wang-guiping">王贵平：</span>啊？</div>
+                    <div class="speaker"><span class="timestamp">[00:36]</span><span class="zhou-jianghong">周江红：</span>以起诉书上面写的为准。</div>
+                    <div class="speaker"><span class="timestamp">[00:40]</span><span class="wang-guiping">王贵平：</span>以起诉书上面，问题是我起诉书都没收到呢。</div>
+                    <div class="speaker"><span class="timestamp">[00:45]</span><span class="zhou-jianghong">周江红：</span>为什么你会没有收到，你跟我讲。是法院没给你送，是给你送了你没有收还是怎么回事？</div>
+                    <div class="speaker"><span class="timestamp">[00:55]</span><span class="wang-guiping">王贵平：</span>主要问题就是~</div>
+                    <div class="speaker"><span class="timestamp">[00:58]</span><span class="zhou-jianghong">周江红：</span>你就跟~</div>
+                    <div class="speaker"><span class="timestamp">[00:58]</span><span class="wang-guiping">王贵平：</span>这就是你们检察院的问题了噻。</div>
+                    <div class="speaker"><span class="timestamp">[01:01]</span><span class="zhou-jianghong">周江红：</span>咋是我们的问题，我们只负责起诉到法院，至于法院送不送给你，还有就是送了，你收不收是你自己的事情。</div>
+                    <div class="speaker"><span class="timestamp">[01:12]</span><span class="wang-guiping">王贵平：</span>他没有在那个时间内送给我。问题是，这个问题暂时那个嘛，先那个嘛哈。等一下啊，第二个问题。那天我是不是没拿到起诉书，就是审判那天？</div>
+                    <div class="speaker"><span class="timestamp">[01:29]</span><span class="zhou-jianghong">周江红：</span>为什么没拿到，你给我讲下原因嘛。我也不清楚你为什么没拿到。</div>
+                    <div class="speaker"><span class="timestamp">[01:35]</span><span class="wang-guiping">王贵平：</span>我们先不讲原因的事情，那天我是不是不得起诉书，在，进行那个审理？</div>
+                    <div class="speaker"><span class="timestamp">[01:43]</span><span class="zhou-jianghong">周江红：</span>那么又给你读没得呢？开庭的时候？</div>
+                    <div class="speaker"><span class="timestamp">[01:44]</span><span class="wang-guiping">王贵平：</span>啊？</div>
+                    <div class="speaker"><span class="timestamp">[01:46]</span><span class="zhou-jianghong">周江红：</span>开庭的时候给你宣读没得？</div>
+                    <div class="speaker"><span class="timestamp">[01:47]</span><span class="wang-guiping">王贵平：</span>开头的时候只是跟我宣读，但是我不得收到裁定~那个就是起诉书啊。</div>
+                    <div class="speaker"><span class="timestamp">[01:55]</span><span class="zhou-jianghong">周江红：</span>不是，我们要了解清楚原因，对不对？是为什么没收到，是你没收，你不要，还是法院没给你送？</div>
+                    <div class="speaker"><span class="timestamp">[02:06]</span><span class="wang-guiping">王贵平：</span>就是他一次性给我发换押证、起诉书，还有量刑建议书，而且是在2019年6月14号那一天给我送的。</div>
+                    <div class="speaker"><span class="timestamp">[02:19]</span><span class="zhou-jianghong">周江红：</span>嗯，对吧，给你送过了的呢嘛。</div>
+                    <div class="speaker"><span class="timestamp">[02:21]</span><span class="wang-guiping">王贵平：</span>送了，问题是为啥那个案件有没有退侦这个问题，我不晓得啊！</div>
+                    <div class="speaker"><span class="timestamp">[02:28]</span><span class="zhou-jianghong">周江红：</span>起诉书上有啊。</div>
+                    <div class="speaker"><span class="timestamp">[02:30]</span><span class="wang-guiping">王贵平：</span>我不晓得啊，问题是。</div>
+                    <div class="speaker"><span class="timestamp">[02:31]</span><span class="zhou-jianghong">周江红：</span>你不晓得，这个东西你让我怎么解释喽。问题是拿给你的东西，你自家不要，那你肯定就不晓得这些事情啊。所有的事情起诉书上都有写明啊，这个经过，诉讼经过对不对？</div>
+                    <div class="speaker"><span class="timestamp">[02:45]</span><span class="wang-guiping">王贵平：</span>对于那个，就是我那个案件，我处在哪个时间段，应该搞啥，我是有知情权的呢。</div>
+                    <div class="speaker"><span class="timestamp">[02:54]</span><span class="zhou-jianghong">周江红：</span>你拘留在里面，比如说你拘留了，逮捕了，起诉了，对不对？你，这个环节你是清楚的嘛？比如说我们去提讯你，公安提讯你，给你宣布拘留，还有就是我们去你们喊叫过检查呢嘛，对不对？这些东西我都签字了的呀。</div>
+                    <div class="speaker"><span class="timestamp">[03:14]</span><span class="wang-guiping">王贵平：</span>签字问题是我不晓得，问题是从，从，从那个，呃侦查，总结，然后到审查起诉，这个时间段应该大概也就一个月的时间。为啥拖这么长的时间呢？</div>
+                    <div class="speaker"><span class="timestamp">[03:28]</span><span class="zhou-jianghong">周江红：</span>最长可以到可以一年（方言为年吧），就是说侦查到起诉，这个期限全部用完的话哈，可以一年（方言为年吧）。</div>
+                    <div class="speaker"><span class="timestamp">[03:40]</span><span class="wang-guiping">王贵平：</span>你讲的就是审查起诉可以一年（方言为年吧）啊？</div>
+                    <div class="speaker"><span class="timestamp">[03:44]</span><span class="zhou-jianghong">周江红：</span>对，法律规定是，最长可以应该是。</div>
+                    <div class="speaker"><span class="timestamp">[03:48]</span><span class="wang-guiping">王贵平：</span>那个。我的案件是根据~？</div>
+                    <div class="speaker"><span class="timestamp">[03:50]</span><span class="zhou-jianghong">周江红：</span>一年左右，一年左右哈，侦查到起诉的法定的期间，最长可以到一年左右。</div>
+                    <div class="speaker"><span class="timestamp">[03:58]</span><span class="wang-guiping">王贵平：</span>我是那个审查阶段的期限，大概也就一个月的时间。</div>
+                    <div class="speaker"><span class="timestamp">[04:04]</span><span class="zhou-jianghong">周江红：</span>哪个说的一个月，六个半月，最长可以到。</div>
+                    <div class="speaker"><span class="timestamp">[04:05]</span><span class="wang-guiping">王贵平：</span>唉，也就是一个半月嘛。一个半月那个~</div>
+                    <div class="speaker"><span class="timestamp">[04:09]</span><span class="zhou-jianghong">周江红：</span>六半月。</div>
+                    <div class="speaker"><span class="timestamp">[04:10]</span><span class="wang-guiping">王贵平：</span>那个是有退侦的情况才有，才可以延长半个月，然后并且有延长期限的告知书，对不对？</div>
+                    <div class="speaker"><span class="timestamp">[04:19]</span><span class="zhou-jianghong">周江红：</span>退侦，我们这个案子只有退侦，没有延期哈。</div>
+                    <div class="speaker"><span class="timestamp">[04:23]</span><span class="wang-guiping">王贵平：</span>既然有退~</div>
+                    <div class="speaker"><span class="timestamp">[04:25]</span><span class="zhou-jianghong">周江红：</span>退侦，根据法律规定，没有说是要告知你。延期，是要告知你，延期要告知，退侦不告知。</div>
+                    <div class="speaker"><span class="timestamp">[04:33]</span><span class="wang-guiping">王贵平：</span>退侦不告知啊？</div>
+                    <div class="speaker"><span class="timestamp">[04:34]</span><span class="zhou-jianghong">周江红：</span>对。</div>
+                    <div class="speaker"><span class="timestamp">[04:34]</span><span class="wang-guiping">王贵平：</span>那是依据哪一条法律规定的不告知我呢？</div>
+                    <div class="speaker"><span class="timestamp">[04:43]</span><span class="zhou-jianghong">周江红：</span>他就是没有规定要告知啊。</div>
+                    <div class="speaker"><span class="timestamp">[04:45]</span><span class="wang-guiping">王贵平：</span>就具体是哪一条法律规定的？</div>
+                    <div class="speaker"><span class="timestamp">[04:50]</span><span class="zhou-jianghong">周江红：</span>你这个，我给你看一眼。</div>
+                    <div class="speaker"><span class="timestamp">[05:18]</span><span class="zhou-jianghong">周江红：</span>其他还有啥问题没得？</div>
+                    <div class="speaker"><span class="timestamp">[05:20]</span><span class="wang-guiping">王贵平：</span>还有。</div>
+                    <div class="speaker"><span class="timestamp">[05:23]</span><span class="zhou-jianghong">周江红：</span>讲嘛。</div>
+                    <div class="speaker"><span class="timestamp">[05:27]</span><span class="wang-guiping">王贵平：</span>等一下我看一下第三个问题。我是2024年11月5号在那个~</div>
+                    <div class="speaker"><span class="timestamp">[05:36]</span><span class="zhou-jianghong">周江红：</span>等一下，等一下，等一分钟哈。</div>
+                    <div class="speaker"><span class="timestamp">[05:36]</span><span class="wang-guiping">王贵平：</span>好。</div>
+                    <div class="speaker"><span class="timestamp">[05:36]</span><span class="zhou-jianghong">周江红：</span>唉，你讲。</div>
+                    <div class="speaker"><span class="timestamp">[05:42]</span><span class="wang-guiping">王贵平：</span>也就是说我从2024年10月5号，才，在那个云岩区法院的档案室看到我的那个起诉书的~那个~</div>
+                    <div class="speaker"><span class="timestamp">[05:54]</span><span class="zhou-jianghong">周江红：</span>好久看到的啊？</div>
+                    <div class="speaker"><span class="timestamp">[05:55]</span><span class="wang-guiping">王贵平：</span>2024年10月5号。</div>
+                    <div class="speaker"><span class="timestamp">[05:55]</span><span class="zhou-jianghong">周江红：</span>哦，你收到判决书没得嘛？</div>
+                    <div class="speaker"><span class="timestamp">[06:01]</span><span class="wang-guiping">王贵平：</span>判决书我是收到的，早就收到的。</div>
+                    <div class="speaker"><span class="timestamp">[06:04]</span><span class="zhou-jianghong">周江红：</span>的那就是喽。</div>
+                    <div class="speaker"><span class="timestamp">[06:06]</span><span class="wang-guiping">王贵平：</span>但是起诉书~的问那个内容，我是2024年11月5号才~才知晓里面的全部内容的呢。</div>
+                    <div class="speaker"><span class="timestamp">[06:16]</span><span class="zhou-jianghong">周江红：</span>那么就是说，还有一个问题，就是刚才我问你的，为什么你会没有收到？等一下哈。</div>
+                    <div class="speaker"><span class="timestamp">[06:50]</span><span class="zhou-jianghong">周江红：</span>你讲。喂？</div>
+                    <div class="speaker"><span class="timestamp">[06:57]</span><span class="wang-guiping">王贵平：</span>喂，那边好没有？</div>
+                    <div class="speaker"><span class="timestamp">[06:59]</span><span class="zhou-jianghong">周江红：</span>好了，你讲。</div>
+                    <div class="speaker"><span class="timestamp">[07:03]</span><span class="wang-guiping">王贵平：</span>呃，等下哈，我讲到哪里，我都还没那个。</div>
+                    <div class="speaker"><span class="timestamp">[07:06]</span><span class="zhou-jianghong">周江红：</span>哦不，你讲下为啥没得到起诉书，你给我讲下这个问题。</div>
+                    <div class="speaker"><span class="timestamp">[07:10]</span><span class="wang-guiping">王贵平：</span>就是你们的那个审查起诉阶段的那个时间过期了，我不晓得，没得解释，这应该属于你们检察院的~</div>
+                    <div class="speaker"><span class="timestamp">[07:19]</span><span class="zhou-jianghong">周江红：</span>最长是可以，在我们这个阶段哈，是六个半月，是半年呢嘛，半年加半个月就是六个半，六个半月不是一个半月哈，你要搞清楚。</div>
+                    <div class="speaker"><span class="timestamp">[07:31]</span><span class="wang-guiping">王贵平：</span>这个法律规定的就是一个月，然后有情况可以退侦，可以延长半个月，但是没有你讲说的半年那些，这么夸张的事情。</div>
+                    <div class="speaker"><span class="timestamp">[07:43]</span><span class="zhou-jianghong">周江红：</span>你跟我讲，你听我讲，首先第一次送来一个月，对不对？然后我们退回去，公安又一个月，他拿回来又有一个月，就是三个月了，对不对？一退，要是我们觉得事实还没有查清，那么就再退一次，这叫二退。二退一退回去公安一个月，然后他又拿回来。</div>
+                    <div class="speaker"><span class="timestamp">[08:08]</span><span class="wang-guiping">王贵平：</span>他是以二次 为限，反正就是一次半个月噻。</div>
+                    <div class="speaker"><span class="timestamp">[08:13]</span><span class="zhou-jianghong">周江红：</span>退侦一次是一个月，一个月。相当于推一次可以两个月，推一次就是两个月。</div>
+                    <div class="speaker"><span class="timestamp">[08:23]</span><span class="wang-guiping">王贵平：</span>那问题是~</div>
+                    <div class="speaker"><span class="timestamp">[08:24]</span><span class="zhou-jianghong">周江红：</span>延期延期，延期呀那叫延长审查起诉期限才是半个月，延长还是半个月。</div>
+                    <div class="speaker"><span class="timestamp">[08:30]</span><span class="wang-guiping">王贵平：</span>但是有这些情况我不晓 得啊！不晓得我就（没得签收起诉书）。</div>
+                    <div class="speaker"><span class="timestamp">[08:35]</span><span class="zhou-jianghong">周江红：</span>你不晓得是哪个造成的喽？是，肯定是因为你自家原因造成的啊。你不收这个起诉书，你就不晓得这个过程，这些过程那起诉书上都写的有的啊，你不是说你，你今年看到了的吗？</div>
+                    <div class="speaker"><span class="timestamp">[08:47]</span><span class="wang-guiping">王贵平：</span>你先不要打断我，我先跟你讲哈。</div>
+                    <div class="speaker"><span class="timestamp">[08:49]</span><span class="zhou-jianghong">周江红：</span>你讲嘛哈。</div>
+                    <div class="speaker"><span class="timestamp">[08:51]</span><span class="wang-guiping">王贵平：</span>呃起~就是说的有退侦哈，我在里面是看到好多人的，不是我一个，既然有退侦，呃人家都有那个退侦的那个告知书或者是延长审查起诉的告知书，那啥我没有呢？</div>
+                    <div class="speaker"><span class="timestamp">[09:09]</span><span class="zhou-jianghong">周江红：</span>我跟你讲，退侦没得规定要告知你啊。</div>
+                    <div class="speaker"><span class="timestamp">[09:12]</span><span class="wang-guiping">王贵平：</span>为啥别人都告知，我不得不告知啊？</div>
+                    <div class="speaker"><span class="timestamp">[09:15]</span><span class="zhou-jianghong">周江红：</span>那是延期延期，延期要告知。我跟你讲呢嘛，延期要告知。如果你觉得退侦没告知，那我不晓得怎么理解，这个。</div>
+                    <div class="speaker"><span class="timestamp">[09:26]</span><span class="wang-guiping">王贵平：</span>哎。</div>
+                    <div class="speaker"><span class="timestamp">[09:30]</span><span class="zhou-jianghong">周江红：</span>还有啥问题？</div>
+                    <div class="speaker"><span class="timestamp">[09:32]</span><span class="wang-guiping">王贵平：</span>还有我看一下哈，就是我看到那个，就是在法院档案室。</div>
+                    <div class="speaker"><span class="timestamp">[09:38]</span><span class="zhou-jianghong">周江红：</span>咦，我问下你，你这个案子当时你上诉没得？</div>
+                    <div class="speaker"><span class="timestamp">[09:41]</span><span class="wang-guiping">王贵平：</span>上的啊。</div>
+                    <div class="speaker"><span class="timestamp">[09:42]</span><span class="zhou-jianghong">周江红：</span>上诉维持的呢嘛中院。</div>
+                    <div class="speaker"><span class="timestamp">[09:44]</span><span class="wang-guiping">王贵平：</span>维持的。反正还出现一些问题，现在那个法院的督察还找那个法官可能在督查点事情哈，今天刚才给我打电话。</div>
+                    <div class="speaker"><span class="timestamp">[09:55]</span><span class="zhou-jianghong">周江红：</span>叫啥名字嘛？那法官是哪个嘛？</div>
+                    <div class="speaker"><span class="timestamp">[09:58]</span><span class="wang-guiping">王贵平：</span>诶，这个么，我就没必要告诉你了噻。</div>
+                    <div class="speaker"><span class="timestamp">[10:01]</span><span class="zhou-jianghong">周江红：</span>哦，好，行，你讲嘛。</div>
+                    <div class="speaker"><span class="timestamp">[10:04]</span><span class="wang-guiping">王贵平：</span>第四个问题哈，就是我在那个法院的档案室看到的那个起诉书哈，为啥第一页的那个下面没得防伪标识，就是那个条形码呢？</div>
+                    <div class="speaker"><span class="timestamp">[10:17]</span><span class="zhou-jianghong">周江红：</span>这个东西有时候那个系统上它会有，有时候它又没得。</div>
+                    <div class="speaker"><span class="timestamp">[10:22]</span><span class="wang-guiping">王贵平：</span>有时候有，有时候不得，等于就是你们制作起诉书的标准不一样，是不是？</div>
+                    <div class="speaker"><span class="timestamp">[10:28]</span><span class="zhou-jianghong">周江红：</span>那肯定是一样的啊。</div>
+                    <div class="speaker"><span class="timestamp">[10:30]</span><span class="wang-guiping">王贵平：</span>那是一样的，未来会有时候有，有时候不得呢？</div>
+                    <div class="speaker"><span class="timestamp">[10:33]</span><span class="zhou-jianghong">周江红：</span>技术原因哈。你，然后我跟你讲为什么没得，我也搞不懂哈。</div>
+                    <div class="speaker"><span class="timestamp">[10:39]</span><span class="wang-guiping">王贵平：</span>你也搞不懂，这个起诉书你制作的，问题~你都搞不懂，那个就有点让人难得，难以理解了呢！</div>
+                    <div class="speaker"><span class="timestamp">[10:48]</span><span class="zhou-jianghong">周江红：</span>你觉得是假的呢嘛？怎么可能是假的呢？那么你遭，比如说拘留啊。</div>
+                    <div class="speaker"><span class="timestamp">[10:53]</span><span class="wang-guiping">王贵平：</span>我就说它直白点呢嘛，可能就是，事后，我就觉得存在这种可能，事后变造哈。</div>
+                    <div class="speaker"><span class="timestamp">[11:01]</span><span class="zhou-jianghong">周江红：</span>你觉得有这种可能性，你该去哪里上访啊，信访啊，比如说是申诉，你可以去搞这些的，这是你的权利，对不对？</div>
+                    <div class="speaker"><span class="timestamp">[11:12]</span><span class="wang-guiping">王贵平：</span>诶，好好好。</div>
+                    <div class="speaker"><span class="timestamp">[11:13]</span><span class="zhou-jianghong">周江红：</span>还有没有嘛？</div>
+                    <div class="speaker"><span class="timestamp">[11:15]</span><span class="wang-guiping">王贵平：</span>就是那个起诉书上写的是2019年3月27号到5月15号，就是说的退侦，是不是嘛？</div>
+                    <div class="speaker"><span class="timestamp">[11:28]</span><span class="zhou-jianghong">周江红：</span>应该是4月27退的嘛。</div>
+                    <div class="speaker"><span class="timestamp">[11:29]</span><span class="wang-guiping">王贵平：</span>啊？</div>
+                    <div class="speaker"><span class="timestamp">[11:33]</span><span class="zhou-jianghong">周江红：</span>那上面写的是好久收的嘛，你看一下嘛。是好久移送给我们的嘛？</div>
+                    <div class="speaker"><span class="timestamp">[11:40]</span><span class="wang-guiping">王贵平：</span>呃，我看一下哈，4月27号？等到我再看一下。</div>
+                    <div class="speaker"><span class="timestamp">[11:47]</span><span class="zhou-jianghong">周江红：</span>等一下我给你打过来，等一下我给你打过来。</div>
+                    <div class="speaker"><span class="timestamp">[11:50]</span><span class="wang-guiping">王贵平：</span>好。</div>
+                </div>
+        
+                <div class="time-location">
+                    <div>音频文件名称：检察员周江红@0851 8669 7155_20241212103516.m4a</div>
+                    <div>时间：2024年12月12日 10:35:16</div>
+                    <div>录音时长：1分16秒</div>
+                    <div>录制地点：通话录音</div>
+                    <div>文件SHA256哈希值：5CD686C1F29CB855472F3A5DB976895EFB4102417158F47F49254F8065D6B933</div>
+                </div>
+                <div class="dialog">
+                    <div class="speaker"><span class="timestamp">[00:01]</span><span class="wang-guiping">王贵平：</span>喂。</div>
+                    <div class="speaker"><span class="timestamp">[00:01]</span><span class="zhou-jianghong">周江红：</span>喂，</div>
+                    <div class="speaker"><span class="timestamp">[00:01]</span><span class="wang-guiping">王贵平：</span>呃，你好。</div>
+                    <div class="speaker"><span class="timestamp">[00:04]</span><span class="zhou-jianghong">周江红：</span>继续讲嘛。</div>
+                    <div class="speaker"><span class="timestamp">[00:06]</span><span class="wang-guiping">王贵平：</span>刚才我是讲到哪里了就是？就是2019年4月26号到5月15号属于退侦时间，是不是？</div>
+                    <div class="speaker"><span class="timestamp">[00:17]</span><span class="zhou-jianghong">周江红：</span>不是，你看一下上面公安是好久移送给我们的。你看一下第二段。</div>
+                    <div class="speaker"><span class="timestamp">[00:30]</span><span class="wang-guiping">王贵平：</span>呃，那上面写的是3月27号向你们移送。</div>
+                    <div class="speaker"><span class="timestamp">[00:37]</span><span class="zhou-jianghong">周江红：</span>哦，哦，那么就是3月27，4月27号退的嘛，那么就是，对不对？还有这一段最后，你看有退侦的时间没得。</div>
+                    <div class="speaker"><span class="timestamp">[00:49]</span><span class="wang-guiping">王贵平：</span>3月27号，等一下我看，那这个侦查起诉阶段应该是两个月，对不对？</div>
+                    <div class="speaker"><span class="timestamp">[00:59]</span><span class="zhou-jianghong">周江红：</span>哎呀，不是你这样理解的呀。你讲嘛有啥问题。</div>
+                    <div class="speaker"><span class="timestamp">[01:04]</span><span class="wang-guiping">王贵平：</span>就是那个1，2019年1月30号。</div>
+                    <div class="speaker"><span class="timestamp">[01:09]</span><span class="zhou-jianghong">周江红：</span>等我把这个东西拿到再说，我拿到了再跟你讲哦，你说的这个起诉书我拿到再说，啊。</div>
+                    <div class="speaker"><span class="timestamp">[01:15]</span><span class="wang-guiping">王贵平：</span>好好好。</div>
+                </div>
+        
+                <div class="time-location">
+                    <div>音频文件名称：检察员周江红@0851 8669 7155_20241212103912.m4a</div>
+                    <div>时间：2024年12月12日 10:39:12</div>
+                    <div>录音时长：7分44秒</div>
+                    <div>录制地点：通话录音</div>
+                    <div>文件SHA256哈希值：A704A60C730CCC78E2BFF81600823FE7C0741F6B435F606B6CE14BB6C12BA587</div>
+                </div>
+                <div class="dialog">
+                    <div class="speaker"><span class="timestamp">[00:00]</span><span class="zhou-jianghong">周江红：</span>你讲嘛。</div>
+                    <div class="speaker"><span class="timestamp">[00:02]</span><span class="wang-guiping">王贵平：</span>等到哈，你一挂个电话，我就那个（想不起）。刚才讲到哪里了？</div>
+                    <div class="speaker"><span class="timestamp">[00:08]</span><span class="zhou-jianghong">周江红：</span>你说这个时间3月，4月26，5月15。</div>
+                    <div class="speaker"><span class="timestamp">[00:13]</span><span class="wang-guiping">王贵平：</span>诶，它是退侦两个，就是说的侦查阶段是两个月的时间是不是啊？</div>
+                    <div class="speaker"><span class="timestamp">[00:20]</span><span class="zhou-jianghong">周江红：</span>你看哈，我们一般是一个月。它是~3月27移送给我们的，对不对？</div>
+                    <div class="speaker"><span class="timestamp">[00:32]</span><span class="wang-guiping">王贵平：</span>呃3月27号，呃移送的嘛。</div>
+                    <div class="speaker"><span class="timestamp">[00:37]</span><span class="zhou-jianghong">周江红：</span>那么就可以到4月27号，对不对，那么就事实不清，那么我们就退了一次，就4月26到5月15这个时间段，又回到公安那边去了。</div>
+                    <div class="speaker"><span class="timestamp">[00:53]</span><span class="wang-guiping">王贵平：</span>问题是移到公安那里，这个事情我不晓得呢，不晓得就导致我没在那个后面的，就是签发起诉书那上面签字。</div>
+                    <div class="speaker"><span class="timestamp">[01:12]</span><span class="zhou-jianghong">周江红：</span>你不用签字，你要签啥字，这又没有损害你哪样东西，对不对？</div>
+                    <div class="speaker"><span class="timestamp">[01:17]</span><span class="wang-guiping">王贵平：</span>麻烦你声音稍微大一点，我这听得不太清楚。</div>
+                    <div class="speaker"><span class="timestamp">[01:21]</span><span class="zhou-jianghong">周江红：</span>你说你不晓得这个对不对？那么就是，比如说你退的这次也给你算你的羁押时间了的啊，你唯一的有损害的地方就是这一点啊。</div>
+                    <div class="speaker"><span class="timestamp">[01:36]</span><span class="wang-guiping">王贵平：</span>我是，我对这个案件的，就是这些情况是有知情权的呢。</div>
+                    <div class="speaker"><span class="timestamp">[01:43]</span><span class="zhou-jianghong">周江红：</span>有知情权啊，知情告知你的时候，你自家不听，不要啊。</div>
+                    <div class="speaker"><span class="timestamp">[01:48]</span><span class="wang-guiping">王贵平：</span>你是后面，后面才告知的，就是一直到2019年6月14号那天，也就是说的，才签，就是说的才签的那个起诉书。等于那个事情都过了。然后（签收起诉书）我知道那些内容有啥必要呢？</div>
+                    <div class="speaker"><span class="timestamp">[02:06]</span><span class="zhou-jianghong">周江红：</span>不是，延期才告知你，比如说延15天，这种才告知你。</div>
+                    <div class="speaker"><span class="timestamp">[02:13]</span><span class="wang-guiping">王贵平：</span>反正这个问题我保留意见了保留意见。</div>
+                    <div class="speaker"><span class="timestamp">[02:17]</span><span class="zhou-jianghong">周江红：</span>还有没得？</div>
+                    <div class="speaker"><span class="timestamp">[02:19]</span><span class="wang-guiping">王贵平：</span>还有。就是我在看守所的那个健康档案啊，我不晓得你是咋审查证据的。你看到那个，那上面就是，那个人体标示图，你看到过不得？</div>
+                    <div class="speaker"><span class="timestamp">[02:33]</span><span class="zhou-jianghong">周江红：</span>看到过了的呀。</div>
+                    <div class="speaker"><span class="timestamp">[02:35]</span><span class="wang-guiping">王贵平：</span>看到的上面是不是有，眼部和背部软组织损伤，还有双手背肿胀啊？</div>
+                    <div class="speaker"><span class="timestamp">[02:46]</span><span class="zhou-jianghong">周江红：</span>这个我就忘了呢。</div>
+                    <div class="speaker"><span class="timestamp">[02:47]</span><span class="wang-guiping">王贵平：</span>啊？</div>
+                    <div class="speaker"><span class="timestamp">[02:47]</span><span class="zhou-jianghong">周江红：</span>这些我是看到过的，但是你具体哪里受伤，现在我也知道啊。</div>
+                    <div class="speaker"><span class="timestamp">[02:54]</span><span class="wang-guiping">王贵平：</span>那个，那个证据都在你那里，你会不晓得这个就有点~</div>
+                    <div class="speaker"><span class="timestamp">[02:59]</span><span class="zhou-jianghong">周江红：</span>现在你叫我慢慢把卷宗找出来看啊，那卷宗又在公安里去了。</div>
+                    <div class="speaker"><span class="timestamp">[03:04]</span><span class="wang-guiping">王贵平：</span>卷宗在公安那里去了？</div>
+                    <div class="speaker"><span class="timestamp">[03:07]</span><span class="zhou-jianghong">周江红：</span>在法院，在法院哈，法院。</div>
+                    <div class="speaker"><span class="timestamp">[03:08]</span><span class="wang-guiping">王贵平：</span>哦在法院去了是不是啊？</div>
+                    <div class="speaker"><span class="timestamp">[03:10]</span><span class="zhou-jianghong">周江红：</span>你看到过的呢嘛。你不是说你去看过呢嘛？</div>
+                    <div class="speaker"><span class="timestamp">[03:13]</span><span class="wang-guiping">王贵平：</span>上面有我讲的这些东西，你要不要我给你发一份那个图片啊？</div>
+                    <div class="speaker"><span class="timestamp">[03:20]</span><span class="zhou-jianghong">周江红：</span>不用。</div>
+                    <div class="speaker"><span class="timestamp">[03:20]</span><span class="wang-guiping">王贵平：</span>啊？</div>
+                    <div class="speaker"><span class="timestamp">[03:21]</span><span class="zhou-jianghong">周江红：</span>不用发我，我要自家去看啊。</div>
+                    <div class="speaker"><span class="timestamp">[03:25]</span><span class="wang-guiping">王贵平：</span>哦，你要自己看啊。既然是有这些东西就觉得有问题了，就是存在暴力执法这些问题了呢？</div>
+                    <div class="speaker"><span class="timestamp">[03:37]</span><span class="zhou-jianghong">周江红：</span>这些问题哈。第一，你说你遭你说的暴力，好，那么肯定要~暴力，那么就是要调取你当时入所的，体检的材料呢嘛。对不对？</div>
+                    <div class="speaker"><span class="timestamp">[03:53]</span><span class="zhou-jianghong">周江红：</span>还有就是公安机关，那么还有就是，另外你说你遭暴力，你要提线索，你提供不出来线索，你提供不出来线索，对不对？那么我们根据这些东西综合认定下来呢，那就不存在这种情形。还有就是你现在，如果你认为，你有存当年存在这种暴力执法的这种情形，那你可以先走申诉，信访的这种程序，啊。</div>
+                    <div class="speaker"><span class="timestamp">[04:21]</span><span class="wang-guiping">王贵平：</span>唉，我就明确的跟你讲呢嘛，这个，这个已经转交到最高人民检察院了。</div>
+                    <div class="speaker"><span class="timestamp">[04:28]</span><span class="zhou-jianghong">周江红：</span>哦，那就行了呗。</div>
+                    <div class="speaker"><span class="timestamp">[04:33]</span><span class="wang-guiping">王贵平：</span>呃反正就是说的，呃这个健康档案，是经过你的手的呢嘛？</div>
+                    <div class="speaker"><span class="timestamp">[04:40]</span><span class="zhou-jianghong">周江红：</span>这个肯定我们是看到的。</div>
+                    <div class="speaker"><span class="timestamp">[04:43]</span><span class="wang-guiping">王贵平：</span>哦，看到的。我就觉得这个证据，应该按照非法的证据排除。为啥你没排除，依然以抢劫罪来起诉我啊？</div>
+                    <div class="speaker"><span class="timestamp">[04:55]</span><span class="zhou-jianghong">周江红：</span>我们认定下来这就是个抢劫啊。</div>
+                    <div class="speaker"><span class="timestamp">[04:58]</span><span class="wang-guiping">王贵平：</span>哦，你认定就是一个抢劫。</div>
+                    <div class="speaker"><span class="timestamp">[05:01]</span><span class="zhou-jianghong">周江红：</span>包括到今天，我都认为就是个抢劫，还有啥没得？</div>
+                    <div class="speaker"><span class="timestamp">[05:09]</span><span class="wang-guiping">王贵平：</span>嗯，我看一下哦。就是你制作的这个云检公诉刑诉〔2019〕3711号都是合法合规的吗？</div>
+                    <div class="speaker"><span class="timestamp">[05:26]</span><span class="zhou-jianghong">周江红：</span>肯定。</div>
+                    <div class="speaker"><span class="timestamp">[05:28]</span><span class="wang-guiping">王贵平：</span>你觉得肯定就可以了。</div>
+                    <div class="speaker"><span class="timestamp">[05:31]</span><span class="zhou-jianghong">周江红：</span>好，没得了呢嘛？</div>
+                    <div class="speaker"><span class="timestamp">[05:33]</span><span class="wang-guiping">王贵平：</span>那个，还有一个，就是这个起诉书为啥没有公开呀？</div>
+                    <div class="speaker"><span class="timestamp">[05:41]</span><span class="zhou-jianghong">周江红：</span>应该没公开，这个我看，现在我也看不到了。公开不公开，这是我们工作的规定，哈。</div>
+                    <div class="speaker"><span class="timestamp">[05:53]</span><span class="wang-guiping">王贵平：</span>这个最高人民检察院是有规定要公开的呢。</div>
+                    <div class="speaker"><span class="timestamp">[05:57]</span><span class="zhou-jianghong">周江红：</span>你觉得没有公开，你也可以去把它写进去嘛。比如说，你说的最高人民检察院啊，你给他们交没，啊。</div>
+                    <div class="speaker"><span class="timestamp">[06:07]</span><span class="wang-guiping">王贵平：</span>那既然是有规定，为啥不得公开，我就搞不清楚了。</div>
+                    <div class="speaker"><span class="timestamp">[06:16]</span><span class="zhou-jianghong">周江红：</span>你，我们根据我们的工作要求来，哈。至于你说的这个是否公开，我也搞忘了。</div>
+                    <div class="speaker"><span class="timestamp">[06:23]</span><span class="wang-guiping">王贵平：</span>你也搞忘了。</div>
+                    <div class="speaker"><span class="timestamp">[06:24]</span><span class="zhou-jianghong">周江红：</span>如果有规定要求公开，肯定是公开的，哈。</div>
+                    <div class="speaker"><span class="timestamp">[06:28]</span><span class="wang-guiping">王贵平：</span>如果是公开的话，应该是在检察院12，12309是可以查到的，是不是啊？</div>
+                    <div class="speaker"><span class="timestamp">[06:35]</span><span class="zhou-jianghong">周江红：</span>啊，可以查的到。</div>
+                    <div class="speaker"><span class="timestamp">[06:38]</span><span class="wang-guiping">王贵平：</span>那我就为啥，我就搞不清楚我为啥查不到。</div>
+                    <div class="speaker"><span class="timestamp">[06:41]</span><span class="zhou-jianghong">周江红：</span>那么就是，如果说你没查到，那就是根据规定没有公开。</div>
+                    <div class="speaker"><span class="timestamp">[06:48]</span><span class="wang-guiping">王贵平：</span>但是，具体根据哪一条规定没有公开，麻烦你给我解释一下。</div>
+                    <div class="speaker"><span class="timestamp">[06:52]</span><span class="zhou-jianghong">周江红：</span>这个规定是我们内部的工作规定，哈。</div>
+                    <div class="speaker"><span class="timestamp">[06:55]</span><span class="wang-guiping">王贵平：</span>内部工作规定。那个，最高检都有规定了的。为啥是你们，那个内部规定啊这些。现在这个规定，最高院，那个检的规定都是公开的呢。</div>
+                    <div class="speaker"><span class="timestamp">[07:09]</span><span class="zhou-jianghong">周江红：</span>这样，如果你觉得这有问题哈，你就去申诉，不要紧，你，你，你说的你递到最高检啊这些，向他们反映。如果你觉得，这是你的权利，这个，肯定是我们支持，对不对？</div>
+                    <div class="speaker"><span class="timestamp">[07:26]</span><span class="wang-guiping">王贵平：</span>哦，等于还有个问题，就是现在我的卷宗档案不在你那里了是不是？</div>
+                    <div class="speaker"><span class="timestamp">[07:32]</span><span class="zhou-jianghong">周江红：</span>在法院，不在我这。</div>
+                    <div class="speaker"><span class="timestamp">[07:34]</span><span class="wang-guiping">王贵平：</span>哦，全部都在法院去了。</div>
+                    <div class="speaker"><span class="timestamp">[07:36]</span><span class="zhou-jianghong">周江红：</span>诶，对，全部在法院，哈。</div>
+                    <div class="speaker"><span class="timestamp">[07:38]</span><span class="wang-guiping">王贵平：</span>哦，好好好。</div>
+                    <div class="speaker"><span class="timestamp">[07:39]</span><span class="zhou-jianghong">周江红：</span>行，就这样嘛，哈。</div>
+                    <div class="speaker"><span class="timestamp">[07:41]</span><span class="wang-guiping">王贵平：</span>好，再见。</div>
+                </div>
+                
+        <h1 class="title" id="nav-anchor-8">2024年12月16日在派出所做笔录的对话记录</h1>
+        
+        <div class="time-location">
+            <div>音频文件名称：20241216_113734.m4a</div>
+            <div>时间：2024年12月16日 11:37:34左右</div>
+            <div>录音时长：37分48秒</div>
+            <div>录制地点：贵阳市毓秀路派出所值班室内</div>
+            <div>文件SHA256哈希值：F8C8B236C4579991AE3E20DF88DE98BB35FCF60A9683B5113BFA6A6877205C9B</div>
+        </div>
+
+        <div class="dialog">
+            <div class="speaker">
+                <span class="timestamp">[00:44]</span>
+                <span class="a-policeman">X58050民警：</span>现在住哪里？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[00:45]</span>
+                <span class="wang-guiping">王贵平：</span>现在住龙里。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[00:48]</span>
+                <span class="a-policeman">X58050民警：</span>贵阳没住住呢嘛。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[00:51]</span>
+                <span class="wang-guiping">王贵平：</span>嗯，没有。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[01:10]</span>
+                <span class="a-policeman">X58050民警：</span>电话号码是好多？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[01:11]</span>
+                <span class="wang-guiping">王贵平：</span>138xxxxxxx83。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[01:38]</span>
+                <span class="a-policeman">X58050民警：</span>有职业没有？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[01:40]</span>
+                <span class="wang-guiping">王贵平：</span>现在生病，暂时还没有。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[01:43]</span>
+                <span class="a-policeman">X58050民警：</span>文化程度？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[01:43]</span>
+                <span class="wang-guiping">王贵平：</span>高中。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[02:03]</span>
+                <span class="a-policeman">X58050民警：</span>今日来派出所是因为什么事？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[02:08]</span>
+                <span class="wang-guiping">王贵平：</span>因为……这些事情，我都写在上面（提前准备的资料）的，麻烦你看，哈。在那个110（报警系统）上面也有。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[08:38]</span>
+                <span class="a-policeman">X58050民警：</span>这个我倒是看了，那么你今天来是因为啥你要给我讲啊。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[08:47]</span>
+                <span class="wang-guiping">王贵平：</span>嗯，我那天通过110呢，本来是向贵阳市公安局报的警，然后我不知道它为啥，为啥会接到你们派出所。然后呢，当天了，你们派出所又打电话喊我来核实情况，所以呢，我今天就来了。就是这么个情况。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[09:07]</span>
+                <span class="a-policeman">X58050民警：</span>核实啥嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[09:08]</span>
+                <span class="wang-guiping">王贵平：</span>这个是你们派出所的人打电话叫我过来的，我也不晓得核实啥。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[09:13]</span>
+                <span class="a-policeman">X58050民警：</span>派出所的人打的嘛。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[09:16]</span>
+                <span class="wang-guiping">王贵平：</span>唉。顺便这个手机的，叫啥，指控的证物也有问题。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[09:24]</span>
+                <span class="a-policeman">X58050民警：</span>啥指控的证物有问题嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[09:26]</span>
+                <span class="wang-guiping">王贵平：</span>这个手机的真实性有点问题啊！我觉得。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[09:29]</span>
+                <span class="a-policeman">X58050民警：</span>手机，啥手机真实性有问题吗？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[09:31]</span>
+                <span class="wang-guiping">王贵平：</span>就是这个案件的手机的那个，本来我（案发）之前用的手机就是oppo手机呢。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[09:40]</span>
+                <span class="a-policeman">X58050民警：</span>嗯，然后呢？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[09:43]</span>
+                <span class="wang-guiping">王贵平：</span>然后他指控我的手机，我也没见过，照片我也没看到。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[10:21]</span>
+                <span class="wang-guiping">王贵平：</span>麻烦你把它拷一份，或者复印一份。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[10:41]</span>
+                <span class="a-policeman">X58050民警：</span>啊？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[10:41]</span>
+                <span class="wang-guiping">王贵平：</span>免得……我说麻烦你照个片或者是那个，到时候大家都好那个。到时候我来了，你，你，问你你不要说没这回事的话，那个就……
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[11:05]</span>
+                <span class="a-policeman">X58050民警：</span>看不懂。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[11:03]</span>
+                <span class="wang-guiping">王贵平：</span>咋会看不懂呢，这么简单。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[11:05]</span>
+                <span class="a-policeman">X58050民警：</span>确实看不懂。在哪里（2019年1月20日晚在派出所）被打了？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[11:34]</span>
+                <span class="wang-guiping">王贵平：</span>就在值班室外面，我不晓得在哪里，有点像个房间里面，又像房间，又不晓得是不是房间，可能是更衣室我估计。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[11:47]</span>
+                <span class="a-policeman">X58050民警：</span>派出所吗，还是哪里嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[11:48]</span>
+                <span class="wang-guiping">王贵平：</span>就在派出所。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[11:49]</span>
+                <span class="a-policeman">X58050民警：</span>哪里的派出所？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[11:50]</span>
+                <span class="wang-guiping">王贵平：</span>就在你们毓秀路派出所。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[12:01]</span>
+                <span class="a-policeman">X58050民警：</span>好久的事情？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[12:20]</span>
+                <span class="wang-guiping">王贵平：</span>2019年1月20号晚上。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[13:20]</span>
+                <span class="a-policeman">X58050民警：</span>你说你晕倒，你咋会晓得你被别人扶到树下呢？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[13:58]</span>
+                <span class="wang-guiping">王贵平：</span>我醒来就在那里的噻，没人扶我，我咋会被移到那个树下面呢。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[14:03]</span>
+                <span class="a-policeman">X58050民警：</span>路边么，还是哪里吗？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[14:12]</span>
+                <span class="wang-guiping">王贵平：</span>啊？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[14:12]</span>
+                <span class="a-policeman">X58050民警：</span>是路边么，还是哪里嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[14:15]</span>
+                <span class="wang-guiping">王贵平：</span>你讲的是？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[14:15]</span>
+                <span class="a-policeman">X58050民警：</span>晕倒。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[14:15]</span>
+                <span class="wang-guiping">王贵平：</span>晕倒就在（大十字）广场中心那里。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:19]</span>
+                <span class="a-policeman">X58050民警：</span>你说你下午苏醒后，因路人言语难听，咋个难听嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:29]</span>
+                <span class="wang-guiping">王贵平：</span>可能就是因为早上遭骂后，可能就是听人说话（情绪）不那个。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:34]</span>
+                <span class="a-policeman">X58050民警：</span>人家说啥嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:38]</span>
+                <span class="wang-guiping">王贵平：</span>那个时候，晕倒刚醒来，可能也没想到这么多，还可能就是。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:43]</span>
+                <span class="a-policeman">X58050民警：</span>等于你不知道人家说啥呢嘛。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:43]</span>
+                <span class="wang-guiping">王贵平：</span>啊！
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[16:43]</span>
+                <span class="a-policeman">X58050民警：</span>你不晓得对方讲啥呢嘛。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:01]</span>
+                <span class="wang-guiping">王贵平：</span>哎。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:01]</span>
+                <span class="a-policeman">X58050民警：</span>那么不知道对方说了什么，咋会有言语难听一说呢？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:01]</span>
+                <span class="wang-guiping">王贵平：</span>可能他就是说话有点，咋讲呢哈，反正就是带黄腔的那种嘛，可能就是。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:11]</span>
+                <span class="a-policeman">X58050民警：</span>你都不晓得他讲的是啥东西，现在。呃带黄腔，我也搞不清楚。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[17:24]</span>
+                <span class="wang-guiping">王贵平：</span>总的反正就是一个情绪的问题，没控制好。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:22]</span>
+                <span class="a-policeman">X58050民警：</span>你这个，你说的是语言难听，你又不晓得对方讲的是啥东西。那你又是和哪个发生肢体冲突嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:27]</span>
+                <span class="wang-guiping">王贵平：</span>这些和这个案件没关系呀？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:32]</span>
+                <span class="a-policeman">X58050民警：</span>那么，你给我讲嘛，啥和这个案件有关系喽。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:37]</span>
+                <span class="wang-guiping">王贵平：</span>就是那个手机的问题啊。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:46]</span>
+                <span class="a-policeman">X58050民警：</span>啥手机？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[18:46]</span>
+                <span class="wang-guiping">王贵平：</span>就是只跟我抢的那个手机啊。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:12]</span>
+                <span class="a-policeman">X58050民警：</span>指控你抢的手机。等于你今天来，是说是派出所的民警人打的呢嘛，是这个意思吗？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:17]</span>
+                <span class="wang-guiping">王贵平：</span>在派出所，除了民警还有谁敢打人？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:20]</span>
+                <span class="a-policeman">X58050民警：</span>我在问你，你不要反问我，我咋晓得！我是在问你，啊你是在向我反映，被警察殴打是吗？时间是1月20日晚上23点左右是吗？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:35]</span>
+                <span class="wang-guiping">王贵平：</span>时间是在晚上21:00~23:00左右，反正就是在这段时间。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[20:59]</span>
+                <span class="a-policeman">X58050民警：</span>21:00~23年左右，是不是这个意思？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[21:02]</span>
+                <span class="wang-guiping">王贵平：</span>那（材料）上面都写的很清楚的嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[21:05]</span>
+                <span class="a-policeman">X58050民警：</span>我问你，不是说那上面清楚嘞！我看不懂，我就跟你讲，你要（我）咋讲。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[21:10]</span>
+                <span class="wang-guiping">王贵平：</span>反正就是大概（晚上）9:00~12:00那段时间。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[21:18]</span>
+                <span class="a-policeman">X58050民警：</span>接近（晚上）12点是不是嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[21:22]</span>
+                <span class="wang-guiping">王贵平：</span>诶，接近晚上12点。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[21:40]</span>
+                <span class="a-policeman">X58050民警：</span>你说一下事情的经过。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[21:46]</span>
+                <span class="wang-guiping">王贵平：</span>经过那（材料）上面都写的有啊。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[21:56]</span>
+                <span class="a-policeman">X58050民警：</span>刚刚我在讲因为啥被打这些，你说那不是重点，那么我就问你重点你讲给我听啊， 经过，是因为啥嘛！你讲给我听啊，是因为啥嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[22:07]</span>
+                <span class="wang-guiping">王贵平：</span>重点就是因为那天我打那个人，然后后面把我指控成抢劫。那这个证物手机的真实性，我不晓得是咋个证明这个，我没看到过手机。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[22:26]</span>
+                <span class="a-policeman">X58050民警：</span>几点钟打的人嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[22:28]</span>
+                <span class="wang-guiping">王贵平：</span>你讲的是我在那边（大十字广场）几点钟打的人是吧？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[22:28]</span>
+                <span class="a-policeman">X58050民警：</span>诶，你不是说你打人呀，几点钟打的人嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[22:28]</span>
+                <span class="wang-guiping">王贵平：</span>我没带时间，上面写的是大概是晚上，下午18点左右吧，18点30分左右好像。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[22:44]</span>
+                <span class="a-policeman">X58050民警：</span>18时左右是不是嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[22:51]</span>
+                <span class="wang-guiping">王贵平：</span>判决书上是这么写的。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[22:58]</span>
+                <span class="a-policeman">X58050民警：</span>你在广场中心把人打了是吗？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[23:01]</span>
+                <span class="wang-guiping">王贵平：</span>不是广场中心，是广场的边上挨着河西路的那点，那点还有个公安岗亭。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[23:11]</span>
+                <span class="a-policeman">X58050民警：</span>是你把人家打了，在河西路口那里呢嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[23:15]</span>
+                <span class="wang-guiping">王贵平：</span>就是在广场上挨着河西路边。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[23:22]</span>
+                <span class="a-policeman">X58050民警：</span>你把人打了是吗？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[23:22]</span>
+                <span class="wang-guiping">王贵平：</span>诶。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[24:17]</span>
+                <span class="a-policeman">X58050民警：</span>对方是男的还是女的嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[24:18]</span>
+                <span class="wang-guiping">王贵平：</span>男的。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[24:23]</span>
+                <span class="a-policeman">X58050民警：</span>打了，然后呢？打了人然后呢？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[24:28]</span>
+                <span class="wang-guiping">王贵平：</span>打了人，然后被他们（被害人，还有其他人）反应过来，就把我送到那个公安岗亭里面去。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[24:55]</span>
+                <span class="a-policeman">X58050民警：</span>是送到公安岗亭，还是哪样？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[25:36]</span>
+                <span class="wang-guiping">王贵平：</span>公安岗亭里面。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[25:37]</span>
+                <span class="a-policeman">X58050民警：</span>然后呢？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[25:39]</span>
+                <span class="wang-guiping">王贵平：</span>然后我等了大概半个小时以后……
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[25:48]</span>
+                <span class="a-policeman">X58050民警：</span>里面有人没有嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[25:50]</span>
+                <span class="wang-guiping">王贵平：</span>我在里面的时候没有人，就是我一个。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[25:57]</span>
+                <span class="a-policeman">X58050民警：</span>等于对方把你送到里面，你就一个人在里面摆起呀？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[26:04]</span>
+                <span class="wang-guiping">王贵平：</span>唉。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[26:04]</span>
+                <span class="a-policeman">X58050民警：</span>那两个没和你在一起呀？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[26:04]</span>
+                <span class="wang-guiping">王贵平：</span>那两个我不晓得，应该是在外面嘛。具体情况反正我也不清楚，反正我在里面。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[26:20]</span>
+                <span class="a-policeman">X58050民警：</span>等于岗亭里面没人？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[26:22]</span>
+                <span class="wang-guiping">王贵平：</span>没有。里面有监控的。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[26:35]</span>
+                <span class="a-policeman">X58050民警：</span>有啥控都没用，5年了。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[26:50]</span>
+                <span class="wang-guiping">王贵平：</span>这个时间不存在问题嘛。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[26:55]</span>
+                <span class="a-policeman">X58050民警：</span>那么，证明你不懂呢嘛。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[28:07]</span>
+                <span class="a-policeman">X58050民警：</span>大概等了半个小时的样子就有民警，是不是嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[28:13]</span>
+                <span class="wang-guiping">王贵平：</span>唉。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[28:13]</span>
+                <span class="a-policeman">X58050民警：</span>着装没有？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[28:13]</span>
+                <span class="wang-guiping">王贵平：</span>现在我记不清楚了。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[28:24]</span>
+                <span class="a-policeman">X58050民警：</span>最后警察来干了啥呢？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[28:27]</span>
+                <span class="wang-guiping">王贵平：</span>最后警察来就是，他喊我把身上的东西掏出来，放在那个凳子上。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[28:32]</span>
+                <span class="a-policeman">X58050民警：</span>警察来岗亭里，喊你把身上的东西掏出来是不是嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[28:38]</span>
+                <span class="wang-guiping">王贵平：</span>诶，就是随身物品。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[28:54]</span>
+                <span class="a-policeman">X58050民警：</span>放在岗亭里的凳子上是不是嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[29:12]</span>
+                <span class="wang-guiping">王贵平：</span>唉，里面有一个长凳子。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[29:20]</span>
+                <span class="a-policeman">X58050民警：</span>之后呢？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[29:23]</span>
+                <span class="wang-guiping">王贵平：</span>掏出来以后，然后过一段时间好像，他做了登记以后，然后就，然后之后就给我上手铐嘛，就把我送到派出所来了，好像是打开执法记录仪的那天。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[29:59]</span>
+                <span class="a-policeman">X58050民警：</span>就是给你登记呢嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[30:01]</span>
+                <span class="wang-guiping">王贵平：</span>唉，给我登记，但是没有手机哦。这个（纸质材料上写的）是我那天放在（岗亭里面的凳子）上面的东西。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[30:51]</span>
+                <span class="a-policeman">X58050民警：</span>给你登记完后，就有人给你上手铐是不是嘛？然后呢？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[31:01]</span>
+                <span class="wang-guiping">王贵平：</span>然后就把我送到派出所来。然后送到派出所呆了差不多个把小时的时候，就在这个，这里应该是值班室嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[31:55]</span>
+                <span class="a-policeman">X58050民警：</span>这里是值班室呀。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[31:56]</span>
+                <span class="wang-guiping">王贵平：</span>就在值班室这里待了一个小时左右。然后就（被）带进调解室，那你是不是条件是嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[32:08]</span>
+                <span class="a-policeman">X58050民警：</span>嗯。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[32:26]</span>
+                <span class="wang-guiping">王贵平：</span>唉，先是（被）带进去那个调解室里面。然后又被带出去了，我不晓得是被带到哪个地方，不晓得是不是更衣室或者是，反正就是在一个房间里面。可能没监控里面。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[33:02]</span>
+                <span class="a-policeman">X58050民警：</span>被带到调解室，又被带到房间里，哪里的房间嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[33:02]</span>
+                <span class="wang-guiping">王贵平：</span>我不晓得，反正就是，这里（指责值班室门外左侧的屋子）。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[33:09]</span>
+                <span class="a-policeman">X58050民警：</span>然后呢？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[33:49]</span>
+                <span class="wang-guiping">王贵平：</span>然后就招电棍，甩棍那些（违法使用警械）招呼了噻。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[34:37]</span>
+                <span class="a-policeman">X58050民警：</span>没其它呢嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[34:41]</span>
+                <span class="wang-guiping">王贵平：</span>反正到晚上12点左右的时候，再被带到那个，应该是讯问室嘛里面，就是那个，就是，开始做笔录的那里面是不是讯问室嘛？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[35:05]</span>
+                <span class="a-policeman">X58050民警：</span>你讲哪里？哪里做笔录？是在派出所里面，还是在哪？
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[35:14]</span>
+                <span class="wang-guiping">王贵平：</span>就在派出所（里），这里嘛。
+            </div>
+        </div>
+
+
+        <div class="time-location">
+            <div>音频文件名称：20241216_132453.M4a</div>
+            <div>时间：2024年12月16日 13:24:53左右</div>
+            <div>录音时长：16分14秒</div>
+            <div>录制地点：贵阳市毓秀路派出所值班室内</div>
+            <div>文件SHA256哈希值：31F86BD4496005B1ED8029D05FC89D72D67442A2175D3B48EA87C934203DD19F</div>
+        </div>
+        <div class="dialog"></div>
+            <div class="speaker">
+                <span class="timestamp">[7:29]</span>
+                <span class="wang-guiping">王贵平：</span>这一张，这个字有点问题，应该是带言字旁那个讯，是讯问，不是询问，其他的都没啥问题。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[8:18]</span>
+                 <span class="a-policeman">X58050民警：</span>签字。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[8:23]</span>
+                <span class="wang-guiping">王贵平：</span>等于……你们先签嘛。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[8:33]</span>
+                <span class="a-policeman">X58050民警：</span>啊，我说是你看过了签字，后面他们会过来签字的。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[8:35]</span>
+                <span class="wang-guiping">王贵平：</span>你们先签，我先去吃饭，吃饭完了，是哪个询问的，哪个签哈。
+            </div>
+            <div class="speaker">
+                <span class="timestamp">[8:43]</span>
+                <span class="a-policeman">X58050民警：</span>去（吃饭）呀。
+            </div>
+            <h1 class="title" id="nav-anchor-9">2024年12月18日 电话对话记录</h1>
+            <div class="time-location">
+                <div>音频文件名称：0851 8528 1715_20241218112741.m4a</div>
+                <div>时间：2024年12月18日 11:27:41</div>
+                <div>录音时长：未知</div>
+                <div>录制地点：通话录音</div>
+                <div>文件SHA256哈希值：DA4B90D954767908CDB3C330355ED8E44F21A39C899B2A3B9E53AFCF4F5F56A4</div>
+            </div>
+            <div class="dialog">
+                <div class="speaker"><span class="timestamp">[00:00]</span><span class="wang-guiping">王贵平：</span>你好</div>
+                <div class="speaker"><span class="timestamp">[00:01]</span><span class="a-policeman">来电民警：</span>喂。</div>
+                <div class="speaker"><span class="timestamp">[00:02]</span><span class="wang-guiping">王贵平：</span>你好。</div>
+                <div class="speaker"><span class="timestamp">[00:04]</span><span class="a-policeman">来电民警：</span>你是不是说你随身物品在派出所不见了？</div>
+                <div class="speaker"><span class="timestamp">[00:08]</span><span class="wang-guiping">王贵平：</span>对对对，</div>
+                <div class="speaker"><span class="timestamp">[00:09]</span><span class="a-policeman">来电民警：</span>你直接</div>
+                <div class="speaker"><span class="timestamp">[00:10]</span><span class="wang-guiping">王贵平：</span>你直接走派出所来嘛！</div>
+                <div class="speaker"><span class="timestamp">[00:14]</span><span class="a-policeman">来电民警：</span>哎，直接到派出所来，就行了。</div>
+                <div class="speaker"><span class="timestamp">[00:17]</span><span class="wang-guiping">王贵平：</span>呃，问题是找到没得喽？</div>
+                <div class="speaker"><span class="timestamp">[00:20]</span><span class="a-policeman">来电民警：</span>你来派出所问办案民警了，你不晓得嘛，他们系统里面查得到的，你过来嘛。</div>
+                <div class="speaker"><span class="timestamp">[00:26]</span><span class="wang-guiping">王贵平：</span>系统里面查得到。</div>
+                <div class="speaker"><span class="timestamp">[00:28]</span><span class="a-policeman">来电民警：</span>查得到办案的是哪个。</div>
+                <div class="speaker"><span class="timestamp">[00:31]</span><span class="wang-guiping">王贵平：</span>哦，好好好，那么我。</div>
+                <div class="speaker"><span class="timestamp">[00:34]</span><span class="a-policeman">来电民警：</span>整起过来嘛。</div>
+                <div class="speaker"><span class="timestamp">[00:34]</span><span class="wang-guiping">王贵平：</span>好，麻烦喽。</div>
+                <div class="speaker"><span class="timestamp">[00:37]</span><span class="a-policeman">来电民警：</span>没得。</div>
+                <div class="speaker"><span class="timestamp">[00:38]</span><span class="wang-guiping">王贵平：</span>唉，我过来找哪个？</div>
+            </div>
+
+            <h1 class="title" id="nav-anchor-10">2024年12月18日 接待对话记录 1</h1>
+            <div class="time-location">
+                <div>音频文件名称：20241218_134643.m4a</div>
+                <div>时间：2024年12月18日 13:46:43</div>
+                <div>录音时长：未知</div>
+                <div>录制地点：派出所</div>
+                <div>文件SHA256哈希值：FB310D00CF461208FCD9F6D305E90468947676D45E1E880CE85CCE7CB8976DD1</div>
+            </div>
+            <div class="dialog">
+                <div class="speaker"><span class="timestamp">[00:02]</span><span class="wang-guiping">王贵平：</span>警官你好。请问刚才11点半的时候是谁给我打电话？</div>
+                <div class="speaker"><span class="timestamp">[00:07]</span><span class="a-policeman">接待民警：</span>11点半，谁给你打电话，你是干啥的嘛？</div>
+                <div class="speaker"><span class="timestamp">[00:10]</span><span class="wang-guiping">王贵平：</span>就是那个随身物品的那个呢。</div>
+                <div class="speaker"><span class="timestamp">[00:13]</span><span class="a-policeman">接待民警：</span>随身物品，是多久的事情？</div>
+                <div class="speaker"><span class="timestamp">[00:16]</span><span class="wang-guiping">王贵平：</span>就是今天11点半的时候，就有你们所的人给我打电话。</div>
+                <div class="speaker"><span class="timestamp">[00:20]</span><span class="a-policeman">接待民警：</span>你是啥情况？</div>
+                <div class="speaker"><span class="timestamp">[00:21]</span><span class="a-policeman">通话民警：</span>就是以前被他们处理的，是不是吗？</div>
+                <div class="speaker"><span class="timestamp">[00:23]</span><span class="a-policeman">接待民警：</span>哪个办的案嘛？</div>
+                <div class="speaker"><span class="timestamp">[00:26]</span><span class="wang-guiping">王贵平：</span>我不晓得呢。</div>
+                <div class="speaker"><span class="timestamp">[00:29]</span><span class="a-policeman">接待民警：</span>你不晓得我咋给你找人呢？</div>
+                <div class="speaker"><span class="timestamp">[00:38]</span><span class="wang-guiping">王贵平：</span>刚才这个是不是你们打的电话？</div>
+                <div class="speaker"><span class="timestamp">[00:40]</span><span class="a-policeman">接待民警：</span>是的啊。</div>
+                <div class="speaker"><span class="timestamp">[00:41]</span><span class="wang-guiping">王贵平：</span>唉，是哪个打的呢，你看11点20打的。</div>
+                <div class="speaker"><span class="timestamp">[00:43]</span><span class="a-policeman">接待民警：</span>你听像不像我的声音嘛？</div>
+                <div class="speaker"><span class="timestamp">[00:45]</span><span class="wang-guiping">王贵平：</span>我不晓得。</div>
+                <div class="speaker"><span class="timestamp">[00:47]</span><span class="a-policeman">接待民警：</span>嗯！</div>
+                <div class="speaker"><span class="timestamp">[00:47]</span><span class="wang-guiping">王贵平：</span>我不晓得。</div>
+                <div class="speaker"><span class="timestamp">[00:47]</span><span class="a-policeman">接待民警：</span>你是啥情况，你讲情况，我给你解决就可以了，解决不到我也没得法。</div>
+                <div class="speaker"><span class="timestamp">[00:53]</span><span class="wang-guiping">王贵平：</span>等于就是我那个~</div>
+            </div>
+
+            <h1 class="title">2024年12月18日 接待对话记录 2</h1>
+            <div class="time-location">
+                <div>音频文件名称：20241218_135327.m4a</div>
+                <div>时间：2024年12月18日 13:53:27</div>
+                <div>录音时长：未知</div>
+                <div>录制地点：派出所</div>
+                <div>文件SHA256哈希值：7C6BF7483B6F35B36DD7C2DC92E7C40DFA7E332B4190EBC2DC8584D06A715C77</div>
+            </div>
+            <div class="dialog">
+                <div class="speaker"><span class="timestamp">[00:00]</span><span class="a-policeman">接待民警：</span>23230是吧。</div>
+                <div class="speaker"><span class="timestamp">[00:04]</span><span class="wang-guiping">王贵平：</span>对。</div>
+                <div class="speaker"><span class="timestamp">[00:41]</span><span class="a-policeman">接待民警：</span>王贵平是吧？</div>
+                <div class="speaker"><span class="timestamp">[00:42]</span><span class="wang-guiping">王贵平：</span>对。</div>
+                <div class="speaker"><span class="timestamp">[00:47]</span><span class="a-policeman">接待民警：</span>眼睛花了是吧，咋个搞个眼镜戴镜，之前你都没戴眼镜的呀？</div>
+                <div class="speaker"><span class="timestamp">[00:52]</span><span class="wang-guiping">王贵平：</span>有近视。</div>
+                <div class="speaker"><span class="timestamp">[00:53]</span><span class="a-policeman">接待民警：</span>有近视。</div>
+                <div class="speaker"><span class="timestamp">[01:04]</span><span class="wang-guiping">王贵平：</span>我的随身物品是不是，是不是我讲的情况？</div>
+                <div class="speaker"><span class="timestamp">[01:09]</span><span class="a-policeman">接待民警：</span>我咋个晓得。</div>
+                <div class="speaker"><span class="timestamp">[01:10]</span><span class="wang-guiping">王贵平：</span>上面都写的有的噻。</div>
+                <div class="speaker"><span class="timestamp">[01:11]</span><span class="a-policeman">接待民警：</span>我不敢乱讲嘛。哥哥对不对，因为你这个事情又不是我那个的。对不对？</div>
+                <div class="speaker"><span class="timestamp">[04:47]</span><span class="a-policeman">接待民警：</span>这有个叫王贵平的，说它啥银行卡没~拿。</div>
+                <div class="speaker"><span class="timestamp">[04:57]</span><span class="a-policeman">接待民警：</span>这有个叫王贵平的，他说他是~，19年遭（被抓）的哈？</div>
+                <div class="speaker"><span class="timestamp">[05:01]</span><span class="wang-guiping">王贵平：</span>唉，19年。</div>
+                <div class="speaker"><span class="timestamp">[05:09]</span><span class="a-policeman">接待民警：</span>哦。等于你们处理过的是吧？好好。好好，我知道。好好，拜拜。你是不是大十字抢劫遭（被抓）的哪个嘛？</div>
+                <div class="speaker"><span class="timestamp">[05:31]</span><span class="wang-guiping">王贵平：</span>那个啥抢劫嘛，打人。</div>
+                <div class="speaker"><span class="timestamp">[05:35]</span><span class="a-policeman">接待民警：</span>哦，是，应该就是。好，好，他们说的他们给你处理过了的，哈。</div>
+                <div class="speaker"><span class="timestamp">[05:43]</span><span class="wang-guiping">王贵平：</span>处理过了是吧，就是我的随身物品是咋处理的嘛？</div>
+                <div class="speaker"><span class="timestamp">[05:47]</span><span class="a-policeman">接待民警：</span>你问他们~，我，有，有啥介意呢，又不是我给你处理的，你别和我笑呀，真的呢。我是好心帮你问呢。</div>
+                <div class="speaker"><span class="timestamp">[05:59]</span><span class="wang-guiping">王贵平：</span>哦，好，麻烦，我就会去了呢。</div>
+                <div class="speaker"><span class="timestamp">[06:02]</span><span class="a-policeman">接待民警：</span>嗯，好。</div>
+            </div>
+
+        <h1 class="title" id="nav-anchor-11">2024年12月18日第二次与贵阳市公安局交涉的对话记录</h1>
+        <div class="time-location"></div>
+            <div>音频文件名称：20241218_164339_笔记.docx</div>
+            <div>录制时间：2024年12月18日</div>
+            <div>录制地点：贵阳市公安局</div>
+        </div>
+        <div class="dialog">
+            <div class="speaker"><span class="timestamp">[00:15]</span><span class="wang-guiping">王贵平：</span>还有个问题，就是我刑事拘留通知书，我家里都没收到。</div>
+            <div class="speaker"><span class="timestamp">[00:42]</span><span class="a-policeman">贵阳市公安局胡督察：</span>初审、终审，只有两个判决呢嘛？</div>
+            <div class="speaker"><span class="timestamp">[00:45]</span><span class="wang-guiping">王贵平：</span>诶。而且，还有这个判决呢，哈，现在这个法官遭督查了。</div>
+            <div class="speaker"><span class="timestamp">[00:49]</span><span class="a-policeman">贵阳市公安局胡督察：</span>呃，那些法官的事，我跟你说法院么，我给你处理不了。</div>
+            <div class="speaker"><span class="timestamp">[00:53]</span><span class="wang-guiping">王贵平：</span>哦，我晓得。但是，这个，这个裁定，它说的，和它法院的不一样，等于它法院存档的是669号，我，收到的是667号。</div>
+            <div class="speaker"><span class="timestamp">[01:07]</span><span class="a-policeman">贵阳市公安局胡督察：</span>这个，这个我跟给你~。</div>
+            <div class="speaker"><span class="timestamp">[01:10]</span><span class="wang-guiping">王贵平：</span>唉好，好，这个不关你们公安的事，我晓得了。只不过么，这些信息我还是提供一下的比较好一点。这个健康档案就是你们公安阶段的事情，诶。警官我借一支笔用一下行不行？，我没带笔。</div>
+            <div class="speaker"><span class="timestamp">[02:16]</span><span class="a-policeman">贵阳市公安局胡督察：</span>桌子上</div>
+            <div class="speaker"><span class="timestamp">[02:32]</span><span class="wang-guiping">王贵平：</span>没找到。嗯。</div>
+            <div class="speaker"><span class="timestamp">[04:20]</span><span class="wang-guiping">王贵平：</span>哦，这是110那个截频。</div>
+            <div class="speaker"><span class="timestamp">[06:59]</span><span class="a-policeman">贵阳市公安局胡督察：</span>这里，笔。</div>
+            <div class="speaker"><span class="timestamp">[07:00]</span><span class="wang-guiping">王贵平：</span>诶，好，谢谢。</div>
+            <div class="speaker"><span class="timestamp">[07:15]</span><span class="wang-guiping">王贵平：</span>还有，我那个OPPO的账号，我应该注明一下哈。</div>
+            <div class="speaker"><span class="timestamp">[07:20]</span><span class="a-policeman">贵阳市公安局胡督察：</span>你这个东西，我给你讲的，这个东西我给你核实不到。因为主要是，你这个东西，呃具体涉不涉案，办案单位来，主要核实的，你，这个东西你认为，它不是~，你这个，抢主要OPPO手机并不是的，被你抢的，是你自家的。主要的是你跟法院提出来。</div>
+            <div class="speaker"><span class="timestamp">[07:41]</span><span class="wang-guiping">王贵平：</span>呃，这个法院呢。因为我在法院的时候呢，那时候已经记不起了，我也不晓得那时~</div>
+            <div class="speaker"><span class="timestamp">[07:49]</span><span class="a-policeman">贵阳市公安局胡督察：</span>所以我现在跟你讲的是啥子？所以程序上的东西，或者是民警有没有对你进行啥子刑讯逼供啊，这些。这些是我们来核。但是针对你这个案子，你对他们这个证据，就是你，就派出所这些，提供出来的，这些验证资料，说的证据真实性存疑。诶，这些是给法院提出来。</div>
+            <div class="speaker"><span class="timestamp">[08:09]</span><span class="wang-guiping">王贵平：</span>给法院提出来是不是嘛？</div>
+            <div class="speaker"><span class="timestamp">[08:11]</span><span class="a-policeman">贵阳市公安局胡督察：</span>对。因为你要去排除他的证据材料这些，是你自家，你有，当时你应该是有律师的嘛？律师会~</div>
+            <div class="speaker"><span class="timestamp">[08:17]</span><span class="wang-guiping">王贵平：</span>没，没得没得没得。</div>
+            <div class="speaker"><span class="timestamp">[08:19]</span><span class="a-policeman">贵阳市公安局胡督察：</span>反正律师哈，不管你是去法院提出再提出申诉这块，你要排除公安机关的证据，你自家，你要质证。</div>
+            <div class="speaker"><span class="timestamp">[08:27]</span><span class="wang-guiping">王贵平：</span>你的意思就是我去法院，去把这个~</div>
+            <div class="speaker"><span class="timestamp">[08:30]</span><span class="a-policeman">贵阳市公安局胡督察：</span>你要是，你要质证，比如说这个东西，这个手机是我家的，诶并不是我~并不是我抢劫的。这些东西，是法院它会有个定夺，哈。因为，只是我现从案子上来看，诶，上面说扣位啊，那这些，诶说的是扣的是OPPO手机，并且已经发还，还有受害人的笔录啊这些，我现在从程序上来看是没问题的得。啊，至于你所谓的这个证据的，证据排除这个东西。</div>
+            <div class="speaker"><span class="timestamp">[08:57]</span><span class="a-policeman">贵阳市公安局胡督察：</span>诶比如说，你说这个我手机是你自家的，并你抢啊，这些东西呢，首先在法院你可以给他们提出来。</div>
+            <div class="speaker"><span class="timestamp">[09:03]</span><span class="wang-guiping">王贵平：</span>法院呢，现在我正在准备申诉，但是~</div>
+            <div class="speaker"><span class="timestamp">[09:06]</span><span class="a-policeman">贵阳市公安局胡督察：</span>是啊。</div>
+            <div class="speaker"><span class="timestamp">[09:07]</span><span class="wang-guiping">王贵平：</span>还没得~</div>
+            <div class="speaker"><span class="timestamp">[09:09]</span><span class="a-policeman">贵阳市公安局胡督察：</span>至于你之前反映的。说的是啥子扣押你的物品没有归还也好，啥子刑讯逼供的也好，这些东西肯定是要查。呃所以我刚讲的，之前你讲的，我也正准备去调你这些啥子清单呐，这些。啊，但你也已经提供出来了，但是这个OPPO手机究竟是归属于哪个的，所以这个东西，我给你核实不到，啊。</div>
+            <div class="speaker"><span class="timestamp">[09:29]</span><span class="wang-guiping">王贵平：</span>就是，这个OPPO的手机它是真实性，就是它真实性~</div>
+            <div class="speaker"><span class="timestamp">[09:33]</span><span class="a-policeman">贵阳市公安局胡督察：</span>我意思说这个OPPO手机究竟是你的也好，还是所谓的受害人，所谓的遭你抢夺的也好。这个东西我咋给你证实？这个我给你证实不到。</div>
+            <div class="speaker"><span class="timestamp">[09:44]</span><span class="wang-guiping">王贵平：</span>就是他，既然他指控我有这个行为，他应该有那个视频啊！</div>
+            <div class="speaker"><span class="timestamp">[09:49]</span><span class="a-policeman">贵阳市公安局胡督察：</span>是啊，所以我讲的。至于你对公安机关的，的证据材料提出疑问的，应该在法院部门进行提出，并不是向我们，给我们提出哈。而他这个法院一判，反正两次庭，两次是庭审喽，都作出决定，都是维持原判。所以你要，在庭上你要质证出来，你跟我讲这个东西没用得，是不是？</div>
+            <div class="speaker"><span class="timestamp">[10:09]</span><span class="wang-guiping">王贵平：</span>呃，那也行，反正我提出来那个办不办。那个是~</div>
+            <div class="speaker"><span class="timestamp">[10:13]</span><span class="a-policeman">贵阳市公安局胡督察：</span>呃，至于你讲的啥子民警这个，执法徇私枉法啊，反正刑讯逼供啊，这个东西，唉是我分内之事。至于你说的，这个证据是不是应该排非，还是，这个东西（是）你给法院提出来东西，因为法院还是个审判机构，唉我不是在这个审判。至于法院的判决呢，我也推翻不到它的，至于它提出的法院里面，啥子文号错误错啊这些，我也修改不了的。这不是我们作出来的东西。啊，因为公检法是，三家是分开的单位。</div>
+            <div class="speaker"><span class="timestamp">[10:39]</span><span class="wang-guiping">王贵平：</span>诶，好。</div>
+            <div class="speaker"><span class="timestamp">[10:39]</span><span class="a-policeman">贵阳市公安局胡督察：</span>啊，因为它，法院是作为这个裁判裁决单位呢嘛哈。像你有，也可以提供你自家的印证资料。唉对公安机关质，提出的质证据材料啊这些，进行那个否定啊，这是你的权利哈，当然你也要提供你自家的印证资料，要把它还原，要不它为啥采纳你的喽，是不是？</div>
+            <div class="speaker"><span class="timestamp">[10:58]</span><span class="wang-guiping">王贵平：</span>诶，好好好。另外一个，那个拘留通知书，应该是属于你们公安的~</div>
+            <div class="speaker"><span class="timestamp">[11:03]</span><span class="a-policeman">贵阳市公安局胡督察：</span>拘留通知书，那个是，但是印象当中哈，我看，因为我现在我还没看到，我印象当中好像是有个，通过挂号信的形式寄出去了的。</div>
+            <div class="speaker"><span class="timestamp">[11:12]</span><span class="wang-guiping">王贵平：</span>寄出去。我问我家老的，他们说没有收到。</div>
+            <div class="speaker"><span class="timestamp">[11:15]</span><span class="a-policeman">贵阳市公安局胡督察：</span>他这个东西，到时候给你落实一下呢嘛哈。当时如果是寄了挂号信它应该是会有底单的，啊。因为按照道理来讲，如果说官家拘留你嘛肯定要通知，通知你或者家属，但是你在拘留区，肯定要通知你家属呢嘛哈，这个我们再来落实一下。就你反映的，现在我们核实的，就是你遭刑讯逼供的问题。二个就是那个拘留通知书，通知家属的问题。第三个嘛，就是说的是，那个是扣押的物品的问题呢嘛。</div>
+            <div class="speaker"><span class="timestamp">[11:41]</span><span class="wang-guiping">王贵平：</span>唉，还有这个扣押物品它是~，</div>
+            <div class="speaker"><span class="timestamp">[11:44]</span><span class="a-policeman">贵阳市公安局胡督察：</span>但是我给你讲的，扣押物品，我看扣押物品清单，上面只有个OPPO手机，是已经发还给受害人了的。涉案的才是扣押，不涉案的就说的是，属于涉案人员随身物品管理台账，但是管理台账上面你签了字的，上面只有一张银行卡，所以呢，这个东西呢，我就给你答复喽。</div>
+            <div class="speaker"><span class="timestamp">[12:03]</span><span class="wang-guiping">王贵平：</span>只，只有一张银行卡。</div>
+            <div class="speaker"><span class="timestamp">[12:04]</span><span class="a-policeman">贵阳市公安局胡督察：</span>上面你签字的字的噻，我不可能给你核实四年前，我不会是神仙嘛，我跑去，我回溯到四年前，我看到现场，有哪些东西啊这些，所以说的，我确实哈，我只能按照你那个，台账上边你签的字那个来认定。因为确实上面你签了字的按手印的，上面只有一张银行卡，所以我只能说是这样。这个财物这块我现在我又已经答复喽，但另外两个问题下来我再，再落实，哈。</div>
+            <div class="speaker"><span class="timestamp">[12:27]</span><span class="wang-guiping">王贵平：</span>但是那个事与实际不，不相，不相符，但是。</div>
+            <div class="speaker"><span class="timestamp">[12:31]</span><span class="a-policeman">贵阳市公安局胡督察：</span>但我跟你核实不到呢嘛，你四年前的事情，你现在来跟我讲，我咋给你核实？</div>
+            <div class="speaker"><span class="timestamp">[12:37]</span><span class="wang-guiping">王贵平：</span>但是他有执法记录仪，还有监控嘛。</div>
+            <div class="speaker"><span class="timestamp">[12:39]</span><span class="a-policeman">贵阳市公安局胡督察：</span>监控，那个公安机关，呃办案区的那个监控哈，按要求不低于半年，6个月。你现在四年多，哪个可能有？</div>
+            <div class="speaker"><span class="timestamp">[12:49]</span><span class="wang-guiping">王贵平：</span>但是说作为刑事案件的~</div>
+            <div class="speaker"><span class="timestamp">[12:50]</span><span class="a-policeman">贵阳市公安局胡督察：</span>刑事案件只是那个同步录音录像的，呃，同步录音录像，但你这个是随身物品，但不是对你，不进行讯问，哈。</div>
+            <div class="speaker"><span class="timestamp">[12:57]</span><span class="wang-guiping">王贵平：</span>哦。</div>
+            <div class="speaker"><span class="timestamp">[13:02]</span><span class="a-policeman">贵阳市公安局胡督察：</span>所以说那个东西我跟你无法核实，只能从现在那个台账上面，那就有一张银行卡，我现在只能这样跟你说，</div>
+            <div class="speaker"><span class="timestamp">[13:11]</span><span class="wang-guiping">王贵平：</span>也就是说只能以那个为准呢嘛？</div>
+            <div class="speaker"><span class="timestamp">[13:13]</span><span class="a-policeman">贵阳市公安局胡督察：</span>在到我这个地方，我肯定是，只能以那个的，因为虽然说我们也是公安机关哈，但是呢我们，虽然说我们督办案件，但是我们要排除哪个哪个东西。就刚才讲的，唉你提出你的东西，办单位提出他的东西，在办单位提供出来了，你提供出其他东西来，而且现场的监控啊这些，肯定早，已遭覆掉了的。所以说，现在，只能说是现场调查情况，上面你签字了的，就只能认定这个东西。</div>
+            <div class="speaker"><span class="timestamp">[13:37]</span><span class="wang-guiping">王贵平：</span>哦。</div>
+            <div class="speaker"><span class="timestamp">[13:38]</span><span class="a-policeman">贵阳市公安局胡督察：</span>好，呃。</div>
+            <div class="speaker"><span class="timestamp">[13:40]</span><span class="wang-guiping">王贵平：</span>那个呢，这个事情呢，咋讲呢哈。</div>
+            <div class="speaker"><span class="timestamp">[13:40]</span><span class="a-policeman">贵阳市公安局胡督察：</span>呃，至于你反映还有刑讯逼供那个，到时候我再，下来再落实，哈。还有就是那个啥子~</div>
+            <div class="speaker"><span class="timestamp">[13:48]</span><span class="wang-guiping">王贵平：</span>就是那个手机呢？</div>
+            <div class="speaker"><span class="timestamp">[13:48]</span><span class="a-policeman">贵阳市公安局胡督察：</span>家属通知书。</div>
+            <div class="speaker"><span class="timestamp">[13:50]</span><span class="wang-guiping">王贵平：</span>唉，就是那个手机的来源真实性。</div>
+            <div class="speaker"><span class="timestamp">[13:52]</span><span class="a-policeman">贵阳市公安局胡督察：</span>在真实性嘛，这是现场我看了的，笔录里面他当事人，受害人也讲了的哈，一个OPPO手机，而且扣押清单，发问清单那些都签了。呃，至于你对这个，派出所的这个所有的东西，应该是你的东西，由法院提出来。哈。</div>
+            <div class="speaker"><span class="timestamp">[14:08]</span><span class="wang-guiping">王贵平：</span>唉，好好。</div>
+            <div class="speaker"><span class="timestamp">[14:08]</span><span class="a-policeman">贵阳市公安局胡督察：</span>唉，这上面东西我就先跟你收倒，判决的两份，还有这个，你的这个保安回执，呃，这个健康体检，哈。</div>
+            <div class="speaker"><span class="timestamp">[14:18]</span><span class="wang-guiping">王贵平：</span>诶，这些全部收嘛。</div>
+            <div class="speaker"><span class="timestamp">[14:20]</span><span class="a-policeman">贵阳市公安局胡督察：</span>具体我就不收喽，哈，因为这些不收，我要收来，到时候我，我咋，我咋给你附卷嘛？这些东西不涉及到这个事情的。</div>
+            <div class="speaker"><span class="timestamp">[14:28]</span><span class="wang-guiping">王贵平：</span>啊，不涉及？</div>
+            <div class="speaker"><span class="timestamp">[14:31]</span><span class="a-policeman">贵阳市公安局胡督察：</span>嗯。</div>
+            <div class="speaker"><span class="timestamp">[14:32]</span><span class="wang-guiping">王贵平：</span>行嘛，那你核实，你哪些东西收你给我签个字嘛哈。</div>
+            <div class="speaker"><span class="timestamp">[14:35]</span><span class="a-policeman">贵阳市公安局胡督察：</span>给你签个字，那么这样，啊。我在这上面，我来给你登记起。呃你交了些东西。</div>
+            <div class="speaker"><span class="timestamp">[15:52]</span><span class="a-policeman">贵阳市公安局胡督察：</span>你家电话是好多？</div>
+            <div class="speaker"><span class="timestamp">[15:55]</span><span class="wang-guiping">王贵平：</span>138xxxxxxx83。</div>
+            <div class="speaker"><span class="timestamp">[22:46]</span><span class="a-policeman">贵阳市公安局胡督察：</span>好，这三个问题，一个是对其刑讯逼供；二个是未向家属寄到拘留通知书；第三个未对其随身物品进行登记，也是进行反映呢嘛。向我队提供：一、2019年的入所健康档案；二、法院的那个，云岩区人民法院的初审判决，第二个就是中级人民法院的那个裁定书；第四个呢，就是那个12月6号的毓秀所办理回执，哈。在上面签个字。</div>
+            <div class="speaker"><span class="timestamp">[23:36]</span><span class="wang-guiping">王贵平：</span>三页。签在中间是吧？</div>
+            <div class="speaker"><span class="timestamp">[23:47]</span><span class="a-policeman">贵阳市公安局胡督察：</span>呃，你就写在中间，写嘛。以上对吧，以上四份材料由我本人提供。四份材料。</div>
+            <div class="speaker"><span class="timestamp">[24:19]</span><span class="a-policeman">贵阳市公安局胡督察：</span>日期写一个呢嘛。</div>
+            <div class="speaker"><span class="timestamp">[24:26]</span><span class="wang-guiping">王贵平：</span>12月18。</div>
+            <div class="speaker"><span class="timestamp">[24:33]</span><span class="a-policeman">贵阳市公安局胡督察：</span>他这个啥情况，到时候我跟你联系，哈。因为之前讲的，因为你那个东西四年前，以前的事情，所以说你当时那个随身物品的那个东西，你来反映，到时候我再答复你一遍呢嘛，应该都是这个情况，因为我确实给你查不清楚喽，啊。至于你遭刑讯逼供这个东西啊，还有就是，你那个拘留通知书那个，到时候我们这边会跟你联系的。</div>
+            <div class="speaker"><span class="timestamp">[24:54]</span><span class="wang-guiping">王贵平：</span>大概是好多时间？</div>
+            <div class="speaker"><span class="timestamp">[24:55]</span><span class="a-policeman">贵阳市公安局胡督察：</span>因为按照公安机关这个受理这个举报投诉项目来讲哈，一般来说是30日呢嘛，特殊情况会延长，但是呢肯定要不了那么久的。</div>
+            <div class="speaker"><span class="timestamp">[25:07]</span><span class="wang-guiping">王贵平：</span>嗯，哦就是那个，我留个邮箱，到时候就是结果你可以发邮箱不呢？</div>
+            <div class="speaker"><span class="timestamp">[25:13]</span><span class="a-policeman">贵阳市公安局胡督察：</span>诶，我直接给你打电话呢嘛。</div>
+            <div class="speaker"><span class="timestamp">[25:14]</span><span class="wang-guiping">王贵平：</span>打电话还是麻烦。</div>
+            <div class="speaker"><span class="timestamp">[25:16]</span><span class="a-policeman">贵阳市公安局胡督察：</span>好，你还有其它电话有嘛，我多接一个。</div>
+            <div class="speaker"><span class="timestamp">[25:18]</span><span class="wang-guiping">王贵平：</span>电话？</div>
+            <div class="speaker"><span class="timestamp">[25:18]</span><span class="a-policeman">贵阳市公安局胡督察：</span>呃。</div>
+            <div class="speaker"><span class="timestamp">[25:21]</span><span class="wang-guiping">王贵平：</span>就这个电话。</div>
+            <div class="speaker"><span class="timestamp">[25:22]</span><span class="a-policeman">贵阳市公安局胡督察：</span>就这个电话呢嘛，138854444983，呃就跟你那个12389投诉那个一样的呢嘛，一个电话呢嘛？</div>
+            <div class="speaker"><span class="timestamp">[25:29]</span><span class="wang-guiping">王贵平：</span>诶。</div>
+            <div class="speaker"><span class="timestamp">[25:32]</span><span class="a-policeman">贵阳市公安局胡督察：</span>你这个，包括就这样讲的，自己要长个心眼。你不要说是法院，它是进行判决，公安机关提出它的证据之后，你就把它，不要当成公安机关，你就把当成一个当事人，唉。你们在今天那个法院庭审的时候，对方提出的一些证据支撑，你也可以进行反驳的，啊，你提供你的相应证据支撑，对不对？</div>
+            <div class="speaker"><span class="timestamp">[25:53]</span><span class="wang-guiping">王贵平：</span>诶，好好好。</div>
+            <div class="speaker"><span class="timestamp">[25:53]</span><span class="a-policeman">贵阳市公安局胡督察：</span>呃，也要不了现在，你现在跟我讲，我咋，我给处理不到这个事情，哈。我们下面只是它们程序上面这个东西，哈。</div>
+            <div class="speaker"><span class="timestamp">[26:04]</span><span class="wang-guiping">王贵平：</span>好，那请问一下警官你咋称呼？</div>
+            <div class="speaker"><span class="timestamp">[26:07]</span><span class="a-policeman">贵阳市公安局胡督察：</span>我姓胡。</div>
+            <div class="speaker"><span class="timestamp">[26:08]</span><span class="wang-guiping">王贵平：</span>胡，胡啥名字呀？</div>
+            <div class="speaker"><span class="timestamp">[26:10]</span><span class="a-policeman">贵阳市公安局胡督察：</span>呃，我胡阳。</div>
+            <div class="speaker"><span class="timestamp">[26:10]</span><span class="wang-guiping">王贵平：</span>胡阳哦，好，谢谢。</div>
+            <div class="speaker"><span class="timestamp">[26:12]</span><span class="a-policeman">贵阳市公安局胡督察：</span>没得。有的东西反正，反正我尽力办，哈。倒是这两，这两天我在看，就是看抽个时间走看守所去调一下你的健康档案啊，这些。哈，正好你送过来了呢，嘿。</div>
+            <div class="speaker"><span class="timestamp">[26:27]</span><span class="wang-guiping">王贵平：</span>麻烦了。</div>
+            <div class="speaker"><span class="timestamp">[26:28]</span><span class="a-policeman">贵阳市公安局胡督察：</span>好，没得。</div>
+        </div>
+
+        <h1 class="title" id="nav-anchor-12">2024年12月25日 第三次与林筑萍通话</h1>
+        <div class="time-location">
+            <div>音频文件名称：林筑萍法官@0851 8536 4238_20241225092406.m4a</div>
+            <div>音频文件SHA256哈希值：85B42C1ECE44984E8594B3A511BAEC8BF57D38D09F4A7F8003A7A20CCFF5DF49</div>
+            <div>录制时间戳：2024年12月25日 09时24分06秒</div>
+            <div>音频时长：0秒</div>
+            <div>录制地点：通话录音</div>
+        </div>
+        <div class="dialog">
+            <div class="speaker"><span class="timestamp">[0:00]</span><span class="a-policeman">林筑萍：</span>喂！</div>
+        </div>
+        <div class="time-location">
+            <div>音频文件名称：林筑萍法官@0851 8536 4238_20241225092424.m4a</div>
+            <div>音频文件SHA256哈希值：F0E5915E16B0AB0F648DA94582D0964BE40729EC82B8045E7B7544A2410266F7</div>
+            <div>录制时间戳：2024年12月25日  11时24分24秒</div>
+            <div>音频时长：1分16秒</div>
+            <div>录制地点：通话录音</div>
+        </div>
+        <div class="dialog">
+            <div class="speaker"><span class="timestamp">[0:01]</span><span class="wang-guiping">王贵平：</span>喂，你好！</div>
+            <div class="speaker"><span class="timestamp">[0:02]</span><span class="a-policeman">林筑萍：</span>喂，你哪位？</div>
+            <div class="speaker"><span class="timestamp">[0:03]</span><span class="wang-guiping">王贵平：</span>我叫王贵平。</div>
+            <div class="speaker"><span class="timestamp">[0:04]</span><span class="a-policeman">林筑萍：</span>哦，啥事？</div>
+            <div class="speaker"><span class="timestamp">[0:06]</span><span class="wang-guiping">王贵平：</span>就是你2019年8月26号作的那个裁定书没寄给我呢！</div>
+            <div class="speaker"><span class="timestamp">[0:12]</span><span class="a-policeman">林筑萍：</span>啥裁定书没作给你？</div>
+            <div class="speaker"><span class="timestamp">[0:15]</span><span class="wang-guiping">王贵平：</span>就是2019年，是8月26号作的，叫黔2019……</div>
+            <div class="speaker"><span class="timestamp">[0:22]</span><span class="a-policeman">林筑萍：</span>更正裁定不是送给你了吗？</div>
+            <div class="speaker"><span class="timestamp">[0:26]</span><span class="wang-guiping">王贵平：</span>你寄给我的那个是11月8号，就是今年11月8号……</div>
+            <div class="speaker"><span class="timestamp">[0:30]</span><span class="a-policeman">林筑萍：</span>听着我给你讲，因为你收到的那份案号是错的，那么所以我们针对，你收到错的那一份，我们给你下一份更正裁定，就以我们后面……，案号就以我们后面更正的这份案号为准就行了，原来的那一份我就不需要寄给你，因为，我不可能寄两份给你，哈。</div>
+            <div class="speaker"><span class="timestamp">[0:48]</span><span class="wang-guiping">王贵平：</span>那一份我应该要知道啊！你就是……</div>
+            <div class="speaker"><span class="timestamp">[0:50]</span><span class="a-policeman">林筑萍：</span>不存在知不知道，就是个案号啊，我以更正裁定给你讲清楚了，那个案号就是案号错了，其他内容不变。</div>
+            <div class="speaker"><span class="timestamp">[0:56]</span><span class="wang-guiping">王贵平：</span>那你这个更正裁定书的依据是什么呀？</div>
+            <div class="speaker"><span class="timestamp">[1:00]</span><span class="a-policeman">林筑萍：</span>就是我给你讲了，像我们所有的法律文书，不是主文部分的错误，都可以用更正文书来更正，你就是个案号错，哈，你不要一直纠结这个问题了。</div>
+            <div class="speaker"><span class="timestamp">[1:10]</span><span class="wang-guiping">王贵平：</span>我说你作，你作的这个更正裁定书，是依哪个依据作的裁定？</div>
+        </div>
+        <div class="time-location">
+            <div>音频文件名称：林筑萍法官@0851 8536 4238_20241225093037.m4a</div>
+            <div>音频文件SHA256哈希值：EA548124048342FC70D9A9308F89D27DE173F540E9A15F1900B18132DC4BFCA5</div>
+            <div>录制时间：2024年12月25日9时30分37秒</div>
+            <div>音频时长：5分5秒</div>
+            <div>录制地点：通话录音</div>
+        </div>
+        <div class="dialog">
+            <div class="speaker"><span class="timestamp">[0:01]</span><span class="wang-guiping">王贵平：</span>喂，你好！</div>
+            <div class="speaker"><span class="timestamp">[0:02]</span><span class="a-policeman">林筑萍：</span>喂，你这电话咋断了勒？</div>
+            <div class="speaker"><span class="timestamp">[0:04]</span><span class="wang-guiping">王贵平：</span>是你自己挂的勒。</div>
+            <div class="speaker"><span class="timestamp">[0:07]</span><span class="a-policeman">林筑萍：</span>喂！</div>
+            <div class="speaker"><span class="timestamp">[0:08]</span><span class="wang-guiping">王贵平：</span>是你挂的勒！</div>
+            <div class="speaker"><span class="timestamp">[0:10]</span><span class="a-policeman">林筑萍：</span>我挂了，我还给你打过来干嘛！我看你是没事做了！我跟你讲，你只是问这个，为啥给你更正这个裁定书的这个号，是不是，文书的这个号是不是？</div>
+            <div class="speaker"><span class="timestamp">[0:20]</span><span class="wang-guiping">王贵平：</span>我是说你是依据……</div>
+            <div class="speaker"><span class="timestamp">[0:22]</span><span class="a-policeman">林筑萍：</span>主要法律依据是不是？</div>
+            <div class="speaker"><span class="timestamp">[0:23]</span><span class="wang-guiping">王贵平：</span>唉，对！</div>
+            <div class="speaker"><span class="timestamp">[0:24]</span><span class="a-policeman">林筑萍：</span>你这样子，你最好去买一份我们法院的刑事诉讼文书样式。哈，这个上面有我们最高法院的规定的。最高法院的规定是：对文书当中的，不涉及到主文，或者实体的判决这种，是允许用裁定形式更正。哈，我这次告诉你，告诉你以后，麻烦以后再也不要来问这个问题了。</div>
+            <div class="speaker"><span class="timestamp">[0:44]</span><span class="wang-guiping">王贵平：</span>这个问题……</div>
+            <div class="speaker"><span class="timestamp">[0:45]</span><span class="a-policeman">林筑萍：</span>如果你对我的，听着我给你讲完。</div>
+            <div class="speaker"><span class="timestamp">[0:46]</span><span class="wang-guiping">王贵平：</span>这个问题我已经……查过了。</div>
+            <div class="speaker"><span class="timestamp">[0:46]</span><span class="a-policeman">林筑萍：</span>听着我给你讲完，你要打电话来问，你听我讲完。你对我的解释不满意，你该咋反映咋反映，哈。这问题你问，既然问到这个问题我就给你将清楚，这个最高法院的规定是允许的，那么我们根据最高法院的规定，作出裁定，对这个案号错误的这个作更正。如果你对这个案件的实体问题，认定事实，定罪量刑，你认为有问题你正常走你的申诉程序。哈，听清楚没？</div>
+            <div class="speaker"><span class="timestamp">[1:15]</span><span class="wang-guiping">王贵平：</span>你讲的那个依据我已经看过了。</div>
+            <div class="speaker"><span class="timestamp">[1:32]</span><span class="a-policeman">林筑萍：</span>听着，你不要在电话里面和我一直这样扯这个事情。如果你对我的解释不满意，你正规的走你的程序，你该向哪里反映，你向哪里反映，哈。其他你还有什么问题没有？</div>
+            <div class="speaker"><span class="timestamp">[1:32]</span><span class="wang-guiping">王贵平：</span>我的问题就是那个依据不清楚。</div>
+            <div class="speaker"><span class="timestamp">[1:33]</span>庭长来电话，林筑萍和对方对话，……。</div>
+            <div class="speaker"><span class="timestamp">[2:51]</span><span class="a-policeman">林筑萍：</span>你还有什么问题没有？</div>
+            <div class="speaker"><span class="timestamp">[2:52]</span><span class="wang-guiping">王贵平：</span>你就是讲的那个瑕疵依据，你是依据哪个规定，瑕疵……</div>
+            <div class="speaker"><span class="timestamp">[2:57]</span><span class="a-policeman">林筑萍：</span>我已经告诉你了，你不要一直问我了，我们最高法院的相关规定哈。最高法院对法律文书的相关规定，对不涉及……</div>
+            <div class="speaker"><span class="timestamp">[3:04]</span><span class="wang-guiping">王贵平：</span>具体是哪个相关规定呀？</div>
+            <div class="speaker"><span class="timestamp">[3:05]</span><span class="a-policeman">林筑萍：</span>你听着我给你讲清楚。就是那个……最高人民法院关于人民法院法律文书的相关规定，就是这个规定。哈，不涉及主文，不影响实体的，这个是可以用裁定的形式那个的。</div>
+            <div class="speaker"><span class="timestamp">[3:20]</span><span class="wang-guiping">王贵平：</span>发文编号是多少？</div>
+            <div class="speaker"><span class="timestamp">[3:21]</span><span class="a-policeman">林筑萍：</span>你不要一直和我在电话里面和我掰，你一天没事情，我现在工作多的很。</div>
+            <div class="speaker"><span class="timestamp">[3:25]</span><span class="a-policeman">林筑萍：</span>这样子，对这个问题解释，我已经给你答复清楚了。其他的问题，你该走法律程序，走法律程序。除了这个问题，你还有什么问题？</div>
+            <div class="speaker"><span class="timestamp">[3:32]</span><span class="wang-guiping">王贵平：</span>我说你的这个依据发文编号是多少？</div>
+            <div class="speaker"><span class="timestamp">[3:33]</span><span class="a-policeman">林筑萍：</span>我已经告诉你了，还没听清楚啊？我已经给你讲清楚了呀，最高法院关于法律文书的相关的差、错、漏（不知道是不是差错漏，发音不清）的相关规定，这个是有的。法律文书的规定，这个是有的。其它还有问题没有？</div>
+            <div class="speaker"><span class="timestamp">[3:47]</span><span class="wang-guiping">王贵平：</span>是多少号发布的规定？</div>
+            <div class="speaker"><span class="timestamp">[3:49]</span><span class="a-policeman">林筑萍：</span>没有号数，这个没有号数。包括你去查我们的刑事法律文书的这个格式上，都有这个裁定文书的这个，这个格式的，是允许的。啊，不仅仅是对你这个案子，我们很多的案子不涉及到实体，不涉及主文的，有差错漏的，我们都允许更正的。其它你还有什么问题没？除此以外，你还有啥问题没有？如果没有，我就不和你多讲了。哈，我还有别的工作。</div>
+            <div class="speaker"><span class="timestamp">[4:12]</span><span class="wang-guiping">王贵平：</span>你这个涉及到案号了呢！</div>
+            <div class="speaker"><span class="timestamp">[4:15]</span><span class="a-policeman">林筑萍：</span>唉，对，你认为，听着我给你讲清楚，你听得懂话不？你对我的解释，如果你不满意，你去走相关的程序，该向哪里反映向哪里反映。哈，听清楚没有？你不要打这个电话来了，我们还有别的工作。不可能问你这个事情，一天一直纠结，你反反复复的，起码二三十次了。</div>
+            <div class="speaker"><span class="timestamp">[4:33]</span><span class="wang-guiping">王贵平：</span>我肯定要搞清楚，我该打还是要打。</div>
+            <div class="speaker"><span class="timestamp">[4:37]</span><span class="a-policeman">林筑萍：</span>其它还有什么问题没有？</div>
+            <div class="speaker"><span class="timestamp">[4:40]</span><span class="wang-guiping">王贵平：</span>就是你作出的那个裁定依据，具体一点。</div>
+            <div class="speaker"><span class="timestamp">[4:43]</span><span class="a-policeman">林筑萍：</span>我已经告诉你了，听得懂不？</div>
+            <div class="speaker"><span class="timestamp">[4:46]</span><span class="wang-guiping">王贵平：</span>是哪一条规定？发文编号是什么？</div>
+            <div class="speaker"><span class="timestamp">[4:47]</span><span class="a-policeman">林筑萍：</span>好，我已经给你讲了，它没有具体规定，它就是在法律文书样式上是允许的。哈，我不和你多讲了，如果以这个问题，对不起，我现在就给你挂电话了。
+                <span class="wang-guiping">王贵平：</span>2013年1月20号（口误应该是2023年）。
+            <div class="speaker"><span class="timestamp">[4:59]</span><span class="wang-guiping">王贵平：</span>我的问题就是你还没解释清楚。</div>
+            <div class="speaker"><span class="timestamp">[5:01]</span><span class="a-policeman">林筑萍：</span>好，这样子我不和你再讲了，哈。</div>
+    </div>
+
+    <h1 class="title" id="nav-anchor-13">2024年12月31日 第三次与贵阳市公安局云岩分局胡督察对话（电话方式）</h1>
+    <div class="time-location"></div>
+            <div>音频文件名称：0851 8682 2261_20241231212357_笔记.docx</div>
+            <div>录制时间：2024年12月31日 21:23:57</div>
+            <div>录音时长：未知</div>
+            <div>录制地点：贵阳市公安局云岩分局</div>
+            <div>文件SHA256哈希值：未提供</div>
+        </div>
+        <div class="dialog"></div>
+            <div class="speaker"><span class="timestamp">[00:00]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>那天你过来说的是，他们没有给你寄家属通知书的问题呢嘛，是吧?</div>
+            <div class="speaker"><span class="timestamp">[00:05]</span><span class="wang-guiping">王贵平：</span>唉，就是一个拘留通知书，还有个逮捕通知书。</div>
+            <div class="speaker"><span class="timestamp">[00:09]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>因为他那个情况呢，我现在我给你打电话，又给你回访，告知你一下，呃，针对你之前反映就是那个，刑事拘留家属通知书的这个问题。因为他们那个派出所呢，我查了他们案件卷宗材料，他们是通过邮寄的形式，以挂号信的方式寄给你父亲的，唉。</div>
+            <div class="speaker"><span class="timestamp">[00:27]</span><span class="wang-guiping">王贵平：</span>我父亲到这个时候一直没收到呢。</div>
+            <div class="speaker"><span class="timestamp">[00:30]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>那它这个上面是有邮戳的嘛，是有记录的。诶，至于当时是你们家里面是啥子原因没有收到这些，这个就，具体我就给你答复不到了。但是他这个确实，东西是寄出去了的，通过挂号信寄的，呃。</div>
+            <div class="speaker"><span class="timestamp">[00:43]</span><span class="wang-guiping">王贵平：</span>寄的，它是寄在我户籍地么，还是寄在这个龙里这边来？</div>
+            <div class="speaker"><span class="timestamp">[00:51]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>龙里龙里</div>
+            <div class="speaker"><span class="timestamp">[00:51]</span><span class="wang-guiping">王贵平：</span>龙里，我这没收到，这个问题就有点那个了呢！</div>
+            <div class="speaker"><span class="timestamp">[00:54]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>他这个东西我跟你现在，他们，至于你们那边是到，为啥子没有收啊，或者是，没有送到啊，这些情况我不晓得。但它这个看看，程序上来讲，他们是已经送出去了的，是吧有挂号信，有邮戳的，啊。</div>
+            <div class="speaker"><span class="timestamp">[01:06]</span><span class="wang-guiping">王贵平：</span>有挂号信那个回执有没得嘛？</div>
+            <div class="speaker"><span class="timestamp">[01:09]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>呃，他这个东西，说这些，哦，现在所里面，可能怕。因为发的判决的话，你查档案，全部交给法院了的。啊。</div>
+            <div class="speaker"><span class="timestamp">[01:19]</span><span class="wang-guiping">王贵平：</span>你的意思说，你的意思是，那个回执那些都交给法院了，是不是啊？</div>
+            <div class="speaker"><span class="timestamp">[01:25]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>如果是案卷卷宗材料，你移送起诉的时候，按照案卷卷宗材料会一并移送。啊。</div>
+            <div class="speaker"><span class="timestamp">[01:32]</span><span class="wang-guiping">王贵平：</span>诶。我是问的是那个，就是你说那个挂号信寄那个，通知书的事情呢，那个回执应该是有的啊。</div>
+            <div class="speaker"><span class="timestamp">[01:42]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>所以我你讲的，如果是因为案件卷宗，纸质的卷宗，他们会随愿移交。移送起诉的时候，所以纸质卷宗途径呢，现在我这里没得，我只看到网上有这个记录和片。</div>
+            <div class="speaker"><span class="timestamp">[01:55]</span><span class="wang-guiping">王贵平：</span>哦。</div>
+            <div class="speaker"><span class="timestamp">[01:55]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>呃，然后你反映还有刑讯逼供的问题，因为时间较久，你19年的事情了，现在隔了六年了。呃所以说，当时你那个所里面那个啥子办区那个监控那些，现在给你复原不到了的，就是那天（2024年12月18日）你来的时候呢，我已经告知了你。所以说这个情况我给你核实不清楚，啊。然后因为，你那个笔录里面你也看了喽，你说是，在当时笔录里面有签字捺印的。呃你在抢人家手机的时候，唉，打对方，啊造成的受伤，当然这个东西我现在，不多的给你一个解释呢嘛哈。因为这个材料上面你有签字捺印的，主要的是监控探头。现在我已经调不到了的，啊，已经到覆掉的喽。</div>
+            <div class="speaker"><span class="timestamp">[02:34]</span><span class="wang-guiping">王贵平：</span>监控调不到。问题是你那个手机是从哪点来的喽？</div>
+            <div class="speaker"><span class="timestamp">[02:38]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>所以我给你我讲的，因为至于你这个手机，诶，你说的啥子证据排斥，那天你来我都给你说的很好的呢嘛，哈。所以你，至于他这个东西，你认为不是抢夺这些是法院来判，并不是说，我来给你催促裁判，啊。</div>
+            <div class="speaker"><span class="timestamp">[02:53]</span><span class="wang-guiping">王贵平：</span>哦。</div>
+            <div class="speaker"><span class="timestamp">[02:54]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>第三的个，因为那个随身物品登记台账这一块，那个公安机关，那个反正办案，我们内部规定呢嘛。违法犯罪嫌疑人进入办案场所或者就是那个随身财物进行过了一个登记。但是上面只登记了你有一个工商银行的银行卡，上面也有你签字捺印，这东西我现在，我也给你认不到。比如给你讲的，当时讲已经覆掉了的，所以我看不到当时你有那些东西，但是上面你签字了的东西，所以我只能说是，按照这个，你签字的随身物品台账登记表来进行核实，哈。</div>
+            <div class="speaker"><span class="timestamp">[03:28]</span><span class="wang-guiping">王贵平：</span>啊，这个签字，它并不代表有事实这个事实啊？，这个事实那些~</div>
+            <div class="speaker"><span class="timestamp">[03:32]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>但是我现在，只能是认定这个东西，啊。就现在，当时那个监控都没得了的。我当时又不在现场，我晓得身上有哪些东西，对不对？我不清楚嘛！我现在只能是通过你们当时签的这个东西来认定。好不好？</div>
+            <div class="speaker"><span class="timestamp">[03:47]</span><span class="wang-guiping">王贵平：</span>哦，就是我不得收到那个逮捕通知书和那个拘留通知书，可以补送不呢？</div>
+            <div class="speaker"><span class="timestamp">[03:55]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>如果你需要这个东西，你可以去所里面喊他们再拿，再给你打印一份，好不好？</div>
+            <div class="speaker"><span class="timestamp">[04:00]</span><span class="wang-guiping">王贵平：</span>就是在派出所呢嘛？</div>
+            <div class="speaker"><span class="timestamp">[04:02]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>呃，对。</div>
+            <div class="speaker"><span class="timestamp">[04:02]</span><span class="wang-guiping">王贵平：</span>哦，好好好。</div>
+            <div class="speaker"><span class="timestamp">[04:04]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>可以再，再生成再打出来的。但是给你讲的，因为现在卷宗材料是已经移送了的。哈，所以说，我也，我也只能说是看到有一个记录，哈。</div>
+            <div class="speaker"><span class="timestamp">[04:14]</span><span class="wang-guiping">王贵平：</span>哦，好好好，麻烦了哈，唉。</div>
+            <div class="speaker"><span class="timestamp">[04:15]</span><span class="a-policeman">贵阳市公安局云岩分局胡督察：</span>哦，没得。</div>
+        </div>
+
+
+    </div>
+</html>

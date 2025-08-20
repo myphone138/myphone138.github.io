@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?706326d91e162e3e129576cfec1ad6b5";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="icon" type="image/png" href="images/OPPO A5 来源不明.png">
+    
+    <title>王贵平主页</title>
+    <style>
+        /* 基础 */
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            cursor: grab;
+            font-family: 'Arial', sans-serif;
+        }
+
+        canvas { display: block; }
+
+        /* 汉堡按钮 */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 3000;
+        }
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 4px;
+            margin: 4px 0;
+            background: #2196f3;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* 头部 */
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 80px;
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(26,26,46,0.9) 50%, rgba(22,33,62,0.9) 100%);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0,255,136,0.3);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+        .header-left { display: flex; align-items: center; gap: 20px; }
+
+        .logo { font-size: 24px; font-weight: bold; color: #00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.5); }
+
+        /* 胶囊按钮样式 */
+        .capsule-btn {
+            display: inline-block; padding: 0.35em 1.2em; border-radius: 999px;
+            background: linear-gradient(90deg,#1976d2 0%,#2196f3 100%);
+            color:#f5f5f5; font-weight:500; font-size:15px; text-decoration:none;
+            box-shadow:0 2px 6px rgba(25,118,210,0.10); border:none; transition: background .3s, box-shadow .3s, transform .2s;
+            cursor:pointer; outline:none; white-space:nowrap;
+        }
+        .capsule-btn:hover,.capsule-btn:focus{ background:linear-gradient(90deg,#1565c0 0%,#1976d2 100%); box-shadow:0 4px 12px rgba(25,118,210,0.18); transform:translateY(-2px) scale(1.04); }
+
+        /* 导航（默认桌面显示） */
+        .nav-menu {
+            display:flex; gap:30px; list-style:none; margin:0; padding:0; justify-content:center; width:100%;
+        }
+        .nav-menu li { flex:0 0 auto; }
+        .nav-menu li a { color:white; text-decoration:none; font-size:16px; transition:color .3s; position:relative; }
+        .nav-menu li a:hover{ color:#00ff88; }
+        .nav-menu li a::after{ content:''; position:absolute; bottom:-5px; left:0; width:0; height:2px; background:#00ff88; transition:width .3s; }
+        .nav-menu li a:hover::after{ width:100%; }
+
+        /* 滚动条样式 */
+        .nav-menu::-webkit-scrollbar{ height:6px; }
+        .nav-menu::-webkit-scrollbar-thumb{ background:#1976d2; border-radius:3px; }
+        .nav-menu::-webkit-scrollbar-track{ background:#eee; }
+
+        /* 其它元素 */
+        .status-indicator{ display:flex; align-items:center; gap:8px; color:#00ff88; font-size:14px; }
+        .status-dot{ width:8px; height:8px; background:#00ff88; border-radius:50%; animation:pulse 2s infinite; }
+        @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.5;} }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(26,26,46,0.9) 50%, rgba(22,33,62,0.9) 100%);
+            backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(0,255,136,0.3);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 30px;
+        }
+        .footer-center {
+            color: #fff !important;
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            text-align: center !important;
+            text-shadow: 0 0 12px #00ff88, 0 0 4px #fff, 0 2px 12px rgba(0,255,136,0.35);
+            letter-spacing: 2px !important;
+            width: 100%;
+            text-align: center;
+        }
+
+        .social-links a{ color:#fff !important; text-shadow:0 0 8px #00ff88,0 0 2px #fff; }
+        .social-links a:hover{ color:#00ff88 !important; text-shadow:0 0 12px #00ff88,0 0 4px #fff; }
+
+        .avatar-img{ width:48px; height:48px; border-radius:50%; box-shadow:0 2px 8px rgba(25,118,210,0.15); margin-right:12px; object-fit:cover; vertical-align:middle; }
+        .avatar-name{ font-size:22px; font-weight:bold; color:#00ff88; margin-right:18px; letter-spacing:2px; text-shadow:0 0 8px #00ff88,0 0 2px #fff; }
+
+        /* 移动端：隐藏导航，显示汉堡 */
+        @media (max-width:900px){
+            .hamburger{ display:flex; }
+            /* 固定定位浮层，避免被 footer 覆盖；保留底部内边距以便最后一项可见 */
+            .nav-menu{
+                display:none !important;
+                flex-direction:column;
+                gap:10px;
+                position:fixed;
+                top:90px;
+                left:50%;
+                transform:translateX(-50%);
+                width:86%;
+                max-height:calc(100vh - 170px); /* 留出 header+footer 空间 */
+                padding:12px 16px 120px 16px; /* 底部留出更多空间，避免被 footer 遮挡 */
+                background:rgba(26,35,126,0.94);
+                backdrop-filter:blur(6px);
+                border-radius:12px;
+                box-shadow:0 8px 32px rgba(0,0,0,0.45);
+                overflow-y:auto;
+                -webkit-overflow-scrolling:touch;
+                touch-action:pan-y;
+                overscroll-behavior: contain;
+                white-space:normal;
+                scrollbar-width:thin;
+                scrollbar-color:#1976d2 rgba(0,0,0,0.1);
+                z-index:9999;
+                pointer-events:auto;
+            }
+            .nav-menu.show{ display:flex !important; }
+            .nav-menu li{ margin:10px 0; text-align:center; }
+            .nav-menu::-webkit-scrollbar{ height:8px; }
+            .nav-menu::-webkit-scrollbar-thumb{ background:#1976d2; border-radius:4px; }
+            .header-left{ width:100%; justify-content:flex-end; }
+        }
+    </style>
+    <!-- 额外保险：立刻在 head 级别再次保证小屏幕隐藏导航（防止缓存或脚本先行显示） -->
+    <style>
+        @media (max-width:900px){
+            .nav-menu{ display:none !important; }
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <div class="header-left">
+        
+            <img src="images/OPPO A5 来源不明.png" alt="头像" class="avatar-img">
+        <span class="avatar-name" style="font-size:16px;">（2019）黔0103刑初821号揭秘</span>
+            <button class="hamburger" id="hamburgerBtn" aria-label="菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        <nav>
+            <ul class="nav-menu" id="navMenu">
+                <li><a class="capsule-btn" href="index.html">本站首页</a></li>
+                <li><a class="capsule-btn" href="declaration.html">重要声明</a></li>
+                <li><a class="capsule-btn" href="introduction.html">案件简介</a></li>
+                <li><a class="capsule-btn" href="case-history.html">案件脉络</a></li>
+                <li><a class="capsule-btn" href="blog-news.html">博主动态</a></li>
+                <li><a class="capsule-btn" href="navigation.html">导航中心</a></li>
+                <li><a class="capsule-btn" href="problems.html">问题清单</a></li>
+                <li><a class="capsule-btn" href="evidence.html">证据列表</a></li>
+                <li><a class="capsule-btn" href="progress.html">处理进度</a></li>
+                <li><a class="capsule-btn" href="official-news.html">官方动态</a></li>
+                <li><a class="capsule-btn" href="contact.html">联系我们</a></li>
+            </ul>
+        </nav>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var hamburger = document.getElementById('hamburgerBtn');
+        var navMenu = document.getElementById('navMenu');
+        // 占位，用于还原 navMenu 的原始位置
+        var placeholder = document.createElement('div');
+        placeholder.style.display = 'none';
+        navMenu.parentNode.insertBefore(placeholder, navMenu.nextSibling);
+
+      // 强制初始收起菜单，防止手机端默认展开
+      navMenu.classList.remove('show');
+      // 调试：打印当前菜单项数量与文本，便于比较手机/桌面差异
+      try { console.info('navMenu items count:', navMenu.querySelectorAll('li').length);
+          console.info(Array.from(navMenu.querySelectorAll('li a')).map(a=>a.textContent.trim())); } catch(e) {}
+        if (window.innerWidth <= 900) {
+            navMenu.style.display = 'none';
+        }
+
+        var movedToBody = false;
+
+        hamburger.addEventListener('click', function() {
+            var isShown = navMenu.classList.toggle('show');
+            // 清除内联 display，让 CSS 控制显示
+            navMenu.style.display = '';
+
+            if (isShown) {
+                // 将菜单移动到 body，避免受父容器 stacking context 限制
+                if (!movedToBody) {
+                    document.body.appendChild(navMenu);
+                    movedToBody = true;
+                }
+                // 让菜单内部支持原生滚动惯性，避免禁用 body overflow（提高灵敏度）
+                // 确保菜单滚到顶部以显示首项
+                setTimeout(function() { navMenu.scrollTop = 0; }, 50);
+            } else {
+                // 收起时把菜单放回占位位置
+                if (movedToBody) {
+                    placeholder.parentNode.insertBefore(navMenu, placeholder.nextSibling);
+                    movedToBody = false;
+                }
+            }
+        });
+    });
+    </script>
+</header>
+
+<canvas id="sphereCanvas"></canvas>
+
+<footer class="footer">
+    <div class="footer-center">
+        <span>© 2025 王贵平保留所有权</span>
+    </div>
+</footer>
+
+<script>
+    const canvas = document.getElementById('sphereCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight - 140;
+        canvas.style.marginTop = '80px';
+    }
+    
+    resizeCanvas();
+
+    const numbers = "oppoA5来源不明";
+    const points = [];
+    const trails = [];
+    const radius = Math.min(canvas.width, canvas.height) * 0.4;
+    let centerX = canvas.width / 2;
+    let centerY = canvas.height / 2;
+    const numPoints = 300;
+
+    let isMouseDown = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+    let mouseVelocityX = 0;
+    let mouseVelocityY = 0;
+
+    for (let i = 0; i < numPoints; i++) {
+        const phi = Math.acos(1 - (2 * i) / numPoints);
+        const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+
+        const x = Math.cos(theta) * Math.sin(phi);
+        const y = Math.sin(theta) * Math.sin(phi);
+        const z = Math.cos(phi);
+
+        points.push({ 
+            x, y, z, 
+            originalX: x, 
+            originalY: y, 
+            originalZ: z,
+            trail: [],
+            color: `hsl(${(i * 137.5) % 360}, 70%, 60%)`
+        });
+    }
+
+    let angleX = 0;
+    let angleY = 0;
+    let velocityX = 0.005;
+    let velocityY = 0.005;
+    const gravityAcceleration = 0.0005;
+    const friction = 0.98;
+
+    function rotatePoint(p, angleX, angleY) {
+        const y1 = p.y * Math.cos(angleX) - p.z * Math.sin(angleX);
+        const z1 = p.y * Math.sin(angleX) + p.z * Math.cos(angleX);
+
+        const x1 = p.x * Math.cos(angleY) - z1 * Math.sin(angleY);
+        const z2 = p.x * Math.sin(angleY) + z1 * Math.cos(angleY);
+
+        return { x: x1, y: y1, z: z2 };
+    }
+
+    function drawTrail(trail, color) {
+        if (trail.length < 2) return;
+        
+        ctx.beginPath();
+        ctx.moveTo(trail[0].x, trail[0].y);
+        
+        for (let i = 1; i < trail.length; i++) {
+            const alpha = i / trail.length;
+            ctx.strokeStyle = `${color.replace(')', `, ${alpha * 0.6})`)}`;
+            ctx.lineWidth = 2 * alpha;
+            ctx.lineTo(trail[i].x, trail[i].y);
+        }
+        
+        ctx.stroke();
+    }
+
+    function draw() {
+        const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius * 2);
+        gradient.addColorStop(0, 'rgba(0, 255, 136, 0.1)');
+        gradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.3)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.8)');
+        
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        velocityX += gravityAcceleration;
+        velocityY += gravityAcceleration;
+        velocityX *= friction;
+        velocityY *= friction;
+
+        velocityX += mouseVelocityX * 0.1;
+        velocityY += mouseVelocityY * 0.1;
+        mouseVelocityX *= 0.9;
+        mouseVelocityY *= 0.9;
+
+        angleX += velocityX;
+        angleY += velocityY;
+
+        const rotatedPoints = points.map(p => {
+            const rotated = rotatePoint(p, angleX, angleY);
+            return { ...rotated, originalPoint: p };
+        });
+
+        rotatedPoints.sort((a, b) => b.z - a.z);
+
+        rotatedPoints.forEach((p) => {
+            const scale = 1 / (1.5 + p.z);
+            const x = centerX + p.x * radius * scale;
+            const y = centerY + p.y * radius * scale;
+
+            p.originalPoint.trail.push({ x, y, timestamp: Date.now() });
+            
+            p.originalPoint.trail = p.originalPoint.trail.filter(point => 
+                Date.now() - point.timestamp < 1000
+            );
+
+            drawTrail(p.originalPoint.trail, p.originalPoint.color);
+        });
+
+        rotatedPoints.forEach((p, index) => {
+            const scale = 1 / (1.5 + p.z);
+            const x = centerX + p.x * radius * scale;
+            const y = centerY + p.y * radius * scale;
+
+            const fontSize = 10 + scale * 15;
+            ctx.font = `bold ${fontSize}px monospace`;
+            
+            const textGradient = ctx.createLinearGradient(x - fontSize/2, y - fontSize/2, x + fontSize/2, y + fontSize/2);
+            textGradient.addColorStop(0, p.originalPoint.color);
+            textGradient.addColorStop(1, '#ffffff');
+            
+            ctx.fillStyle = textGradient;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            ctx.shadowColor = p.originalPoint.color;
+            ctx.shadowBlur = 10 * scale;
+            ctx.fillText(numbers[index % numbers.length], x, y);
+            ctx.shadowBlur = 0;
+
+            for (let j = index + 1; j < Math.min(index + 5, rotatedPoints.length); j++) {
+                const otherPoint = rotatedPoints[j];
+                const otherScale = 1 / (1.5 + otherPoint.z);
+                const otherX = centerX + otherPoint.x * radius * otherScale;
+                const otherY = centerY + otherPoint.y * radius * otherScale;
+                
+                const distance = Math.sqrt((x - otherX) ** 2 + (y - otherY) ** 2);
+                if (distance < 50) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(otherX, otherY);
+                    ctx.strokeStyle = `rgba(0, 255, 136, ${0.1 * (1 - distance/50)})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        });
+
+        requestAnimationFrame(draw);
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+        isMouseDown = true;
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+        canvas.style.cursor = 'grabbing';
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+        if (isMouseDown) {
+            mouseVelocityX = (e.clientX - lastMouseX) * 0.01;
+            mouseVelocityY = (e.clientY - lastMouseY) * 0.01;
+            lastMouseX = e.clientX;
+            lastMouseY = e.clientY;
+        }
+    });
+
+    canvas.addEventListener('mouseup', () => {
+        isMouseDown = false;
+        canvas.style.cursor = 'grab';
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+        isMouseDown = false;
+        canvas.style.cursor = 'grab';
+    });
+
+    draw();
+
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        centerX = canvas.width / 2;
+        centerY = canvas.height / 2;
+        radius = Math.min(canvas.width, canvas.height) * 0.4;
+    });
+</script>
+</body>
+</html>
